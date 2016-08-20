@@ -1208,9 +1208,17 @@ class AudioPlayerDialog(QMainWindow):
 
         if self.mediaObj.totalTime() >0:
             self._dialog.timeLabel.setText(currentTime+" / "+duration)
-            self.bar.setRange(0, self.mediaObj.totalTime())
+            if self.curTango.type == 4:
+                self.bar.setRange(0, self.FadOutTime)
+            else:
+                self.bar.setRange(0, self.mediaObj.totalTime())
             #self.bar.setFormat()
-            self.bar.setValue(self.mediaObj.totalTime()-self.mediaObj.currentTime())
+
+            if self.curTango.type == 4:
+                self.bar.setValue(self.FadOutTime-self.mediaObj.currentTime())    
+            else:
+                self.bar.setValue(self.mediaObj.totalTime()-self.mediaObj.currentTime())
+                
         if not self.curTango.type == 4 or not self.volumeSetToInitial:
             self.audioSink.setVolume(1.0)
             self.volumeSetToInitial = True
@@ -1989,6 +1997,8 @@ class AudioPlayerDialog(QMainWindow):
 
         #print("nb song: "+str(num))
         return num
+
+
     def getNextTanda(self):
         ret={}
         ret['nbintanda'] = self.getNbSongInCurTanda()

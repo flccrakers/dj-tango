@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>tapDialog</class>
+ <widget class="QDialog" name="tapDialog">
+  <property name="windowModality">
+   <enum>Qt::ApplicationModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>531</width>
+    <height>291</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Taping the tempo</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QDialog#tapDialog{
+	background-color: rgb(42,42,42);
+}</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QLabel" name="label">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QLabel{
+	color:white;
+	font-size: 14px;
+	background-color: rgb(42,42,42)
+}</string>
+     </property>
+     <property name="text">
+      <string>Tap on space key while the music is playing, when finish tap on enter to save the calculated bpm. Click enter when finished</string>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLCDNumber" name="lcdNumber">
+     <property name="styleSheet">
+      <string notr="true">QLCDNumber{
+	color: rgb(160,52,77);
+	background-color: rgb(42,42,42);
+}</string>
+     </property>
+     <property name="midLineWidth">
+      <number>0</number>
+     </property>
+     <property name="smallDecimalPoint">
+      <bool>true</bool>
+     </property>
+     <property name="numDigits">
+      <number>5</number>
+     </property>
+     <property name="digitCount">
+      <number>5</number>
+     </property>
+     <property name="mode">
+      <enum>QLCDNumber::Dec</enum>
+     </property>
+     <property name="segmentStyle">
+      <enum>QLCDNumber::Flat</enum>
+     </property>
+     <property name="value" stdset="0">
+      <double>0.000000000000000</double>
+     </property>
+     <property name="intValue" stdset="0">
+      <number>0</number>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="tapButton">
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+	background-color: #2a2a2a;
+	color: white;
+}</string>
+     </property>
+     <property name="text">
+      <string>Tap (hit space)</string>
+     </property>
+     <property name="shortcut">
+      <string>Space</string>
+     </property>
+     <property name="default">
+      <bool>false</bool>
+     </property>
+     <property name="flat">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QPushButton" name="previous">
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
+       <property name="toolTip">
+        <string>Previous (up arrow), will save the bpm</string>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+	background-color: #2a2a2a;
+	color: white;
+}</string>
+       </property>
+       <property name="text">
+        <string>Previous</string>
+       </property>
+       <property name="shortcut">
+        <string>Up</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="next">
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
+       <property name="toolTip">
+        <string>Next (Down arrow), will save the bpm</string>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+	background-color: #2a2a2a;
+	color: white;
+}</string>
+       </property>
+       <property name="text">
+        <string>Next</string>
+       </property>
+       <property name="shortcut">
+        <string>Down</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="cancel">
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
+       <property name="toolTip">
+        <string>Close the windows without saving</string>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+	background-color: #2a2a2a;
+	color: white;
+}</string>
+       </property>
+       <property name="text">
+        <string>Cancel (escape)</string>
+       </property>
+       <property name="shortcut">
+        <string>Esc</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="validate">
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
+       <property name="toolTip">
+        <string>Save the BPM and close the window</string>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+	background-color: #2a2a2a;
+	color: white;
+}</string>
+       </property>
+       <property name="text">
+        <string>Done (Enter)</string>
+       </property>
+       <property name="shortcut">
+        <string>Return</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

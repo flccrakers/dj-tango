@@ -1,0 +1,19 @@
+<RCC>
+  <qresource>
+    <file>img/stop-button.png</file>
+    <file>img/minus-button.png</file>
+    <file>img/hide-left.png</file>
+    <file>img/play-button.png</file>
+    <file>img/clear-button.png</file>
+    <file>img/save-milonga-button.png</file>
+    <file>img/hide-right.png</file>
+    <file>img/logo-djtango.png</file>
+    <file>img/trash-button.png</file>
+    <file>img/search-icon.png</file>
+    <file>img/plus-button.png</file>
+    <file>img/pause-button.png</file>
+    <file>img/arrow-bottom.png</file>
+    <file>img/load-milonga-button.png</file>
+    <file>img/info-button.png</file>
+  </qresource>
+</RCC>

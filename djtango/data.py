@@ -29,12 +29,12 @@ class djDataConnection:
 		cursor = conn.cursor()
 		
 		#create the table
-		script = self.getDataFromSql('databaseCreation.sql')
+		script = self.getDataFromSql('./djtango/sql/databaseCreation.sql')
 		print (script)
 		cursor.executescript(script)
 		
 		#fill the default table
-		script = self.getDataFromSql('databaseFill.sql')
+		script = self.getDataFromSql('./djtango/sql/databaseFill.sql')
 		print (script)
 		cursor.executescript(script)
 

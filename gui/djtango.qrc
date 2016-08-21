@@ -1,6 +1,7 @@
 <RCC>
   <qresource>
     <file>img/stop-button.png</file>
+    <file>img/random-button.png</file>
     <file>img/minus-button.png</file>
     <file>img/hide-left.png</file>
     <file>img/play-button.png</file>

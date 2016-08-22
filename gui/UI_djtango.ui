@@ -1224,8 +1224,8 @@ QHeaderView{
          <string/>
         </property>
         <property name="icon">
-         <iconset>
-          <normaloff>img/hide-right.png</normaloff>img/hide-right.png</iconset>
+         <iconset resource="djtango.qrc">
+          <normaloff>:/img/hide-left.png</normaloff>:/img/hide-left.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -1267,8 +1267,8 @@ QHeaderView{
          <string/>
         </property>
         <property name="icon">
-         <iconset>
-          <normaloff>img/hide-left.png</normaloff>img/hide-left.png</iconset>
+         <iconset resource="djtango.qrc">
+          <normaloff>:/img/hide-right.png</normaloff>:/img/hide-right.png</iconset>
         </property>
         <property name="iconSize">
          <size>

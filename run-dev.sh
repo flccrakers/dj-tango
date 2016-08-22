@@ -1,6 +1,8 @@
 #!/bin/sh
 # add as many pyuic4 convenstion that needed to create the project
 #
+cd $(dirname $0)
+
 pyuic4 ./gui/UI_djtango.ui -o ./djtango/UI_djtango.py &&\
 pyuic4 ./gui/UI_details.ui -o ./djtango/UI_details.py &&\
 pyuic4 ./gui/UI_infos.ui -o ./djtango/UI_infos.py &&\

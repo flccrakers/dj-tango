@@ -732,6 +732,7 @@ class AudioPlayerDialog(QMainWindow):
         self.tapTable = []
         self.tapContent.lcdNumber.display(0.0)
         self.bpm = 0
+        self.initialiszeBmpInfo()
         self.tapWindow.show()
         
     #def playCurrentRow():
@@ -756,15 +757,41 @@ class AudioPlayerDialog(QMainWindow):
                 for i in range(len(self.bpmtrack)-1, len(self.bpmtrack)-6, -1):
                     #print (self.delta[i])
                     temp.append(self.bpmtrack[i])
-                #print("delta: "+str(max(temp)-min(temp)))
-                if max(temp)-min(temp) < 0.2:
-                    print("STOP")
+                print("delta: "+str(max(temp)-min(temp)))
+                if max(temp)-min(temp) < 0.3 and self.bmpState != 2:
+                    self.tapContent.labelDone.setText("DONE")
+                    self.tapContent.labelDone.setStyleSheet("color: rgba(70,169,73)")
+                    self.bmpState = 2
+                    #print("STOP")
+                elif max(temp)-min(temp) < 0.8 and max(temp)-min(temp) > 0.5 and self.bmpState == 0:
+                    self.tapContent.labelDone.setText("CONTINUE")
+                    self.tapContent.labelDone.setStyleSheet("color: rgba(215,0,8)")
+                    self.bmpState = 1
+                elif max(temp)-min(temp) < 0.5 and self.bmpState !=2:
+                    self.tapContent.labelDone.setText("ALMOST")
+                    self.tapContent.labelDone.setStyleSheet("color: rgba(240,169,73)")
+
 
 
 
             self.curTango.bpmHuman = self.bpm
 
             self.tapContent.lcdNumber.display(self.bpm)
+    def initialiszeBmpInfo(self):
+        self.bmpState = 0
+        self.tapContent.labelDone.setText("DONE")
+        self.tapContent.labelDone.setStyleSheet("color: rgba(42,42,42)")
+        #print(self.curTango.bpmHuman)
+        #print(self.curTango.bpmFromFile)
+        if self.curTango.bpmHuman == 0 and self.curTango.bpmFromFile == 0:
+            self.tapContent.labelTypeBmp.setText("Not set")
+            self.tapContent.labelTypeBmp.setStyleSheet("color: rgba(215,0,8)")
+        elif self.curTango.bpmHuman == 0 and self.curTango.bpmFromFile > 0:
+            self.tapContent.labelTypeBmp.setText("Set by computer")
+            self.tapContent.labelTypeBmp.setStyleSheet("color: rgba(240,169,73)")
+        else:
+            self.tapContent.labelTypeBmp.setText("Set by human")
+            self.tapContent.labelTypeBmp.setStyleSheet("color: rgba(70,169,73)")
 
     def _handelValidatebpm(self):
 
@@ -776,6 +803,7 @@ class AudioPlayerDialog(QMainWindow):
 
     def _handelTapingNext(self):
         #print("next")
+
         self.updateTangoBPM()
         self.tapTable = []
         self.delta = []
@@ -790,6 +818,7 @@ class AudioPlayerDialog(QMainWindow):
             self.curTango = self._tangoList.tangos[self.curTangoEditing]
             self._loadNewMedia()
             self._playMedia()
+            self.initialiszeBmpInfo()
         
     def _handelTapingPrevious(self):
         #print("Previous")
@@ -807,6 +836,7 @@ class AudioPlayerDialog(QMainWindow):
             self.curTango = self._tangoList.tangos[self.curTangoEditing]
             self._loadNewMedia()
             self._playMedia()
+            self.initialiszeBmpInfo()
 
     def updateTangoBPM(self):
         indexes = self._dialog.milongaSource.selectionModel().selectedRows()
@@ -999,29 +1029,31 @@ class AudioPlayerDialog(QMainWindow):
         #self._dialog.milongaLayout.setVisible(False)
         if self._dialog.milongaSource.isVisible():
             self._dialog.pushButtonHideDest.setVisible(False)
-            self._dialog.pushButtonHideSource.setIcon(QIcon("./img/hide-right.png"))
+            self._dialog.pushButtonHideSource.setIcon(QIcon("./djtango/img/hide-right.png"))
             self._dialog.milongaSource.setVisible(False)
             self._dialog.pushButtonClearFilter.setVisible(False)
             self._dialog.comboBoxArtist.setVisible(False)
             self._dialog.comboBoxAlbum.setVisible(False)
             self._dialog.comboBoxGenre.setVisible(False)
             self._dialog.lineEditFilter.setVisible(False)
+            self._dialog.pushButtonRandom.setVisible(False)
            
         else:
             self._dialog.pushButtonHideDest.setVisible(True)
-            self._dialog.pushButtonHideSource.setIcon(QIcon("./img/hide-left.png"))
+            self._dialog.pushButtonHideSource.setIcon(QIcon("./djtango/img/hide-left.png"))
             self._dialog.milongaSource.setVisible(True)
             self._dialog.pushButtonClearFilter.setVisible(True)
             self._dialog.comboBoxArtist.setVisible(True)
             self._dialog.comboBoxAlbum.setVisible(True)
             self._dialog.comboBoxGenre.setVisible(True)
             self._dialog.lineEditFilter.setVisible(True)
+            self._dialog.pushButtonRandom.setVisible(True)
     
     def _handelHideDest(self):
 
         if self._dialog.milongaDest.isVisible():
             self._dialog.pushButtonHideSource.setVisible(False)
-            self._dialog.pushButtonHideDest.setIcon(QIcon("./img/hide-left.png"))
+            self._dialog.pushButtonHideDest.setIcon(QIcon("./djtango/img/hide-left.png"))
 
             self._dialog.milongaDest.setVisible(False)
             self._dialog.pushButtonMilongaClear.setVisible(False)
@@ -1030,12 +1062,13 @@ class AudioPlayerDialog(QMainWindow):
             self._dialog.pushButtonDeleteMilonga.setVisible(False)
             self._dialog.pushButtonSaveMilonga.setVisible(False)
             self._dialog.labelSizeDuration.setVisible(False)
+            self._dialog.pushButtonInfoMilonga.setVisible(False)
 
 
 
         else:
             self._dialog.pushButtonHideSource.setVisible(True)
-            self._dialog.pushButtonHideDest.setIcon(QIcon("./img/hide-right.png"))
+            self._dialog.pushButtonHideDest.setIcon(QIcon("./djtango/img/hide-right.png"))
 
 
             self._dialog.milongaDest.setVisible(True)
@@ -1046,6 +1079,7 @@ class AudioPlayerDialog(QMainWindow):
             self._dialog.pushButtonDeleteMilonga.setVisible(True)
             self._dialog.pushButtonSaveMilonga.setVisible(True)
             self._dialog.labelSizeDuration.setVisible(True)
+            self._dialog.pushButtonInfoMilonga.setVisible(True)
             #self.resizeHeaderSource()
             #self._dialog.milongaSource.horizontalHeader() emit()
 

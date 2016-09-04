@@ -532,6 +532,12 @@ Phonon::SeekSlider::sub-page:horizontal {
          <layout class="QHBoxLayout" name="horizontalLayout_5">
           <item>
            <widget class="QPushButton" name="pushButtonRandom">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="focusPolicy">
              <enum>Qt::NoFocus</enum>
             </property>
@@ -1225,7 +1231,7 @@ QHeaderView{
         </property>
         <property name="icon">
          <iconset resource="djtango.qrc">
-          <normaloff>:/img/hide-left.png</normaloff>:/img/hide-left.png</iconset>
+          <normaloff>:/img/hide-right.png</normaloff>:/img/hide-right.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -1268,7 +1274,7 @@ QHeaderView{
         </property>
         <property name="icon">
          <iconset resource="djtango.qrc">
-          <normaloff>:/img/hide-right.png</normaloff>:/img/hide-right.png</iconset>
+          <normaloff>:/img/hide-left.png</normaloff>:/img/hide-left.png</iconset>
         </property>
         <property name="iconSize">
          <size>

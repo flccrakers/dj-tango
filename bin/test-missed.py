@@ -3,9 +3,10 @@
 
 from djtango.data import djDataConnection
 from djtango.dirsong import dirSong
-import string
+import string, os
 
-djData = djDataConnection()
+djhome = os.path.join(os.path.expanduser("~"), ".djtango")
+djData = djDataConnection(djhome)
 
 tangoList = dirSong('/home/hoonakker/media/tango-propres-HQ', False)
 tangoList.loadTangos(djData.getAllTangos())

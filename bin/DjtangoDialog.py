@@ -496,17 +496,11 @@ class AudioPlayerDialog(QMainWindow):
                      SIGNAL("clicked()"),
                      self._handelPlayPause)
 
-        #self.connect(self._dialog.lineEditFilter,
-        #    SIGNAL("cursorPositionChanged()"),
-        #    self._handelFilterChange)
         self._dialog.lineEditFilter.returnPressed.connect(self._handelFilterChange)
+        self._dialog.pushButtonRandom.clicked.connect(self.sourceModel.randomize)
 
 
-        #self.connect(self._dialog.lineEditFilter,
-        #							SIGNAL("tabPressed"),
-        #							self._handelFilter)
 
-        #self.connect(self._dialog.filterButton,SIGNAL("clicked()"), self._handelFilter)
         self._dialog.milongaDest.pressed.connect(self.destModel.pressed)
 
         self.infoContent.pushButtonClose.clicked.connect(self.closeInfo)

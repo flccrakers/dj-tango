@@ -9,7 +9,7 @@ from PyQt4.QtCore import SIGNAL, QDataStream, QIODevice, QVariant
 import operator, re
 from PyQt4.QtCore import QRegExp
 from djtango import utils
-import decimal
+import decimal, random
 
 #from PyQt4.QtGui import *
 
@@ -143,13 +143,19 @@ class milongaSource(QAbstractTableModel):
         self.emit(SIGNAL("layoutAboutToBeChanged()"))
         #print (Qt.InitialSortOrderRole)
         #print(Qt.AscendingOrder)
-        print (col)
+        #print (col)
         self.mylist = sorted(self.mylist, key=operator.itemgetter(col))
         #self.
         if order == Qt.AscendingOrder:
             self.mylist.reverse()
         self.emit(SIGNAL("layoutChanged()"))
         #pass
+    def randomize(self):
+        self.emit(SIGNAL("layoutAboutToBeChanged()"))
+        random.shuffle(self.mylist)
+        self.emit(SIGNAL("layoutChanged()"))
+
+
     def changeData(self, datain):
         print ("I'm changing the data")
 

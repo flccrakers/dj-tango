@@ -26,7 +26,7 @@ class Ui_infosMilonga(object):
     def setupUi(self, infosMilonga):
         infosMilonga.setObjectName(_fromUtf8("infosMilonga"))
         infosMilonga.setWindowModality(QtCore.Qt.ApplicationModal)
-        infosMilonga.resize(356, 301)
+        infosMilonga.resize(284, 250)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)

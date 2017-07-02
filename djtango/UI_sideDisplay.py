@@ -2,32 +2,19 @@
 
 # Form implementation generated from reading ui file './gui/UI_sideDisplay.ui'
 #
-# Created by: PyQt4 UI code generator 4.11.4
+# Created by: PyQt5 UI code generator 5.5.1
 #
 # WARNING! All changes made in this file will be lost!
 
-from PyQt4 import QtCore, QtGui
-
-try:
-    _fromUtf8 = QtCore.QString.fromUtf8
-except AttributeError:
-    def _fromUtf8(s):
-        return s
-
-try:
-    _encoding = QtGui.QApplication.UnicodeUTF8
-    def _translate(context, text, disambig):
-        return QtGui.QApplication.translate(context, text, disambig, _encoding)
-except AttributeError:
-    def _translate(context, text, disambig):
-        return QtGui.QApplication.translate(context, text, disambig)
+from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_sideDisplay(object):
     def setupUi(self, sideDisplay):
-        sideDisplay.setObjectName(_fromUtf8("sideDisplay"))
+        sideDisplay.setObjectName("sideDisplay")
         sideDisplay.setWindowModality(QtCore.Qt.NonModal)
-        sideDisplay.resize(1327, 1074)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Fixed)
+        sideDisplay.setEnabled(True)
+        sideDisplay.resize(1337, 1074)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(sideDisplay.sizePolicy().hasHeightForWidth())
@@ -55,26 +42,26 @@ class Ui_sideDisplay(object):
         sideDisplay.setCursor(QtGui.QCursor(QtCore.Qt.BlankCursor))
         sideDisplay.setFocusPolicy(QtCore.Qt.NoFocus)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(_fromUtf8("../../../../../.designer/backup/img/logo-djtango.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("../../../../../.designer/backup/img/logo-djtango.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         sideDisplay.setWindowIcon(icon)
-        self.verticalLayout = QtGui.QVBoxLayout(sideDisplay)
-        self.verticalLayout.setMargin(0)
+        self.verticalLayout = QtWidgets.QVBoxLayout(sideDisplay)
+        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout.setSpacing(0)
-        self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
-        self.verticalLayout_2 = QtGui.QVBoxLayout()
+        self.verticalLayout.setObjectName("verticalLayout")
+        self.verticalLayout_2 = QtWidgets.QVBoxLayout()
         self.verticalLayout_2.setContentsMargins(0, 0, -1, -1)
         self.verticalLayout_2.setSpacing(0)
-        self.verticalLayout_2.setObjectName(_fromUtf8("verticalLayout_2"))
-        self.verticalLayout_5 = QtGui.QVBoxLayout()
-        self.verticalLayout_5.setObjectName(_fromUtf8("verticalLayout_5"))
-        self.frameType = QtGui.QFrame(sideDisplay)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Fixed)
+        self.verticalLayout_2.setObjectName("verticalLayout_2")
+        self.verticalLayout_5 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_5.setObjectName("verticalLayout_5")
+        self.frameType = QtWidgets.QFrame(sideDisplay)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.frameType.sizePolicy().hasHeightForWidth())
         self.frameType.setSizePolicy(sizePolicy)
         self.frameType.setMinimumSize(QtCore.QSize(0, 140))
-        self.frameType.setStyleSheet(_fromUtf8("QFrame{\n"
+        self.frameType.setStyleSheet("QFrame{\n"
 "    background-color: rgb(160,52,77);\n"
 "    border: 0px;\n"
 "    margin-right: 0px;\n"
@@ -83,56 +70,56 @@ class Ui_sideDisplay(object):
 "    spacing: 0px;\n"
 "    padding: 0px;\n"
 "}\n"
-"QFrame::layout { margin: 0px }"))
-        self.frameType.setFrameShape(QtGui.QFrame.NoFrame)
-        self.frameType.setFrameShadow(QtGui.QFrame.Plain)
+"QFrame::layout { margin: 0px }")
+        self.frameType.setFrameShape(QtWidgets.QFrame.NoFrame)
+        self.frameType.setFrameShadow(QtWidgets.QFrame.Plain)
         self.frameType.setLineWidth(0)
-        self.frameType.setObjectName(_fromUtf8("frameType"))
-        self.horizontalLayout_2 = QtGui.QHBoxLayout(self.frameType)
-        self.horizontalLayout_2.setMargin(0)
+        self.frameType.setObjectName("frameType")
+        self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.frameType)
+        self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout_2.setSpacing(0)
-        self.horizontalLayout_2.setObjectName(_fromUtf8("horizontalLayout_2"))
-        spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_2.addItem(spacerItem)
-        self.labelType = QtGui.QLabel(self.frameType)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
+        self.labelType = QtWidgets.QLabel(self.frameType)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.labelType.sizePolicy().hasHeightForWidth())
         self.labelType.setSizePolicy(sizePolicy)
         self.labelType.setMinimumSize(QtCore.QSize(0, 0))
-        self.labelType.setStyleSheet(_fromUtf8("QLabel{\n"
+        self.labelType.setStyleSheet("QLabel{\n"
 "   font-weight: bold;\n"
 "    color: white;\n"
 "    font-size: 100px;\n"
 "    font-family: \"sans\";\n"
 "    background-color: \"transparent\";\n"
 "    \n"
-"}"))
+"}")
         self.labelType.setScaledContents(False)
         self.labelType.setAlignment(QtCore.Qt.AlignCenter)
         self.labelType.setWordWrap(False)
-        self.labelType.setObjectName(_fromUtf8("labelType"))
+        self.labelType.setObjectName("labelType")
         self.horizontalLayout_2.addWidget(self.labelType)
-        self.PBLayout = QtGui.QVBoxLayout()
-        self.PBLayout.setSizeConstraint(QtGui.QLayout.SetNoConstraint)
+        self.PBLayout = QtWidgets.QVBoxLayout()
+        self.PBLayout.setSizeConstraint(QtWidgets.QLayout.SetNoConstraint)
         self.PBLayout.setContentsMargins(40, 2, 5, 2)
         self.PBLayout.setSpacing(0)
-        self.PBLayout.setObjectName(_fromUtf8("PBLayout"))
+        self.PBLayout.setObjectName("PBLayout")
         self.horizontalLayout_2.addLayout(self.PBLayout)
-        spacerItem1 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_2.addItem(spacerItem1)
         self.verticalLayout_5.addWidget(self.frameType)
         self.verticalLayout_2.addLayout(self.verticalLayout_5)
-        spacerItem2 = QtGui.QSpacerItem(20, 120, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Minimum)
+        spacerItem2 = QtWidgets.QSpacerItem(20, 120, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
         self.verticalLayout_2.addItem(spacerItem2)
-        self.labelArtist = QtGui.QLabel(sideDisplay)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Preferred)
+        self.labelArtist = QtWidgets.QLabel(sideDisplay)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.labelArtist.sizePolicy().hasHeightForWidth())
         self.labelArtist.setSizePolicy(sizePolicy)
-        self.labelArtist.setStyleSheet(_fromUtf8("QLabel{\n"
+        self.labelArtist.setStyleSheet("QLabel{\n"
 "    margin-top: 30px;\n"
 "    margin-left: 20px;\n"
 "    margin-bottom: 25px;\n"
@@ -140,41 +127,41 @@ class Ui_sideDisplay(object):
 "    color: white;\n"
 "    font-size: 100px;\n"
 "   font-family: \"sans\"\n"
-"}"))
+"}")
         self.labelArtist.setScaledContents(True)
         self.labelArtist.setAlignment(QtCore.Qt.AlignCenter)
-        self.labelArtist.setObjectName(_fromUtf8("labelArtist"))
+        self.labelArtist.setObjectName("labelArtist")
         self.verticalLayout_2.addWidget(self.labelArtist)
-        spacerItem3 = QtGui.QSpacerItem(20, 20, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Fixed)
+        spacerItem3 = QtWidgets.QSpacerItem(20, 20, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
         self.verticalLayout_2.addItem(spacerItem3)
-        self.labelTitle = QtGui.QLabel(sideDisplay)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Preferred)
+        self.labelTitle = QtWidgets.QLabel(sideDisplay)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.labelTitle.sizePolicy().hasHeightForWidth())
         self.labelTitle.setSizePolicy(sizePolicy)
-        self.labelTitle.setStyleSheet(_fromUtf8("QLabel{\n"
+        self.labelTitle.setStyleSheet("QLabel{\n"
 "    margin-left: 20px;\n"
 "    color: white;\n"
 "    font-size: 70px;\n"
 "    font-family: \"sans\"\n"
-"}"))
-        self.labelTitle.setFrameShape(QtGui.QFrame.NoFrame)
+"}")
+        self.labelTitle.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.labelTitle.setScaledContents(True)
         self.labelTitle.setAlignment(QtCore.Qt.AlignCenter)
         self.labelTitle.setIndent(-1)
-        self.labelTitle.setObjectName(_fromUtf8("labelTitle"))
+        self.labelTitle.setObjectName("labelTitle")
         self.verticalLayout_2.addWidget(self.labelTitle)
-        spacerItem4 = QtGui.QSpacerItem(20, 300, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        spacerItem4 = QtWidgets.QSpacerItem(20, 300, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout_2.addItem(spacerItem4)
         self.verticalLayout.addLayout(self.verticalLayout_2)
-        self.verticalLayout_3 = QtGui.QVBoxLayout()
-        self.verticalLayout_3.setSizeConstraint(QtGui.QLayout.SetMinAndMaxSize)
+        self.verticalLayout_3 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_3.setSizeConstraint(QtWidgets.QLayout.SetMinAndMaxSize)
         self.verticalLayout_3.setContentsMargins(0, -1, -1, -1)
         self.verticalLayout_3.setSpacing(0)
-        self.verticalLayout_3.setObjectName(_fromUtf8("verticalLayout_3"))
-        self.frameNext = QtGui.QFrame(sideDisplay)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Fixed)
+        self.verticalLayout_3.setObjectName("verticalLayout_3")
+        self.frameNext = QtWidgets.QFrame(sideDisplay)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.frameNext.sizePolicy().hasHeightForWidth())
@@ -211,7 +198,7 @@ class Ui_sideDisplay(object):
         self.frameNext.setPalette(palette)
         self.frameNext.setContextMenuPolicy(QtCore.Qt.NoContextMenu)
         self.frameNext.setLayoutDirection(QtCore.Qt.LeftToRight)
-        self.frameNext.setStyleSheet(_fromUtf8("QFrame{\n"
+        self.frameNext.setStyleSheet("QFrame{\n"
 "    background-color: rgb(160,52,77);\n"
 "    border: 0px;\n"
 "    margin-right: 0px;\n"
@@ -220,30 +207,30 @@ class Ui_sideDisplay(object):
 "    spacing: 0px;\n"
 "    padding: 0px;\n"
 "}\n"
-"QFrame::layout { margin: 0px }"))
+"QFrame::layout { margin: 0px }")
         self.frameNext.setLineWidth(0)
-        self.frameNext.setObjectName(_fromUtf8("frameNext"))
-        self.verticalLayout_4 = QtGui.QVBoxLayout(self.frameNext)
-        self.verticalLayout_4.setMargin(0)
+        self.frameNext.setObjectName("frameNext")
+        self.verticalLayout_4 = QtWidgets.QVBoxLayout(self.frameNext)
+        self.verticalLayout_4.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_4.setSpacing(0)
-        self.verticalLayout_4.setObjectName(_fromUtf8("verticalLayout_4"))
-        self.labelNextTanda = QtGui.QLabel(self.frameNext)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
+        self.verticalLayout_4.setObjectName("verticalLayout_4")
+        self.labelNextTanda = QtWidgets.QLabel(self.frameNext)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.labelNextTanda.sizePolicy().hasHeightForWidth())
         self.labelNextTanda.setSizePolicy(sizePolicy)
         self.labelNextTanda.setMinimumSize(QtCore.QSize(0, 130))
         self.labelNextTanda.setLayoutDirection(QtCore.Qt.LeftToRight)
-        self.labelNextTanda.setStyleSheet(_fromUtf8("QLabel{\n"
+        self.labelNextTanda.setStyleSheet("QLabel{\n"
 "    font-family: \"sans\";\n"
 "    font-weight: bold;\n"
 "    color: white;\n"
 "    font-size: 70px;\n"
-"}"))
+"}")
         self.labelNextTanda.setScaledContents(True)
         self.labelNextTanda.setAlignment(QtCore.Qt.AlignCenter)
-        self.labelNextTanda.setObjectName(_fromUtf8("labelNextTanda"))
+        self.labelNextTanda.setObjectName("labelNextTanda")
         self.verticalLayout_4.addWidget(self.labelNextTanda)
         self.verticalLayout_3.addWidget(self.frameNext)
         self.verticalLayout.addLayout(self.verticalLayout_3)
@@ -252,9 +239,10 @@ class Ui_sideDisplay(object):
         QtCore.QMetaObject.connectSlotsByName(sideDisplay)
 
     def retranslateUi(self, sideDisplay):
-        sideDisplay.setWindowTitle(_translate("sideDisplay", "sideDisplay", None))
-        self.labelType.setText(_translate("sideDisplay", "Tango Type", None))
-        self.labelArtist.setText(_translate("sideDisplay", "Artiste", None))
-        self.labelTitle.setText(_translate("sideDisplay", "Title (year - Author)", None))
-        self.labelNextTanda.setText(_translate("sideDisplay", "NEXT TANDA (in X song)   |   VALS", None))
+        _translate = QtCore.QCoreApplication.translate
+        sideDisplay.setWindowTitle(_translate("sideDisplay", "sideDisplay"))
+        self.labelType.setText(_translate("sideDisplay", "Tango Type"))
+        self.labelArtist.setText(_translate("sideDisplay", "Artiste"))
+        self.labelTitle.setText(_translate("sideDisplay", "Title (year - Author)"))
+        self.labelNextTanda.setText(_translate("sideDisplay", "NEXT TANDA (in X song)   |   VALS"))
 

@@ -2,60 +2,47 @@
 
 # Form implementation generated from reading ui file './gui/UI_milongaName.ui'
 #
-# Created by: PyQt4 UI code generator 4.11.4
+# Created by: PyQt5 UI code generator 5.5.1
 #
 # WARNING! All changes made in this file will be lost!
 
-from PyQt4 import QtCore, QtGui
-
-try:
-    _fromUtf8 = QtCore.QString.fromUtf8
-except AttributeError:
-    def _fromUtf8(s):
-        return s
-
-try:
-    _encoding = QtGui.QApplication.UnicodeUTF8
-    def _translate(context, text, disambig):
-        return QtGui.QApplication.translate(context, text, disambig, _encoding)
-except AttributeError:
-    def _translate(context, text, disambig):
-        return QtGui.QApplication.translate(context, text, disambig)
+from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_DialogMilongaName(object):
     def setupUi(self, DialogMilongaName):
-        DialogMilongaName.setObjectName(_fromUtf8("DialogMilongaName"))
+        DialogMilongaName.setObjectName("DialogMilongaName")
         DialogMilongaName.resize(400, 108)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(_fromUtf8("img/logo-djtango.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("img/logo-djtango.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         DialogMilongaName.setWindowIcon(icon)
-        DialogMilongaName.setStyleSheet(_fromUtf8("QDialog{\n"
+        DialogMilongaName.setStyleSheet("QDialog{\n"
 "    background-color: rgb(42,42,42)\n"
-"}"))
-        self.gridLayout = QtGui.QGridLayout(DialogMilongaName)
-        self.gridLayout.setObjectName(_fromUtf8("gridLayout"))
-        self.buttonBox = QtGui.QDialogButtonBox(DialogMilongaName)
-        self.buttonBox.setStyleSheet(_fromUtf8("QPushButton {\n"
+"}")
+        self.gridLayout = QtWidgets.QGridLayout(DialogMilongaName)
+        self.gridLayout.setObjectName("gridLayout")
+        self.buttonBox = QtWidgets.QDialogButtonBox(DialogMilongaName)
+        self.buttonBox.setStyleSheet("QPushButton {\n"
 "    background-color: #2a2a2a;\n"
 "    color: white;\n"
-"}"))
+"}")
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
-        self.buttonBox.setStandardButtons(QtGui.QDialogButtonBox.Cancel|QtGui.QDialogButtonBox.Ok)
-        self.buttonBox.setObjectName(_fromUtf8("buttonBox"))
+        self.buttonBox.setStandardButtons(QtWidgets.QDialogButtonBox.Cancel|QtWidgets.QDialogButtonBox.Ok)
+        self.buttonBox.setObjectName("buttonBox")
         self.gridLayout.addWidget(self.buttonBox, 1, 1, 1, 1)
-        self.lineEditName = QtGui.QLineEdit(DialogMilongaName)
-        self.lineEditName.setObjectName(_fromUtf8("lineEditName"))
+        self.lineEditName = QtWidgets.QLineEdit(DialogMilongaName)
+        self.lineEditName.setObjectName("lineEditName")
         self.gridLayout.addWidget(self.lineEditName, 0, 1, 1, 1)
-        self.labelMilongaName = QtGui.QLabel(DialogMilongaName)
-        self.labelMilongaName.setObjectName(_fromUtf8("labelMilongaName"))
+        self.labelMilongaName = QtWidgets.QLabel(DialogMilongaName)
+        self.labelMilongaName.setObjectName("labelMilongaName")
         self.gridLayout.addWidget(self.labelMilongaName, 0, 0, 1, 1)
 
         self.retranslateUi(DialogMilongaName)
-        QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL(_fromUtf8("accepted()")), DialogMilongaName.accept)
-        QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL(_fromUtf8("rejected()")), DialogMilongaName.reject)
+        self.buttonBox.accepted.connect(DialogMilongaName.accept)
+        self.buttonBox.rejected.connect(DialogMilongaName.reject)
         QtCore.QMetaObject.connectSlotsByName(DialogMilongaName)
 
     def retranslateUi(self, DialogMilongaName):
-        DialogMilongaName.setWindowTitle(_translate("DialogMilongaName", "Milonga Name", None))
-        self.labelMilongaName.setText(_translate("DialogMilongaName", "Milonga Name", None))
+        _translate = QtCore.QCoreApplication.translate
+        DialogMilongaName.setWindowTitle(_translate("DialogMilongaName", "Milonga Name"))
+        self.labelMilongaName.setText(_translate("DialogMilongaName", "Milonga Name"))
 

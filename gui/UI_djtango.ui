@@ -90,7 +90,7 @@
    <string>DjTango</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="djtango.qrc">
+   <iconset>
     <normaloff>:/img/logo-djtango.png</normaloff>:/img/logo-djtango.png</iconset>
   </property>
   <property name="autoFillBackground">
@@ -373,16 +373,16 @@
        </widget>
       </item>
       <item>
-       <widget class="Phonon::SeekSlider" name="seekSlider" native="true">
+       <widget class="QSlider" name="songSlider">
         <property name="styleSheet">
-         <string notr="true">Phonon::SeekSlider::groove:horizontal{
+         <string notr="true">QSlider::groove:horizontal{
 	border: 1px solid white;
    height: 10px; /* the groove expands to the size of the slider by default. by giving it a height, it has a fixed size */
     background: #2a2a2a;
     margin: 0px 0;
 }
 
-Phonon::SeekSlider::handle:horizontal {
+QSlider::handle:horizontal {
     background: white;
     border: 3px solid #a0344d;
   	width: 5px;
@@ -390,13 +390,16 @@ Phonon::SeekSlider::handle:horizontal {
     margin: -2px -2px; /* handle is placed by default on the contents rect of the groove. Expand outside the groove */
     border-radius: 10px;
 }
-Phonon::SeekSlider::sub-page:horizontal {
+QSlider::sub-page:horizontal {
     background: #a0344d; 
 	/*height: 8px;*/
 	border: 1px solid white;
 } 
 
 </string>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
         </property>
        </widget>
       </item>
@@ -427,15 +430,24 @@ Phonon::SeekSlider::sub-page:horizontal {
          <string>play / pause</string>
         </property>
         <property name="styleSheet">
-         <string notr="true">QPushButton#playToolButton {
+         <string notr="true">QPushButton {
 	background-color: #2a2a2a;
 	color: white;
  }
+QPushButton:hover{
+  border-radius: 4px;
+  border: 1px solid rgba(160,52,77,70);
+}
+
+QPushButton:pressed{
+background-color:rgba(160,52,77,100);
+}
+
 </string>
         </property>
         <property name="icon">
          <iconset resource="djtango.qrc">
-          <normaloff>:/img/play-button.png</normaloff>:/img/play-button.png</iconset>
+          <normaloff>:/icons/img/stop-button.png</normaloff>:/icons/img/stop-button.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -469,18 +481,27 @@ Phonon::SeekSlider::sub-page:horizontal {
          <string>stop</string>
         </property>
         <property name="styleSheet">
-         <string notr="true">QPushButton#stopToolButton {
+         <string notr="true">QPushButton {
 	background-color: #2a2a2a;
 	color: white;
  }
- </string>
+QPushButton:hover{
+  border-radius: 4px;
+  border: 1px solid rgba(160,52,77,70);
+}
+
+QPushButton:pressed{
+background-color:rgba(160,52,77,100);
+}
+
+</string>
         </property>
         <property name="text">
          <string/>
         </property>
         <property name="icon">
          <iconset resource="djtango.qrc">
-          <normaloff>:/img/stop-button.png</normaloff>:/img/stop-button.png</iconset>
+          <normaloff>:/icons/img/play-button.png</normaloff>:/icons/img/play-button.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -546,6 +567,15 @@ Phonon::SeekSlider::sub-page:horizontal {
 	background-color: #2a2a2a;
 	color: white;
  }
+QPushButton:hover{
+  border-radius: 4px;
+  border: 1px solid rgba(160,52,77,70);
+}
+
+QPushButton:pressed{
+background-color:rgba(160,52,77,100);
+}
+
 </string>
             </property>
             <property name="text">
@@ -553,7 +583,7 @@ Phonon::SeekSlider::sub-page:horizontal {
             </property>
             <property name="icon">
              <iconset resource="djtango.qrc">
-              <normaloff>:/img/random-button.png</normaloff>:/img/random-button.png</iconset>
+              <normaloff>:/icons/img/ic_shuffle_white_24dp_1x.png</normaloff>:/icons/img/ic_shuffle_white_24dp_1x.png</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -582,6 +612,15 @@ Phonon::SeekSlider::sub-page:horizontal {
 	background-color: #2a2a2a;
 	color: white;
  }
+QPushButton:hover{
+  border-radius: 4px;
+  border: 1px solid rgba(160,52,77,70);
+}
+
+QPushButton:pressed{
+background-color:rgba(160,52,77,100);
+}
+
 </string>
             </property>
             <property name="text">
@@ -589,7 +628,7 @@ Phonon::SeekSlider::sub-page:horizontal {
             </property>
             <property name="icon">
              <iconset resource="djtango.qrc">
-              <normaloff>:/img/clear-button.png</normaloff>:/img/clear-button.png</iconset>
+              <normaloff>:/icons/img/clear-button.png</normaloff>:/icons/img/clear-button.png</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -960,6 +999,20 @@ QComboBox::down-arrow
          </layout>
         </item>
         <item>
+         <widget class="QLabel" name="labelsongNB_source">
+          <property name="styleSheet">
+           <string notr="true">QLabel{
+	color: white;
+	font-size: 14px;
+	font-weight: bold;
+}</string>
+          </property>
+          <property name="text">
+           <string>0 song</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QTableView" name="milongaSource">
           <property name="palette">
            <palette>
@@ -1230,7 +1283,7 @@ QHeaderView{
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="djtango.qrc">
+         <iconset>
           <normaloff>:/img/hide-right.png</normaloff>:/img/hide-right.png</iconset>
         </property>
         <property name="iconSize">
@@ -1273,7 +1326,7 @@ QHeaderView{
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="djtango.qrc">
+         <iconset>
           <normaloff>:/img/hide-left.png</normaloff>:/img/hide-left.png</iconset>
         </property>
         <property name="iconSize">
@@ -1307,6 +1360,15 @@ QHeaderView{
 	background-color: #2a2a2a;
 	color: white;
  }
+QPushButton:hover{
+  border-radius: 4px;
+  border: 1px solid rgba(160,52,77,70);
+}
+
+QPushButton:pressed{
+background-color:rgba(160,52,77,100);
+}
+
 </string>
             </property>
             <property name="text">
@@ -1314,7 +1376,7 @@ QHeaderView{
             </property>
             <property name="icon">
              <iconset resource="djtango.qrc">
-              <normaloff>:/img/clear-button.png</normaloff>:/img/clear-button.png</iconset>
+              <normaloff>:/icons/img/clear-button.png</normaloff>:/icons/img/clear-button.png</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -1357,6 +1419,15 @@ QHeaderView{
 	background-color: #2a2a2a;
 	color: white;
  }
+QPushButton:hover{
+  border-radius: 4px;
+  border: 1px solid rgba(160,52,77,70);
+}
+
+QPushButton:pressed{
+background-color:rgba(160,52,77,100);
+}
+
 </string>
             </property>
             <property name="text">
@@ -1364,7 +1435,7 @@ QHeaderView{
             </property>
             <property name="icon">
              <iconset resource="djtango.qrc">
-              <normaloff>:/img/load-milonga-button.png</normaloff>:/img/load-milonga-button.png</iconset>
+              <normaloff>:/icons/img/ic_folder_white_24dp_1x.png</normaloff>:/icons/img/ic_folder_white_24dp_1x.png</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -1396,6 +1467,15 @@ QHeaderView{
 	background-color: #2a2a2a;
 	color: white;
  }
+QPushButton:hover{
+  border-radius: 4px;
+  border: 1px solid rgba(160,52,77,70);
+}
+
+QPushButton:pressed{
+background-color:rgba(160,52,77,100);
+}
+
 </string>
             </property>
             <property name="text">
@@ -1403,7 +1483,52 @@ QHeaderView{
             </property>
             <property name="icon">
              <iconset resource="djtango.qrc">
-              <normaloff>:/img/info-button.png</normaloff>:/img/info-button.png</iconset>
+              <normaloff>:/icons/img/ic_info_white_24dp_1x.png</normaloff>:/icons/img/ic_info_white_24dp_1x.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButtonSaveMilongaAs">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
+            <property name="toolTip">
+             <string>save Milanga as</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton {
+	background-color: #2a2a2a;
+	color: white;
+ }
+QPushButton:hover{
+  border-radius: 4px;
+  border: 1px solid rgba(160,52,77,70);
+}
+
+QPushButton:pressed{
+background-color:rgba(160,52,77,100);
+}
+
+</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="djtango.qrc">
+              <normaloff>:/icons/img/ic_save_white_24dp_1x.png</normaloff>:/icons/img/ic_save_white_24dp_1x.png</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -1432,6 +1557,15 @@ QHeaderView{
 	background-color: #2a2a2a;
 	color: white;
  }
+QPushButton:hover{
+  border-radius: 4px;
+  border: 1px solid rgba(160,52,77,70);
+}
+
+QPushButton:pressed{
+background-color:rgba(160,52,77,100);
+}
+
 </string>
             </property>
             <property name="text">
@@ -1439,7 +1573,7 @@ QHeaderView{
             </property>
             <property name="icon">
              <iconset resource="djtango.qrc">
-              <normaloff>:/img/save-milonga-button.png</normaloff>:/img/save-milonga-button.png</iconset>
+              <normaloff>:/icons/img/save-milonga-button.png</normaloff>:/icons/img/save-milonga-button.png</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -1471,6 +1605,15 @@ QHeaderView{
 	background-color: #2a2a2a;
 	color: white;
  }
+QPushButton:hover{
+  border-radius: 4px;
+  border: 1px solid rgba(160,52,77,70);
+}
+
+QPushButton:pressed{
+background-color:rgba(160,52,77,100);
+}
+
 </string>
             </property>
             <property name="text">
@@ -1478,7 +1621,7 @@ QHeaderView{
             </property>
             <property name="icon">
              <iconset resource="djtango.qrc">
-              <normaloff>:/img/trash-button.png</normaloff>:/img/trash-button.png</iconset>
+              <normaloff>:/icons/img/ic_delete_white_24dp_1x.png</normaloff>:/icons/img/ic_delete_white_24dp_1x.png</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -1632,9 +1775,6 @@ QHeaderView{
    <property name="shortcut">
     <string>Ctrl+F11</string>
    </property>
-   <property name="softKeyRole">
-    <enum>QAction::SelectSoftKey</enum>
-   </property>
    <property name="iconVisibleInMenu">
     <bool>true</bool>
    </property>
@@ -1665,13 +1805,6 @@ QHeaderView{
    </property>
   </action>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>Phonon::SeekSlider</class>
-   <extends>QWidget</extends>
-   <header location="global">phonon/seekslider.h</header>
-  </customwidget>
- </customwidgets>
  <resources>
   <include location="djtango.qrc"/>
  </resources>

@@ -2,29 +2,15 @@
 
 # Form implementation generated from reading ui file './gui/UI_infos.ui'
 #
-# Created by: PyQt4 UI code generator 4.11.4
+# Created by: PyQt5 UI code generator 5.5.1
 #
 # WARNING! All changes made in this file will be lost!
 
-from PyQt4 import QtCore, QtGui
-
-try:
-    _fromUtf8 = QtCore.QString.fromUtf8
-except AttributeError:
-    def _fromUtf8(s):
-        return s
-
-try:
-    _encoding = QtGui.QApplication.UnicodeUTF8
-    def _translate(context, text, disambig):
-        return QtGui.QApplication.translate(context, text, disambig, _encoding)
-except AttributeError:
-    def _translate(context, text, disambig):
-        return QtGui.QApplication.translate(context, text, disambig)
+from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_infos(object):
     def setupUi(self, infos):
-        infos.setObjectName(_fromUtf8("infos"))
+        infos.setObjectName("infos")
         infos.setWindowModality(QtCore.Qt.WindowModal)
         infos.resize(714, 40)
         palette = QtGui.QPalette()
@@ -48,13 +34,13 @@ class Ui_infos(object):
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Window, brush)
         infos.setPalette(palette)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(_fromUtf8("img/logo-djtango.svg")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("img/logo-djtango.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         infos.setWindowIcon(icon)
-        self.verticalLayout = QtGui.QVBoxLayout(infos)
-        self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
-        self.horizontalLayout_2 = QtGui.QHBoxLayout()
-        self.horizontalLayout_2.setObjectName(_fromUtf8("horizontalLayout_2"))
-        self.labelInfo = QtGui.QLabel(infos)
+        self.verticalLayout = QtWidgets.QVBoxLayout(infos)
+        self.verticalLayout.setObjectName("verticalLayout")
+        self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+        self.labelInfo = QtWidgets.QLabel(infos)
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
         brush.setStyle(QtCore.Qt.SolidPattern)
@@ -75,12 +61,12 @@ class Ui_infos(object):
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Text, brush)
         self.labelInfo.setPalette(palette)
-        self.labelInfo.setTextFormat(QtCore.Qt.LogText)
+        self.labelInfo.setTextFormat(QtCore.Qt.PlainText)
         self.labelInfo.setAlignment(QtCore.Qt.AlignCenter)
         self.labelInfo.setWordWrap(True)
-        self.labelInfo.setObjectName(_fromUtf8("labelInfo"))
+        self.labelInfo.setObjectName("labelInfo")
         self.horizontalLayout_2.addWidget(self.labelInfo)
-        self.pushButtonClose = QtGui.QPushButton(infos)
+        self.pushButtonClose = QtWidgets.QPushButton(infos)
         self.pushButtonClose.setMaximumSize(QtCore.QSize(20, 20))
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
@@ -138,12 +124,12 @@ class Ui_infos(object):
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Window, brush)
         self.pushButtonClose.setPalette(palette)
-        self.pushButtonClose.setStyleSheet(_fromUtf8("QPushButton {\n"
+        self.pushButtonClose.setStyleSheet("QPushButton {\n"
 "    background-color: #a0344d;\n"
 "    color: white;\n"
 " }\n"
-""))
-        self.pushButtonClose.setObjectName(_fromUtf8("pushButtonClose"))
+"")
+        self.pushButtonClose.setObjectName("pushButtonClose")
         self.horizontalLayout_2.addWidget(self.pushButtonClose)
         self.verticalLayout.addLayout(self.horizontalLayout_2)
 
@@ -151,7 +137,8 @@ class Ui_infos(object):
         QtCore.QMetaObject.connectSlotsByName(infos)
 
     def retranslateUi(self, infos):
-        infos.setWindowTitle(_translate("infos", "Infos", None))
-        self.labelInfo.setText(_translate("infos", "nrusitenr tunriset uniert", None))
-        self.pushButtonClose.setText(_translate("infos", "X", None))
+        _translate = QtCore.QCoreApplication.translate
+        infos.setWindowTitle(_translate("infos", "Infos"))
+        self.labelInfo.setText(_translate("infos", "nrusitenr tunriset uniert"))
+        self.pushButtonClose.setText(_translate("infos", "X"))
 

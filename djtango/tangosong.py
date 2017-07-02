@@ -34,6 +34,12 @@ class TangoSong:
 		#if extractTag:
 			#self.extractID3Tag()
 
+	def titleFields(self):
+		self.artist = self.artist.title()
+		self.title = self.title.title()
+		self.album = self.album.title()
+		self.author = self.author.title()
+
 	def extractAnyTag(self):
 		
 		name, ext = os.path.splitext(self.path)
@@ -46,7 +52,6 @@ class TangoSong:
 					self.extractTags(audio)
 				except:
 					pass
-
 			else:
 				print("the file is a: "+ext)
 				pass
@@ -56,10 +61,10 @@ class TangoSong:
 			print ("not an accepted file extention: "+ext)
 
 	def extractTags(self, audio):
-		self.duration = audio.info.length
+		
 		try:
+			self.duration = audio.info.length
 			self.title = string.capwords(audio["title"][0])
-
 			self.artist = audio["artist"][0]
 			self.album = audio["album"][0]
 			self.type = audio["genre"][0] #TODO: essayer de mapper le genre avec le TYPE défini dans la base. Mettre à Unknow sinon
@@ -73,10 +78,11 @@ class TangoSong:
 
 	def extractID3Tag(self):
 		audio = None
-		audio = MP3(self.path, ID3=EasyID3)
-		self.duration = audio.info.length
+		
 
 		try: 
+			audio = MP3(self.path, ID3=EasyID3)
+			self.duration = audio.info.length
 			self.title = string.capwords(audio["title"][0])
 			self.artist = audio["artist"][0]
 			self.album = audio["album"][0]

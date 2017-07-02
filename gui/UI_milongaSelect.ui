@@ -18,7 +18,7 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>img/logo-djtango.png</normaloff>img/logo-djtango.png</iconset>
+    <normaloff>../../../../../../.designer/backup/img/logo-djtango.png</normaloff>../../../../../../.designer/backup/img/logo-djtango.png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">QDialog{

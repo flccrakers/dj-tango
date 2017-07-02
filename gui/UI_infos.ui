@@ -157,7 +157,7 @@
         <string>nrusitenr tunriset uniert</string>
        </property>
        <property name="textFormat">
-        <enum>Qt::LogText</enum>
+        <enum>Qt::PlainText</enum>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>

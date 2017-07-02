@@ -3,8 +3,9 @@
 
 
 from djtango.data import djDataConnection
-import unicodedata, re
+import unicodedata, re, os
 p = re.compile('(\s\(2\)| \(3\)| \(4\)| \(5\))')
+djhome = os.path.join(os.path.expanduser("~"), ".djtango")
 
 def remove_accents(input_str):
     nfkd_form = unicodedata.normalize('NFKD', input_str)
@@ -24,7 +25,7 @@ def normalize(tango):
 	return(tango)
 
 
-data = djDataConnection()
+data = djDataConnection(djhome)
 tangos = data.getAllTangInTangoDatabase()
 
 for tango in tangos:

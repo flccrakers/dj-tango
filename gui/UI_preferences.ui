@@ -143,13 +143,28 @@
    </item>
    <item>
     <widget class="QCheckBox" name="checkBoxWriteTags">
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
+     </property>
      <property name="toolTip">
       <string>Each time you will change a data, the tag of the file will be updated, if the file format allow it</string>
      </property>
      <property name="styleSheet">
       <string notr="true">QCheckBox{
-	color:red;
+	border: none;
+   color: white;
 	font-size: 14px;
+}
+
+QCheckBox::indicator:unchecked {
+	background-color: rgb(42,42,42);   	
+	border: 1px solid white;
+	image: url(../gui/img/checkbox_checked.png);
+}
+
+QCheckBox::indicator:checked {
+	background-color: rgb(160,52,77);  	
+  	border: 1px solid white;  
 }</string>
      </property>
      <property name="text">
@@ -159,8 +174,28 @@
    </item>
    <item>
     <widget class="QCheckBox" name="checkBoxNormalize">
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
+     </property>
      <property name="toolTip">
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If you check this, eachtime you will make a change on one of your file, the file name and path will be update to respcet the following rules : &lt;/p&gt;&lt;p&gt;YYYY&lt;span style=&quot; font-weight:600;&quot;&gt;-&lt;/span&gt;Name of song&lt;span style=&quot; font-weight:600;&quot;&gt;-&lt;/span&gt;Artist&lt;span style=&quot; font-weight:600;&quot;&gt;-&lt;/span&gt;Album&lt;span style=&quot; font-weight:600;&quot;&gt;-&lt;/span&gt;Type.ext&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#ff0004;&quot;&gt;Be aware that this will completly change the organisation of your directory !&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QCheckBox{
+	border: none;
+   color: white;
+	font-size: 14px;
+}
+
+QCheckBox::indicator:unchecked {
+	background-color: rgb(42,42,42);   	
+	border: 1px solid white;
+}
+
+QCheckBox::indicator:checked {
+	background-color: rgb(160,52,77);  	
+  	border: 1px solid white;  
+}</string>
      </property>
      <property name="text">
       <string>Normalize file name and dir</string>

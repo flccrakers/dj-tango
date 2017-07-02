@@ -7,6 +7,7 @@ from djtango.UI_infos import Ui_infos
 from djtango.UI_preferences import Ui_preferences
 from djtango.UI_selectmilonga import Ui_selectmilonga
 from djtango.UI_milongaName import Ui_DialogMilongaName
+from djtango.UI_askDelete import Ui_DialogAskDelete
 from djtango.UI_sideDisplay import Ui_sideDisplay
 from djtango.UI_tapbpm import Ui_tapDialog
 from djtango.UI_infosMilonga import Ui_infosMilonga
@@ -17,31 +18,42 @@ from djtango.data import djDataConnection
 from djtango.circularprogressbar import QRoundProgressBar
 from djtango import tableModels
 from djtango import utils
+from djtango.dirscanningthread import dirScan
 
 
-from PyQt4.Qt import QMainWindow
-from PyQt4.Qt import QApplication
-from PyQt4.Qt import QDesktopWidget
-from PyQt4.Qt import SIGNAL
-from PyQt4.Qt import QFileDialog
-from PyQt4.Qt import QIcon
-from PyQt4.Qt import QAction
-from PyQt4.Qt import QAbstractTableModel
-from PyQt4.Qt import QHeaderView
-from PyQt4.Qt import QColorDialog
-from PyQt4.Qt import QSortFilterProxyModel
+from PyQt5.QtWidgets import QMainWindow
+from PyQt5.QtWidgets import QProgressDialog
+from PyQt5.QtWidgets import QShortcut
+from PyQt5.QtWidgets import QWidget
+from PyQt5.QtWidgets import QDialog
+from PyQt5.QtWidgets import QMenu
+from PyQt5.QtWidgets import QMessageBox
+from PyQt5.Qt import QApplication
+#from PyQt5.Qt import QList
+from PyQt5.Qt import QDesktopWidget
+from PyQt5.Qt import QThread
+from PyQt5.Qt import pyqtSignal
+#from PyQt5.Qt import SIGNAL
+from PyQt5.Qt import QFileDialog
+from PyQt5.Qt import QIcon
+from PyQt5.Qt import QAction
+from PyQt5.Qt import QAbstractTableModel
+from PyQt5.Qt import QAbstractItemView
+from PyQt5.Qt import QHeaderView
+from PyQt5.Qt import QColorDialog
+from PyQt5.Qt import QSortFilterProxyModel
+from mutagen.mp3 import MP3
+
+from PyQt5.QtMultimedia import (QMediaPlayer, QMediaContent)
 
 
-from PyQt4.QtCore import * 
-from PyQt4.QtGui import * 
-from PyQt4 import QtCore, QtGui, phonon
-#from PyQt4 import phonon
+from PyQt5.QtCore import * 
+from PyQt5.QtGui import *
+
+from PyQt5 import QtCore, QtGui
 
 
-from PyQt4.phonon import Phonon
-
-
-import os, sys, time, threading, operator, re
+import os, sys, time, threading, operator, re, audioread, platform 
 
 try:
     _fromUtf8 =QtCore.QString.fromUtf8
@@ -86,7 +98,9 @@ class MyTimer:
     def stop(self): 
         self._timer.cancel() 
 
-class AudioPlayerDialog(QMainWindow):
+class AudioPlayerDialog(QMainWindow, QObject):
+    tangoListUpdated = pyqtSignal(dirSong)
+    workingOnNewfileStatus = pyqtSignal(bool)
     def __init__(self):
         QMainWindow.__init__(self)
 
@@ -130,11 +144,12 @@ class AudioPlayerDialog(QMainWindow):
 
 
 
-        self.mediaObj = phonon.Phonon.MediaObject(self)
-        self.mediaObj.setTickInterval(250)
-        self.audioSink = Phonon.AudioOutput(Phonon.MusicCategory, self)
-        self.audioSink.setVolume(1)
-        self.audioPath = Phonon.createPath(self.mediaObj, self.audioSink)
+        #self.mediaObj = phonon.Phonon.MediaObject(self)
+        self.player = QMediaPlayer()
+        #self.mediaObj.setTickInterval(250)
+        #self.audioSink = Phonon.AudioOutput(Phonon.MusicCategory, self)
+        #self.audioSink.setVolume(1)
+        #self.audioPath = Phonon.createPath(self.mediaObj, self.audioSink)
         self.firstTime = False
 
 
@@ -191,50 +206,84 @@ class AudioPlayerDialog(QMainWindow):
         self.FadOutTime = prop['cortinaDuration']*1000 #in ms, to get form the database
         self.writeTag =prop['writeTag']
         self.normalize = prop['normalize']
-        self.stepFadOut = self.durationFadOut / self.mediaObj.tickInterval()
+        self.stepFadOut = self.durationFadOut / self.player.notifyInterval()
         self.duration = 0
+
+        print("AUDIO PATH IN INITIALIZING DATA : "+self.audioPath)
+
+
+
+
+        palette = QtGui.QPalette()
+        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.Base, brush)
+        brush = QtGui.QBrush(QtGui.QColor(160, 52, 77, 150))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.Window, brush)
+        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.Base, brush)
+        brush = QtGui.QBrush(QtGui.QColor(160, 52, 77, 150))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.Window, brush)
+        brush = QtGui.QBrush(QtGui.QColor(160, 52, 77, 150))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Base, brush)
+        brush = QtGui.QBrush(QtGui.QColor(160, 52, 77, 150))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Window, brush)
+
+
+
 
         if self.firstTime:
             introDialog = QMessageBox()
+            #introDialog.setPalette(palette)
+            introDialog.setStyleSheet("QDialog{\n""background-color: rgb(42,42,42); color:white\n""}QPushButton {\n""background-color: #2a2a2a;\n""color: white;\noutline: none\n""}QLabel {\n""background-color: #2a2a2a;\n""color: white;\n""}")
+            introDialog.setWindowTitle("First time user ?")
             #introDialog = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel);
             introDialog.setText("Hi, I'm DJ-Tango and it appear that is the first time you use me. \nPlease select the directory where all your Tango are stored.");
             introDialog.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel);
             #introDialog.setModal(True)
             introDialog.setDefaultButton(QMessageBox.Ok);
+            #introDialog.button(QMessageBox.Cancel).setDefault(False)
+            #for button in introDialog.StandardButtons():
+            #    button.setFocusPolicy(setFocusPolicy(QtCore.Qt.NoFocus))
             #introDialog.
             #res = introDialog.exec()
             #print (res)
             if introDialog.exec() == QMessageBox.Ok:
                 self.audioPath = QFileDialog.getExistingDirectory(self, "Open Tango directory", os.path.expanduser('~'), QFileDialog.ShowDirsOnly | QFileDialog.DontResolveSymlinks);
+                self.djData.updateSongPath(self.audioPath)
                 time.sleep(0.3)
             else:
                 sys.exit(0)
-        progress = QProgressDialog ("Scanning dir and analyzing the songs...", "Abort ", 0, 100, self)
-        progress.setWindowModality(Qt.WindowModal);
-        self._tangoList = dirSong(self.audioPath, self.firstTime, progress)
-        if self.firstTime:
-
-            print ("loading the data, please be patient")
-            progress = QProgressDialog ("Inporting Tangos, please be patient...", "Abort Import", 0, len(self._tangoList.tangos), self);
-            progress.setWindowModality(Qt.WindowModal);
-            time.sleep(0.3)
-            count = 0
-            for key in self._tangoList.tangos.keys():
-                count+=1
-                progress.setValue(count)
-                head, tail = os.path.split(self._tangoList.tangos[key].path)
-                progress.setLabelText("Inporting Tangos, please be patient...\n"+str(count)+" / "+str(len(self._tangoList.tangos))+"\n"+tail)
-                #print(count)
-                self.djData.insertTango(self._tangoList.tangos[key])
-                if progress.wasCanceled():
-                    break;
-            progress.setValue(len(self._tangoList.tangos))
-        self.firstTime = False
-        self._tangoList.loadTangos(self.djData.getAllTangos())
+        progressBar = QProgressDialog ("Scanning dir and analyzing the songs...", "Abort", 0, 100, self)
+        progressBar.setWindowTitle("Inporting Tangos in the database and set tags")
+        progressBar.setWindowModality(Qt.WindowModal);
+        progressBar.setStyleSheet(
+            "QDialog{\n""background-color: rgb(42,42,42); color:white\n""}"
+            "QPushButton {\n""background-color: #2a2a2a;\n""color: white;\noutline: none\n""}"
+            "QLabel {\n""background-color: #2a2a2a;\n""color: white;\n""}"
+            "QProgressBar {\n""border: 2px solid grey; border-radius: 5px;  background-color: #2a2a2a; color: white; text-align: center""}"
+            "QProgressBar::chunk {""background-color: #a0344d;" "width: 20px;""}")
+        progressBar.reset()
+        self._tangoList = dirSong(self.audioPath, self.firstTime, progressBar, self.djData)
+        progressBar.reset()
+        #self.firstTime = False
+        if not self.firstTime:
+            self._tangoList.loadTangos(self.djData.getAllTangos())
 
         self.curTango = None
         self.scanningDir = False
-        self.dirthread = MyTimer(20, self.scannDir, ["test"]) 
+        #self.dirthread = MyTimer(20, self.scannDir, ["test"]) 
+        
+                
+        self.scanner = dirScan(self._tangoList, self.djData)
+        self.dirthread2 = QThread()
+        self.scanner.moveToThread(self.dirthread2)
+        
 
         # Create self._dialog instance and call
         # necessary methods to create a user interface
@@ -243,8 +292,48 @@ class AudioPlayerDialog(QMainWindow):
         # Connect slots with signals.
         self._connect()
 
+        # Create the shortcuts
+        self._createShorcuts()
+
+
+        #launch the worer threads
+        print("will start dirthread2")
+        self.dirthread2.start()
+        
+        
         # Show the Audio player.
         self.show()
+
+    def _createShorcuts(self):
+        print("creating shortcuts")
+        _translate = QtCore.QCoreApplication.translate
+        
+        
+        playSourceOnEnter = QShortcut(self._dialog.milongaSource)
+        playSourceOnEnter.setContext(Qt.WidgetShortcut)
+        playSourceOnEnter.setKey(QtCore.Qt.Key_Return)
+        playSourceOnEnter.activated.connect(self.playSelectedSource)
+        #playSourceOnEnter = QShortcut(QKeySequence(QKeySequence.InsertParagraphSeparator), self._dialog.milongaSource);
+        #playSourceOnEnter.setContext(Qt.WidgetShortcut)
+        #playSourceOnEnter.activated.connect(self.playSelectedSource)
+
+        #playSourceOnSpace = QShortcut(QKeySequence(QKeySequence.InsertParagraphSeparator), self._dialog.milongaSource);
+        #playSourceOnSpace.setContext(Qt.WidgetShortcut)
+        #playSourceOnSpace.activated.connect(self.playSelectedSource)
+
+        displaySideWindowOnCrtlF11 = QShortcut(self)
+        displaySideWindowOnCrtlF11.setContext(Qt.WidgetShortcut)
+        displaySideWindowOnCrtlF11.setKey(QtCore.Qt.CTRL + QtCore.Qt.Key_F11)
+        displaySideWindowOnCrtlF11.activated.connect(self._handelDisplaySideScreen)
+
+        fullScreenOnF11 = QShortcut(self)
+        fullScreenOnF11.setContext(Qt.WidgetShortcut)
+        fullScreenOnF11.setKey(QtCore.Qt.Key_F11)
+        fullScreenOnF11.activated.connect(self._handelFullScren)
+
+        #fullScreenOnF11 = QShortcut(QKeySequence(Qt.Key_F11))
+        #self.shortcut.activated.connect(self._handelFullScren)
+
 
 
     def scannDir(unstr, nimp):
@@ -281,7 +370,7 @@ class AudioPlayerDialog(QMainWindow):
 
     def _createUI(self):
         """
-        Create self._dialog using the class Ui_VideoPlayerDialog.
+        Create self._dialog using the class Ui_AudioPlayerDialog.
         Tweak some UI elements
         """
         self._dialog = Ui_AudioPlayerDialog()
@@ -290,7 +379,7 @@ class AudioPlayerDialog(QMainWindow):
         self.playIcon= QIcon("./djtango/img/play-button.png")
         self.pauseIcon= QIcon("./djtango/img/pause-button.png")
 
-        self._dialog.seekSlider.setMediaObject(self.mediaObj)
+        #self._dialog.seekSlider.setMediaObject(self.mediaObj)
         #self._dialog.volumeSlider.setAudioOutput(self.audioSink)
 
         self.colorDialog = QColorDialog()
@@ -315,34 +404,21 @@ class AudioPlayerDialog(QMainWindow):
         self.sourceProxyModel = tableModels.sourceFilterProxyModel(self)
         self.sourceProxyModel.setSourceModel(self.sourceModel)
         self._dialog.milongaSource.setModel(self.sourceProxyModel)
-        self._dialog.milongaSource.horizontalHeader().setResizeMode(QHeaderView.Fixed)
+        self._dialog.milongaSource.horizontalHeader().setSectionResizeMode(QHeaderView.Fixed)
        
         self.destModel = tableModels.milongaDest(self, [], libraryHeader,self.TYPE)
         self._dialog.milongaDest.setModel(self.destModel)
-        self._dialog.milongaDest.horizontalHeader().setResizeMode(QHeaderView.Stretch)
+        self._dialog.milongaDest.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
 
-        self.shortcut = QShortcut(QKeySequence(QKeySequence.InsertParagraphSeparator), self._dialog.milongaSource);
-        self.shortcut.setContext(Qt.WidgetShortcut)
-        #self.connect(shortcut, SIGNAL(activated()), receiver, SLOT(self.playSelectedSource));
-        self.shortcut.activated.connect(self.playSelectedSource)
-
+        
+        self._dialog.labelsongNB_source.setText(str(self.sourceProxyModel.rowCount(QModelIndex()))+" song(s)");
 
         #create windows for tap counting
         
         self.tapWindow=QWidget()
         self.tapContent=Ui_tapDialog()
         self.tapContent.setupUi(self.tapWindow)
-        """
-        self.tapWindow=QWidget()
-        self.tapContent=Ui_Form()
-        self.tapContent.setupUi(self.tapWindow)
-        """
-
-        #kpe=KeyPressEater()
-        #self.tapWindow.installEventFilter(kpe)
-        #self.tapContent.label.installEventFilter(kpe)
-        #self.tapContent.lcdNumber.installEventFilter(kpe)
-        
+                
 
         #create windows for properties edition      
         self.propWindow=QWidget()
@@ -359,7 +435,10 @@ class AudioPlayerDialog(QMainWindow):
         self.sideContent.PBLayout.addWidget(self.bar)
         #self.sideContent.lcdNumber.setVisible(True)
         #self.sideWindow.grabShortcut(QKeySequence(tr("Ctrl+F11")),  Qt.WidgetShortcut)
-        self.shortcut = QShortcut(QKeySequence(Qt.CTRL + Qt.Key_F11), self.sideWindow)
+        
+
+
+        #self.shortcut
         
 
 
@@ -385,6 +464,10 @@ class AudioPlayerDialog(QMainWindow):
         self.milongaNameContent = Ui_DialogMilongaName()
         self.milongaNameContent.setupUi(self.milongaNameWindow)
 
+        self.milongaAskDelete = QDialog()
+        self.milongaAskDeleteContent = Ui_DialogAskDelete()
+        self.milongaAskDeleteContent.setupUi(self.milongaAskDelete)
+
 
 
         #create the preferences window
@@ -403,56 +486,61 @@ class AudioPlayerDialog(QMainWindow):
             B = self.TYPE[i][4]
             T = self.TYPE[i][5]
             #print (T)
-            self.colorDialog.setCustomColor(i, QColor(R,G,B,T).rgba())
+            self.colorDialog.setCustomColor(i, QColor(R,G,B,T))
 
         self.setListOfType()
         self.setListOfArtist()
         self.setListOfAlbum()
-
-        
-
-        #self.infoWindow.show()
-
-        #a = MyTimer(1.0, affiche, ["MyTimer"]) 
-        self.dirthread.start()
+       
 
 
     def closeEvent(self, evt):
         """
         Overrides QMainWindow.closeEvent.
         """
-        if self.mediaObj:
-            self.mediaObj.stop()
+        #if self.mediaObj:
+        #    self.mediaObj.stop()
+        self.player.stop()
 
-        self.mediaObj = None
+        #self.mediaObj = None
         #self._clearEffectsObjects()
         self.infoWindow.close()
         self.prefWindow.close()
         self.sideWindow.close()
-        self.dirthread.stop()
+        #self.dirthread.stop()
+        self.dirthread2.terminate()
 
         QMainWindow.closeEvent(self, evt)
 
-   
+    @pyqtSlot(list, list)
+    def done(self, datas, tangos):
+
+        #print ("IN DONE")
+        #print (len(datas))
+        self.workingOnNewfileStatus.emit(True)
+        #datas = newfiles[0]
+        #tangos = newfiles[1]
+        for tango in tangos:
+            self._tangoList.addTango(tango) #add a Tango with only the path
+        self.sourceModel.addNewData(datas) #update the table
+        self._showInfo(str(len(tangos))+" song has been added")
+        self.workingOnNewfileStatus.emit(False)
+
     def _connect(self):
         """
         Connect slots with signals.
         """
-        self.connect(self._dialog.actionPreferences,
-                     SIGNAL("triggered()"),
-                     self._handelPrefClose)
+        #self.dirthread2.finished.connect(self.done)
+        self.dirthread2.started.connect(self.scanner.workOut)
+        self.scanner.scanned.connect(self.done)
+                
+        self._dialog.actionPreferences.triggered.connect(self._handelPrefClose)
+        
+        self._dialog.actionFullscreen.triggered.connect(self._handelFullScren)
 
-        self.connect(self.shortcut,
-            SIGNAL("activated()"),
-            self._handelFullScren)
+        self._dialog.actionDisplay_side_screen.setChecked(False)
+        self._dialog.actionDisplay_side_screen.triggered.connect(self._handelDisplaySideScreen)
 
-        self.connect(self._dialog.actionFullscreen,
-            SIGNAL("triggered()"),
-            self._handelFullScren)
-
-        self.connect(self._dialog.actionDisplay_side_screen,
-            SIGNAL("triggered()"),
-            self._handelDisplaySideScreen)
 
         #self.connect(self._dialog.fileExitAction,
         #             SIGNAL("triggered()"),
@@ -484,29 +572,25 @@ class AudioPlayerDialog(QMainWindow):
         #self.prefContent.lineEditSongDir.cursorPositionChanged.connect(self.openFileDialog)
         self.prefContent.pushButtonSelectPath.clicked.connect(self.openFileDialog)
         #self.colorDialog 
-        self.connect(self.colorDialog, SIGNAL("accepted()"), self._selectTangoColor)
+
+        self.colorDialog.accepted.connect(self._selectTangoColor)
+        #self.connect(self.colorDialog, SIGNAL("accepted()"), self._selectTangoColor)
 
         #self.connect(self.prefContent.closeButtonPref, SIGNAL("clicked()"), self._handelPrefClose)
 
-        self.connect(self.infothread, SIGNAL("finished()"), self.closeInfo)
-        self.connect(self.infothread, SIGNAL("terminated()"), self.closeInfo)
+        self.infothread.finished.connect(self.closeInfo)
+        #self.infothread.terminated.connect(self.closeIngo)
+        #self.connect(self.infothread, SIGNAL("finished()"), self.closeInfo)
+        #self.connect(self.infothread, SIGNAL("terminated()"), self.closeInfo)
 
 
-        self.connect(self._dialog.playToolButton,
-                     SIGNAL("clicked()"),
-                     self._handelPlayPause)
-
-        #self.connect(self._dialog.lineEditFilter,
-        #    SIGNAL("cursorPositionChanged()"),
-        #    self._handelFilterChange)
+        self._dialog.playToolButton.clicked.connect(self._handelPlayPause)
+        
         self._dialog.lineEditFilter.returnPressed.connect(self._handelFilterChange)
+        self._dialog.pushButtonRandom.clicked.connect(self.sourceModel.randomize)
 
 
-        #self.connect(self._dialog.lineEditFilter,
-        #							SIGNAL("tabPressed"),
-        #							self._handelFilter)
 
-        #self.connect(self._dialog.filterButton,SIGNAL("clicked()"), self._handelFilter)
         self._dialog.milongaDest.pressed.connect(self.destModel.pressed)
 
         self.infoContent.pushButtonClose.clicked.connect(self.closeInfo)
@@ -517,51 +601,142 @@ class AudioPlayerDialog(QMainWindow):
 
         self.detailsContent.previousButton.clicked.connect(self._handlePropWindowPrevious)
 
-        self.mediaObj.tick.connect(self._handleTick)
+        #self.mediaObj.tick.connect(self._handleTick)
+        self.player.durationChanged.connect(self.durationChanged)
+        self.player.positionChanged.connect(self.positionChanged)
+        self.player.stateChanged.connect(self._handelStateChanged)
 
-        self.connect(self._dialog.pushButtonHideSource, SIGNAL("clicked()"), self._handelHideSource)
-        self.connect(self._dialog.pushButtonHideDest, SIGNAL("clicked()"), self._handelHideDest)
+        self._dialog.songSlider.sliderMoved.connect(self.seek)
+        #self._dialog.songSlider.actionTriggered.connect(self.sliderAction)
 
-        
+        self._dialog.songSlider.valueChanged.connect(self.sliderValueChanged)
 
-
+        self._dialog.pushButtonHideSource.clicked.connect(self._handelHideSource)
+        self._dialog.pushButtonHideDest.clicked.connect(self._handelHideDest)
 
         self._dialog.milongaSource.doubleClicked.connect(self._libraryClicked)
         self._dialog.milongaDest.doubleClicked.connect(self._destLibraryClicked)
 
-        self.mediaObj.stateChanged.connect(self._handleStateChanged)
+        #self.mediaObj.stateChanged.connect(self._handleStateChanged)
 
         #the context menu for the library
-        #self._dialog.tableView.customContextMenuRequested.connect(self.popupLibrary)
         self._dialog.milongaSource.customContextMenuRequested.connect(self.popupLibrary)
         self._dialog.milongaDest.customContextMenuRequested.connect(self.popupMilonga)
 
-        self.connect(self._dialog.stopToolButton,
-        	SIGNAL("clicked()"),
-        	self._stopMedia)
+        self._dialog.stopToolButton.clicked.connect(self._stopMedia)
 
         self._dialog.comboBoxArtist.currentIndexChanged.connect(self._handelFilterChange)
         self._dialog.comboBoxAlbum.currentIndexChanged.connect(self._handelFilterChange)
         self._dialog.comboBoxGenre.currentIndexChanged.connect(self._handelFilterChange)
         self._dialog.pushButtonClearFilter.clicked.connect(self._clearFilter)
-        self.connect(self._dialog.pushButtonSaveMilonga, SIGNAL("clicked()"), self._saveMilonga)
-        self.connect(self._dialog.pushButtonDeleteMilonga, SIGNAL("clicked()"), self._deleteMilonga)
-        self.connect(self._dialog.pushButtonLoadMilonga, SIGNAL("clicked()"), self._loadMilonga)
-        self.connect(self._dialog.pushButtonMilongaClear, SIGNAL("clicked()"), self._clearMilonga)
-        
+
+        self._dialog.pushButtonSaveMilonga.clicked.connect(self._saveMilonga)
+        self._dialog.pushButtonSaveMilongaAs.clicked.connect(self._saveMilongaAs)
+        self._dialog.pushButtonDeleteMilonga.clicked.connect(self._deleteMilonga)
+        self._dialog.pushButtonLoadMilonga.clicked.connect(self._loadMilonga)
+        self._dialog.pushButtonMilongaClear.clicked.connect(self._clearMilonga)
+       
         self._dialog.pushButtonInfoMilonga.clicked.connect(self._showInfoMilonga)
 
-        #self.infoMilongaContent.labelInfo.clicked.connect(self.closeInfoMilonga)
-        #self.connect(self.infoMilongaWindow, SIGNAL("clicked()"), self.closeInfoMilonga)
         self.infoMilongaContent.pushButtonClose.clicked.connect(self.closeInfoMilonga)
         
-
-
-
-
-        #self.connect(self.selectMilongaListContent.listWidgetMilongas, SIGNAL("doubleClicked()"), self._doubleClickedMilongaSelect)
         self.selectMilongaListContent.listWidgetMilongas.doubleClicked.connect(self._doubleClickedMilongaSelect)
 
+
+
+    def _handelStateChanged(self):
+
+        #print("state: "+str(self.player.state()))
+        if self.player.state() == QMediaPlayer.PlayingState:
+            self._isClicked = False
+        elif self.player.state() == QMediaPlayer.StoppedState:
+            if not self._isClicked and self._isPlaying :
+                #print("will play the next song")
+                #self.clearPlayingCursor()
+
+                if self._isMilongaPlaying:
+                    self.playNextMilongaSong()
+                else:
+                    self.playNextLibrarySong()
+    
+
+    def durationChanged(self, duration):
+        self.bar.setRange(0, duration)
+        duration/=1000
+        print(str(duration*1000)+" "+str(self.curTango.duration))
+
+        self.duration = duration
+
+
+        self._dialog.songSlider.setMaximum(duration)
+        if (not self.curTango.duration == duration*1000) and (duration > 0):
+            #print ("duration: "+str(self.curTango.duration)+" time in mediaObj: "+str(self.mediaObj.totalTime()))
+            self.curTango.duration = duration*1000
+            
+
+            if self._isMilongaPlaying:
+                indexes = self._dialog.milongaDest.selectionModel().selectedRows()
+                tangoID = self.sourceProxyModel.data(indexes[0], Qt.DisplayRole)
+            else:
+                indexes = self._dialog.milongaSource.selectionModel().selectedRows()
+                tangoID = self.sourceProxyModel.data(indexes[0], Qt.DisplayRole)
+            
+                data = self._tangoList.tangos[tangoID].list()
+                #data[8] = utils.msecToms(data[8])
+                count = 0
+                for cdata in data:
+                    index = self.sourceProxyModel.index(indexes[0].row(),count)
+                    self.sourceProxyModel.setData(index, cdata, Qt.EditRole)
+                    count+=1
+
+            self.djData.updateTango(self.curTango)
+
+
+
+
+    def positionChanged(self, progress):
+        progress /= 1000
+        if not self._dialog.songSlider.isSliderDown():
+            self._dialog.songSlider.setValue(progress)
+            self._dialog.timeLabel.setText(str(utils.msecToms(progress*1000))+" / "+str(utils.msecToms(self.duration*1000)))
+
+        if not self.curTango.type == 4 or not self.volumeSetToInitial:
+            self.player.setVolume(100)
+            #self.audioSink.setVolume(1.0)
+            self.volumeSetToInitial = True 
+            self.bar.setValue(self.duration*1000-progress*1000)
+        elif self.curTango.type == 4:
+            #print("progress: "+str(progress)+" FadOutTime: "+str(self.FadOutTime))
+            #print("volume: "+str(self.player.volume())) 
+            self.bar.setRange(0, self.FadOutTime) #set the maximum value of the circular progress bar
+            self.bar.setValue(self.FadOutTime-progress*1000)
+            if (progress*1000) >= (self.FadOutTime - self.durationFadOut):
+                if self.player.volume() > 1:
+                    self.player.setVolume(self.player.volume()-100/self.stepFadOut)
+                #print ("lowering the volume "+str(self.player.volume())+" currentTime: "+str(progress*1000) + " FadOutTime: "+str(self.FadOutTime))
+                if self.player.volume() <= 1 and progress*1000>=self.FadOutTime:
+                    #print("I'm stopping the Cortina")
+                    self.volumeSetToInitial = False
+                    self.player.stop()
+
+    def seek(self, seconds):
+            self.player.setPosition(seconds * 1000)
+
+    def sliderValueChanged(self, newpos):
+        btns = QApplication.mouseButtons();
+        localMousePos = self._dialog.songSlider.mapFromGlobal(QCursor.pos())
+
+
+        clickOnSlider = btns == Qt.LeftButton and (localMousePos.x() >=0 and localMousePos.y() >=0 and localMousePos.x() < self._dialog.songSlider.size().width() and localMousePos.y() < self._dialog.songSlider.size().height())
+        #print(clickOnSlider)
+        if clickOnSlider:
+            posRatio = localMousePos.x()/self._dialog.songSlider.size().width()
+            slideRange = self._dialog.songSlider.maximum() - self._dialog.songSlider.minimum()
+            sliderPosUnderMouse = self._dialog.songSlider.minimum() + slideRange*posRatio
+            if not sliderPosUnderMouse == newpos:
+                self._dialog.songSlider.setValue(sliderPosUnderMouse)
+                self.seek(sliderPosUnderMouse)
+        
     def resizeHeaderSource(self ,event):
         sizeList={}
         sizeList['#'] = 50
@@ -610,14 +785,15 @@ class AudioPlayerDialog(QMainWindow):
         self._dialog.milongaSource.setSelectionMode(QAbstractItemView.NoSelection)
         pass
         
-
     def _handlePropWindowClose(self):
         #print ("about to close the window")
         self.updateTangoSong()
+        self.TangoBeforeChange = self._tangoList.tangos[self.curTangoEditing]
         self.propWindow.close()
         self._dialog.milongaSource.setSortingEnabled(True)
         self.enableTableView()
         self.scanningDir = False
+        self._dialog.labelsongNB_source.setText(str(self.sourceProxyModel.rowCount(QModelIndex()))+" song(s)");
         #self._dialog.milongaSource.setSelectionMode(QAbstractItemView.ExtendedSelection)
         #self._dialog.milongaSource.setEditTriggers(QAbstractItemView.AllEditTriggers)
         #self.setListOfArtist()
@@ -627,6 +803,7 @@ class AudioPlayerDialog(QMainWindow):
     def _handlePropWindowNext(self):
         self.enableTableView()
         self.updateTangoSong()
+        self.TangoBeforeChange = self._tangoList.tangos[self.curTangoEditing]
 
         #print ("current row: "+str(self.curLibraryRow+1)+" total row: "+str(self.sourceProxyModel.rowCount(self))) 
         if self.curLibraryRow+1 < self.sourceProxyModel.rowCount(QModelIndex()):
@@ -635,10 +812,12 @@ class AudioPlayerDialog(QMainWindow):
             self.curTangoEditing = self.sourceProxyModel.data(index, Qt.DisplayRole)
             self._dialog.milongaSource.selectRow(self.curLibraryRow)
             self.updateTangoProp()
+        self._dialog.labelsongNB_source.setText(str(self.sourceProxyModel.rowCount(QModelIndex()))+" song(s)");
         self.disabledTableView()
         self.scanningDir = True
         
-    
+
+
     def _handlePropWindowPrevious(self):
         self.enableTableView()
         self.updateTangoSong()
@@ -650,6 +829,7 @@ class AudioPlayerDialog(QMainWindow):
             self.updateTangoProp()
         self.disabledTableView()
         self.scanningDir = True
+        self._dialog.labelsongNB_source.setText(str(self.sourceProxyModel.rowCount(QModelIndex()))+" song(s)");
 
     def deleteTangos(self, removeFile=False):
         indexes = self._dialog.milongaSource.selectionModel().selectedRows()
@@ -668,7 +848,9 @@ class AudioPlayerDialog(QMainWindow):
 
             #delete tango in _tangoList.tangos
             if curTangoID in self._tangoList.tangos.keys():
-                del self._tangoList.tangos[curTangoID]
+                
+                self._tangoList.removeTango(curTangoID)
+                self.tangoListUpdated.emit(self._tangoList)
                 #print ("tango removed from tangoList")
             
 
@@ -678,7 +860,18 @@ class AudioPlayerDialog(QMainWindow):
             tango = self._tangoList.tangos[key]
             data.append(tango.list())
         self.sourceModel.changeData(data)
+        self._dialog.labelsongNB_source.setText(str(self.sourceProxyModel.rowCount(QModelIndex()))+" song(s)");
+        #self._dialog.labelsongNB_source.setText(self._dialog.milongaSource.sourceData.rowCount());
         #self.sourceModel.changeData(data)
+
+    def handelOpenPropWidow(self):
+        self.disabledTableView()
+        self._dialog.milongaSource.setSortingEnabled(False)
+        self.updateTangoProp()
+        self.TangoBeforeChange = self._tangoList.tangos[self.curTangoEditing]
+        self.propWindow.show()
+        self.scanningDir = True
+
     def popupLibrary(self, pos):
         menu = QMenu()
         detailsAction = menu.addAction("Details")
@@ -688,14 +881,10 @@ class AudioPlayerDialog(QMainWindow):
         writeTagAction = menu.addAction("Write the tags")
         mp3infos = menu.addAction("Show mp3 infos")
         tapbpm = menu.addAction("Set the bpm by taping the tempo of the song")
+        updateTangoDurations = menu.addAction("update the Tango duration")
         action = menu.exec_(self._dialog.milongaSource.viewport().mapToGlobal(pos))
         if action == detailsAction:
-            self.disabledTableView()
-            self._dialog.milongaSource.setSortingEnabled(False)
-            #self._dialog.milongaSource.setEditTriggers(QAbstractItemView.NoEditTriggers)
-            self.updateTangoProp()
-            self.propWindow.show()
-            self.scanningDir = True
+            self.handelOpenPropWidow()
         elif action == deleteAction:
             #print("I will delete selected tangos and remove the file")
             self.deleteTangos(True)
@@ -720,6 +909,8 @@ class AudioPlayerDialog(QMainWindow):
             os.system("mp3info2 \""+str(self._tangoList.tangos[self.curTangoEditing].path)+"\" &")
         elif action == tapbpm:
             self._handelBpmTappingAction()
+        elif action == updateTangoDurations:
+            self.updateDuration()
     
     def _handelBpmTappingAction(self):
         indexes = self._dialog.milongaSource.selectionModel().selectedRows()
@@ -867,6 +1058,7 @@ class AudioPlayerDialog(QMainWindow):
             self.detailsContent.previousButton.setVisible(True)
             
             self.curTangoEditing = self.sourceProxyModel.data(indexes[0], Qt.DisplayRole)
+
             self.curLibraryRow = indexes[0].row()
             self.detailsContent.textPath.setText(self._tangoList.tangos[self.curTangoEditing].path)
             if self.detailsContent.checkBoxPlayMusic.isChecked():
@@ -940,9 +1132,31 @@ class AudioPlayerDialog(QMainWindow):
             else:
                 sameFieldValue['title'] = False
         return sameFieldValue
+    # check if the tango has change or not
+    def isSomethingChanged(self):
+        ret = True
+        if (self.TangoBeforeChange.artist == self.detailsContent.lineEditArtist.text() and
+            self.TangoBeforeChange.title == self.detailsContent.lineEditTitle.text() and
+            self.TangoBeforeChange.year == self.detailsContent.spinBoxYear.value() and
+            self.TangoBeforeChange.type == self.detailsContent.comboBoxTangoType.currentIndex()+1 and
+            self.TangoBeforeChange.album == self.detailsContent.lineEditAlbum.text()):
+            print("rien n'a changé")
+            ret = False
+        #else:
+        #    print("quelque chose a changé")
+        #    print (self.TangoBeforeChange.artist+" -> "+ self.detailsContent.lineEditArtist.text())
+        #    print (self.TangoBeforeChange.title+" -> "+ self.detailsContent.lineEditTitle.text())
+        #    print (self.TangoBeforeChange.year+" -> "+ self.detailsContent.spinBoxYear.value())
+        #    print (self.TangoBeforeChange.type+" -> "+ self.detailsContent.lineEditArtist.text())
+        #    print (self.TangoBeforeChange.album+" -> "+ self.detailsContent.lineEditArtist.text())
+
+        return ret
+
+
 
     def updateTangoSong(self):
-        
+        if not self.isSomethingChanged():
+            return
         self.scanningDir = True
         indexes = self._dialog.milongaSource.selectionModel().selectedRows()
         for i in range (0, len(indexes)):
@@ -1022,7 +1236,7 @@ class AudioPlayerDialog(QMainWindow):
         #print ("number of rows: "+str(len(indexes)))
         for index in indexes:
             if index.isValid():
-                #print (index.row())
+                print (index.row())
                 self.destModel.removeRows(index.row(),1,QModelIndex())
 
     def _handelHideSource(self):
@@ -1105,7 +1319,7 @@ class AudioPlayerDialog(QMainWindow):
         self._tangoList.songpath = self.prefContent.lineEditSongDir.text()
         self.durationFadOut = self.prefContent.spinBoxFadeOut.value()*1000
         self.FadOutTime = self.prefContent.spinBoxCortinaDuration.value()*1000
-        self.stepFadOut = self.durationFadOut / self.mediaObj.tickInterval()
+        self.stepFadOut = self.durationFadOut / self.player.notifyInterval()
         self.writeTag = self.prefContent.checkBoxWriteTags.checkState()
         self.normalize = self.prefContent.checkBoxNormalize.checkState()
         
@@ -1114,6 +1328,7 @@ class AudioPlayerDialog(QMainWindow):
         #if self.isMilongaPlaying:
         if self.destModel.rowCount(QModelIndex()) > 1:
             self.updateMilongaInfos();
+
     def openFileDialog(self):
 
         dirName = QFileDialog.getExistingDirectory(self, "Open Directory", os.path.expanduser('~'), QFileDialog.ShowDirsOnly | QFileDialog.DontResolveSymlinks);
@@ -1182,6 +1397,7 @@ class AudioPlayerDialog(QMainWindow):
         B = self.TYPE[item+1][4]
         T = self.TYPE[item+1][5]
         self.prefContent.selectColorButton.setStyleSheet("background-color: rgba("+str(R)+","+str(G)+","+str(B)+","+str(T)+")")
+
 
 
         #print("row changed")
@@ -1259,7 +1475,7 @@ class AudioPlayerDialog(QMainWindow):
         elif self.curTango.type == 4:
             if self.mediaObj.currentTime() >= (self.FadOutTime - self.durationFadOut):
                 if self.audioSink.volume() > 0.1:
-                    self.audioSink.setVolume(self.audioSink.volume()-1/self.stepFadOut)
+                    self.audioSink.setVolume(self.audioSink.volume()-100/self.stepFadOut)
                 #print ("lowering the volume "+str(self.audioSink.volume())+" currentTime: "+str(self.mediaObj.currentTime()) + " FadOutTime: "+str(self.FadOutTime))
                 if self.audioSink.volume() <= 0.1 and self.mediaObj.currentTime()>=self.FadOutTime:
                     #print("I'm stopping the Cortina")
@@ -1268,41 +1484,7 @@ class AudioPlayerDialog(QMainWindow):
 			
      
 
-    def _handleStateChanged(self, newstate, oldstate):
-        #print ("newstate "+str(newstate))
-        if self.mediaObj is None:
-            print ("cant handle on None Object")
-            return
-        if newstate == Phonon.PlayingState:
-            #print("let's go to play")
-            #if self._isMilongaPlaying:
-            self._isClicked = False
-            #print ("PLAYING STATE is clicked ? : "+str(self._isClicked)+" is playing ? : "+str(self._isPlaying)+" isMilongaPlaying ? : "+str(self._isMilongaPlaying))
-        #pass
-        elif newstate == Phonon.StoppedState:
-            #self.audioSink.setVolume(1.0)
-            #if 
-            #print ("STOPPED STATE is clicked ? : "+str(self._isClicked)+" is playing ? : "+str(self._isPlaying)+" isMilongaPlaying ? : "+str(self._isMilongaPlaying))
-
-            if not self._isClicked and self._isPlaying :
-                #print("will play the next song")
-                #self.clearPlayingCursor()
-
-                if self._isMilongaPlaying:
-                    self.playNextMilongaSong()
-                else:
-                    self.playNextLibrarySong()
-
-                
-                
-
-               
-                
-
-        elif newstate == Phonon.ErrorState:
-            source = self.mediaObject.currentSource().fileName()
-            self._showInfo ('ERROR: could not play:'+ str(source.toLocal8Bit().data()))
-
+  
     def playNextMilongaSong(self):
 
 
@@ -1388,7 +1570,7 @@ class AudioPlayerDialog(QMainWindow):
                 self.destModel.setData(index, 0, Qt.EditRole)
 
     def playSelectedSource(self):
-        #print("will play on enter press?")
+        print("will play on enter press?")
         self._libraryClicked()
 
     def _libraryClicked(self):
@@ -1435,30 +1617,28 @@ class AudioPlayerDialog(QMainWindow):
             self._loadNewMedia()
             self._playMedia()
             
-
+    def updateDuration(self):
+        
+        sysName = platform.system();
+        print(sysName);
+        if (sysName == 'Linux'):
+            for key in self._tangoList.tangos:
+                tmpTango = self._tangoList.tangos[key]
+                audio = audioread.audio_open(tmpTango.path)
+                print (str(audio.duration*1000))
+                tmpTango.duration = audio.duration*1000
+                self.djData.updateTango(tmpTango)
+        elif (sysName == 'Windows'):
+            self._showInfo('You can not run this command on Windows :-(')
+        
 
     def _loadNewMedia(self):
-        """
-        Create a new MediaSource object using the specified
-        file path.
-        """
-        #This is required so that the player can play another file.
-        # if loaded.
-        if self.mediaSource:
-            self.mediaObj.stop()
-            del self.mediaSource
-        #print ('loading' +self.curTango.path)
-
-        self.mediaSource = phonon.Phonon.MediaSource(self.curTango.path)
-        self.mediaObj.setCurrentSource(self.mediaSource)
+        #print(self.curTango.path)
+        self.mediaSource = QMediaContent(QUrl.fromLocalFile(QFileInfo(self.curTango.path).absoluteFilePath()))
+        self.player.setMedia(self.mediaSource)
+        
 
 
-        
-        
-        #print (self.TYPE)
-        
-        	#print(phonon.Phonon.BackendCapabilities.availableAudioEffects())
-        #self.audioPath = Phonon.createPath(self.mediaObj, self.audioSink)
 
     def _playMedia(self):
         """
@@ -1468,21 +1648,24 @@ class AudioPlayerDialog(QMainWindow):
         if not self._okToPlayPauseStop():
             return
 
-        if self.mediaObj is None:
+        #if self.mediaObj is None:
             
-            self._showInfo ("Error playing Audio")
-            return
+        #    self._showInfo ("Error playing Audio")
+        #    return
 
         if self.curTango is None:
         	self._showInfo("No tango selected")
         	return
 
         
-        self.audioSink.setVolume(1.0)
+        #self.audioSink.setVolume(1.0)
         self._dialog.playToolButton.setIcon(self.pauseIcon)
         self.updateTangoInfos(self.curTango)
         self._isPlaying = True
-        self.mediaObj.play()
+        
+        #self.mediaObj.play()
+        self.player.play()
+        
         time.sleep(0.1)
         
 
@@ -1508,10 +1691,12 @@ class AudioPlayerDialog(QMainWindow):
         if self._isMilongaPlaying:
             self._isMilongaPlaying = False
 
-        self.mediaObj.stop()
+        #self.mediaObj.stop()
+        
         self._isPlaying = False
         self._dialog.playToolButton.setIcon(self.playIcon)
         self._dialog.timeLabel.setText("00:00 / 00:00")
+        self.player.stop()
 
     def _pauseMedia(self):
         """
@@ -1520,7 +1705,8 @@ class AudioPlayerDialog(QMainWindow):
         self._isPlaying = False
         if not self._okToPlayPauseStop():
             return
-        self.mediaObj.pause()
+        #self.mediaObj.pause()
+        self.player.pause()
         self._dialog.playToolButton.setIcon(self.playIcon)
 
     def _okToPlayPauseStop(self):
@@ -1627,6 +1813,7 @@ class AudioPlayerDialog(QMainWindow):
         # TODO : quand selection d'un album, ne mettre que les auteurs et les genres
         # qui correspondent. Faire même chose pour artistes et genre
         self.sourceProxyModel.setlFilterValues(artist,album,genre, linefilter)
+        self._dialog.labelsongNB_source.setText(str(self.sourceProxyModel.rowCount(QModelIndex()))+" song(s)");
               
     def _clearFilter(self):
 
@@ -1648,6 +1835,8 @@ class AudioPlayerDialog(QMainWindow):
         #print("shoul i update ? "+str(manualUpdate))
         if manualUpdate:
             self._handelFilterChange()
+
+        self._dialog.labelsongNB_source.setText(str(self.sourceProxyModel.rowCount(QModelIndex()))+" song(s)");
 
 #----------------------------------------------------
 #
@@ -1677,6 +1866,26 @@ class AudioPlayerDialog(QMainWindow):
         self.djData.saveMilonga(self.currentMilongaName, self.getIDListFromMilonga())
         self._showInfo("The milonga \""+str(self.currentMilongaName)+"\" has been saved")
 
+    def _saveMilongaAs(self):
+
+
+        if self.destModel.rowCount(QModelIndex()) == 0:
+            self._showInfo("The Milonga list is empty, can't save anything")
+            return
+
+        #if self._dialog.labelMilongaName.text() == '- No Milonga -':
+        self.milongaNameContent.lineEditName.setText(self.currentMilongaName) 
+        self.milongaNameWindow.exec_()
+        if self.milongaNameWindow.result() == 1:
+            self.currentMilongaName = self.milongaNameContent.lineEditName.text()
+            self._dialog.labelMilongaName.setText(self.currentMilongaName)
+        else:
+            return
+            #print ("Have a name : "+self.currentMilongaName)
+
+        self.djData.saveMilonga(self.currentMilongaName, self.getIDListFromMilonga())
+        self._showInfo("The milonga \""+str(self.currentMilongaName)+"\" has been saved")
+
     def _deleteMilonga(self):
         if self._isMilongaPlaying:
             self._showInfo("You can not do this while a milonga is playing")
@@ -1687,13 +1896,16 @@ class AudioPlayerDialog(QMainWindow):
             return
         #self.currentMilongaName = 'TestMilongaName'
         
-        #print("number of row: "+str(self.destModel.rowCount(QModelIndex())))
-        if self.djData.deleteMilonga(0, self.currentMilongaName):
-            self.destModel.removeRows(0, self.destModel.rowCount(QModelIndex()), QModelIndex())
-            self._dialog.labelMilongaName.setText('- No Milonga -')
-            self._showInfo(self.currentMilongaName+" has been deleted")
+        self.milongaAskDelete.exec_()
+        if self.milongaAskDelete.result() == 1:
+            if self.djData.deleteMilonga(0, self.currentMilongaName):
+                self.destModel.removeRows(0, self.destModel.rowCount(QModelIndex()), QModelIndex())
+                self._dialog.labelMilongaName.setText('- No Milonga -')
+                self._showInfo(self.currentMilongaName+" has been deleted")
+            else:
+                self._showInfo("something went wrong, "+self.currentMilongaName+" has not been deleted")
         else:
-            self._showInfo("something went wrong, "+self.currentMilongaName+" has not been deleted")
+            self._showInfo("You abort the deletion")
     
     def _loadMilonga(self):
 
@@ -1734,7 +1946,7 @@ class AudioPlayerDialog(QMainWindow):
         totalDurWithCort = 0
         ending = 0
         typeCount = {}
-
+        #print(tangoList)
         for tango in tangoList:
             if tango.type in typeCount:
                 typeCount[tango.type]+=tango.duration
@@ -1757,11 +1969,12 @@ class AudioPlayerDialog(QMainWindow):
         
         #print("###############")
 
-        self.infoMilongaSentence = "Classique \t{0:.0f}% \nAlternatif \t{1:.0f}%".format(classique*100/totalDurWithCort, (1-classique/totalDurWithCort)*100)+"\n\n---------------------------------------\n\n"
-        for key in typeCount.keys():
-            if not key == 4:
-                #print ("{0:15}  {1:.0f}%".format(self.TYPE[key][1], typeCount[key]*100/totalDurWithCort))
-                self.infoMilongaSentence += "{0:15}  \t{1:.0f}%".format(self.TYPE[key][1].title(), typeCount[key]*100/totalDurWithCort)+"\n"
+        if totalDurWithCort > 0:
+            self.infoMilongaSentence = "Classique \t{0:.0f}% \nAlternatif \t{1:.0f}%".format(classique*100/totalDurWithCort, (1-classique/totalDurWithCort)*100)+"\n\n---------------------------------------\n\n"
+            for key in typeCount.keys():
+                if not key == 4:
+                    #print ("{0:15}  {1:.0f}%".format(self.TYPE[key][1], typeCount[key]*100/totalDurWithCort))
+                    self.infoMilongaSentence += "{0:15}  \t{1:.0f}%".format(self.TYPE[key][1].title(), typeCount[key]*100/totalDurWithCort)+"\n"
         #print (self.infoMilongaSentence)
         #print("classique {0:.0f}% \nalternatif {1:.0f}%".format(classique*100/totalDurWithCort, (1-classique/totalDurWithCort)*100))
         
@@ -1770,7 +1983,7 @@ class AudioPlayerDialog(QMainWindow):
         #print(time.strftime("%H:%M", time.localtime(now+totalDuration/1000)))
         end = time.strftime("%H:%M", time.localtime(self._startMilongaTimeStamp+totalDuration/1000))
         #print ("end of Milonga: "+str(utils.msecToHouMin(now+totalDuration)))
-        text = str(songnum)+" song    |    duration : "+str(utils.msecToHouMin(totalDuration))+"    |    Milonga will end at "+end
+        text = str(songnum)+" song(s)    |    duration : "+str(utils.msecToHouMin(totalDuration))+"    |    Milonga will end at "+end
         self._dialog.labelSizeDuration.setText(text)
 
     #def getMilongaInfos(self):
@@ -1794,7 +2007,7 @@ class AudioPlayerDialog(QMainWindow):
 
         self._dialog.labelMilongaName.setText('- No Milonga -')
         self.destModel.removeRows(0, self.destModel.rowCount(QModelIndex()), QModelIndex())
-        self.destModel.reset()
+        #self.destModel.reset()
 
     def _doubleClickedMilongaSelect(self):
         #print("will have to close the milonga dialog")
@@ -1861,7 +2074,7 @@ class AudioPlayerDialog(QMainWindow):
 #
 #------------------------------------------------
     def _handelDisplaySideScreen(self):
-
+#        self.sideWindow.showFullScreen()
         #we assume that only 2 desk are available
 
         self._updateSideScreen()
@@ -1878,8 +2091,10 @@ class AudioPlayerDialog(QMainWindow):
             sideDispDeskID = 0
 
 
+        #print("is side checked ?"+str(self._dialog.actionDisplay_side_screen.isChecked()))
         #print("side screen will be on screen : "+str(sideDispDeskID))
-        if self._dialog.actionDisplay_side_screen.isChecked():
+        #if not self._dialog.actionDisplay_side_screen.isChecked():
+        if not self.sideWindow.isVisible():
 
             #print ("will display side screen")
             
@@ -1887,10 +2102,14 @@ class AudioPlayerDialog(QMainWindow):
             #print (geom)
             self.sideWindow.move(geom.x(), geom.y())
             self.sideWindow.showFullScreen()
-            self.activateWindow()
+            self._dialog.actionDisplay_side_screen.setChecked(True)
+            #self._dialog.milongaSource.activateWindow()
+            #self.setFocus(True)
         else:
-            self.sideWindow.showNormal()
+            #print("will hide side screen")
+            #self.sideWindow.showNormal()
             self.sideWindow.hide()
+            self._dialog.actionDisplay_side_screen.setChecked(False)
 
 
 

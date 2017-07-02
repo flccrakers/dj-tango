@@ -2,31 +2,17 @@
 
 # Form implementation generated from reading ui file './gui/UI_djtango.ui'
 #
-# Created by: PyQt4 UI code generator 4.11.4
+# Created by: PyQt5 UI code generator 5.5.1
 #
 # WARNING! All changes made in this file will be lost!
 
-from PyQt4 import QtCore, QtGui
-
-try:
-    _fromUtf8 = QtCore.QString.fromUtf8
-except AttributeError:
-    def _fromUtf8(s):
-        return s
-
-try:
-    _encoding = QtGui.QApplication.UnicodeUTF8
-    def _translate(context, text, disambig):
-        return QtGui.QApplication.translate(context, text, disambig, _encoding)
-except AttributeError:
-    def _translate(context, text, disambig):
-        return QtGui.QApplication.translate(context, text, disambig)
+from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_AudioPlayerDialog(object):
     def setupUi(self, AudioPlayerDialog):
-        AudioPlayerDialog.setObjectName(_fromUtf8("AudioPlayerDialog"))
+        AudioPlayerDialog.setObjectName("AudioPlayerDialog")
         AudioPlayerDialog.resize(1029, 599)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(AudioPlayerDialog.sizePolicy().hasHeightForWidth())
@@ -53,11 +39,11 @@ class Ui_AudioPlayerDialog(object):
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Window, brush)
         AudioPlayerDialog.setPalette(palette)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(_fromUtf8(":/img/logo-djtango.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(":/img/logo-djtango.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         AudioPlayerDialog.setWindowIcon(icon)
         AudioPlayerDialog.setAutoFillBackground(True)
-        self.centralwidget = QtGui.QWidget(AudioPlayerDialog)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
+        self.centralwidget = QtWidgets.QWidget(AudioPlayerDialog)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.centralwidget.sizePolicy().hasHeightForWidth())
@@ -65,14 +51,14 @@ class Ui_AudioPlayerDialog(object):
         self.centralwidget.setMinimumSize(QtCore.QSize(300, 300))
         self.centralwidget.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.centralwidget.setAutoFillBackground(True)
-        self.centralwidget.setObjectName(_fromUtf8("centralwidget"))
-        self.verticalLayout_3 = QtGui.QVBoxLayout(self.centralwidget)
-        self.verticalLayout_3.setObjectName(_fromUtf8("verticalLayout_3"))
-        self.horizontalLayout = QtGui.QHBoxLayout()
-        self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
-        spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        self.centralwidget.setObjectName("centralwidget")
+        self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.centralwidget)
+        self.verticalLayout_3.setObjectName("verticalLayout_3")
+        self.horizontalLayout = QtWidgets.QHBoxLayout()
+        self.horizontalLayout.setObjectName("horizontalLayout")
+        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem)
-        self.labelTypeSong = QtGui.QLabel(self.centralwidget)
+        self.labelTypeSong = QtWidgets.QLabel(self.centralwidget)
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
         brush.setStyle(QtCore.Qt.SolidPattern)
@@ -102,79 +88,79 @@ class Ui_AudioPlayerDialog(object):
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.ButtonText, brush)
         self.labelTypeSong.setPalette(palette)
-        self.labelTypeSong.setStyleSheet(_fromUtf8("QLabel{\n"
+        self.labelTypeSong.setStyleSheet("QLabel{\n"
 "    color: white;\n"
 "    font-size: 40px;    \n"
-"}"))
+"}")
         self.labelTypeSong.setTextFormat(QtCore.Qt.AutoText)
         self.labelTypeSong.setScaledContents(False)
         self.labelTypeSong.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
-        self.labelTypeSong.setObjectName(_fromUtf8("labelTypeSong"))
+        self.labelTypeSong.setObjectName("labelTypeSong")
         self.horizontalLayout.addWidget(self.labelTypeSong)
-        spacerItem1 = QtGui.QSpacerItem(10, 20, QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Minimum)
+        spacerItem1 = QtWidgets.QSpacerItem(10, 20, QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem1)
-        self.line = QtGui.QFrame(self.centralwidget)
-        self.line.setFrameShape(QtGui.QFrame.VLine)
-        self.line.setFrameShadow(QtGui.QFrame.Sunken)
-        self.line.setObjectName(_fromUtf8("line"))
+        self.line = QtWidgets.QFrame(self.centralwidget)
+        self.line.setFrameShape(QtWidgets.QFrame.VLine)
+        self.line.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.line.setObjectName("line")
         self.horizontalLayout.addWidget(self.line)
-        spacerItem2 = QtGui.QSpacerItem(10, 20, QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Minimum)
+        spacerItem2 = QtWidgets.QSpacerItem(10, 20, QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem2)
-        self.verticalLayout = QtGui.QVBoxLayout()
-        self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
-        self.labelTitle = QtGui.QLabel(self.centralwidget)
-        self.labelTitle.setStyleSheet(_fromUtf8("QLabel{\n"
+        self.verticalLayout = QtWidgets.QVBoxLayout()
+        self.verticalLayout.setObjectName("verticalLayout")
+        self.labelTitle = QtWidgets.QLabel(self.centralwidget)
+        self.labelTitle.setStyleSheet("QLabel{\n"
 "    color: white;\n"
 "    font-size: 22px;    \n"
-"}"))
-        self.labelTitle.setObjectName(_fromUtf8("labelTitle"))
+"}")
+        self.labelTitle.setObjectName("labelTitle")
         self.verticalLayout.addWidget(self.labelTitle)
-        self.horizontalLayout_3 = QtGui.QHBoxLayout()
-        self.horizontalLayout_3.setObjectName(_fromUtf8("horizontalLayout_3"))
-        self.labelArtist = QtGui.QLabel(self.centralwidget)
-        self.labelArtist.setStyleSheet(_fromUtf8("QLabel{\n"
+        self.horizontalLayout_3 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_3.setObjectName("horizontalLayout_3")
+        self.labelArtist = QtWidgets.QLabel(self.centralwidget)
+        self.labelArtist.setStyleSheet("QLabel{\n"
 "    color: white;\n"
 "    font-size: 14px;\n"
 "    font-weight: bold;\n"
-"}"))
-        self.labelArtist.setObjectName(_fromUtf8("labelArtist"))
+"}")
+        self.labelArtist.setObjectName("labelArtist")
         self.horizontalLayout_3.addWidget(self.labelArtist)
-        self.labelSep = QtGui.QLabel(self.centralwidget)
-        self.labelSep.setStyleSheet(_fromUtf8("QLabel{\n"
+        self.labelSep = QtWidgets.QLabel(self.centralwidget)
+        self.labelSep.setStyleSheet("QLabel{\n"
 "    color: white;\n"
 "    font-size: 18px;\n"
 "    font-style: bold;\n"
-"}"))
-        self.labelSep.setObjectName(_fromUtf8("labelSep"))
+"}")
+        self.labelSep.setObjectName("labelSep")
         self.horizontalLayout_3.addWidget(self.labelSep)
-        self.labelAlbum = QtGui.QLabel(self.centralwidget)
-        self.labelAlbum.setStyleSheet(_fromUtf8("QLabel{\n"
+        self.labelAlbum = QtWidgets.QLabel(self.centralwidget)
+        self.labelAlbum.setStyleSheet("QLabel{\n"
 "    color: white;\n"
 "    font-size: 14px;\n"
 "    font-style: italic;\n"
-"}"))
-        self.labelAlbum.setObjectName(_fromUtf8("labelAlbum"))
+"}")
+        self.labelAlbum.setObjectName("labelAlbum")
         self.horizontalLayout_3.addWidget(self.labelAlbum)
         self.verticalLayout.addLayout(self.horizontalLayout_3)
         self.horizontalLayout.addLayout(self.verticalLayout)
-        spacerItem3 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        spacerItem3 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem3)
-        self.timeLabel = QtGui.QLabel(self.centralwidget)
-        self.timeLabel.setStyleSheet(_fromUtf8("QLabel{\n"
+        self.timeLabel = QtWidgets.QLabel(self.centralwidget)
+        self.timeLabel.setStyleSheet("QLabel{\n"
 "    color: white;\n"
 "    \n"
-"}"))
-        self.timeLabel.setObjectName(_fromUtf8("timeLabel"))
+"}")
+        self.timeLabel.setObjectName("timeLabel")
         self.horizontalLayout.addWidget(self.timeLabel)
-        self.seekSlider = phonon.Phonon.SeekSlider(self.centralwidget)
-        self.seekSlider.setStyleSheet(_fromUtf8("Phonon::SeekSlider::groove:horizontal{\n"
+        self.songSlider = QtWidgets.QSlider(self.centralwidget)
+        self.songSlider.setStyleSheet("QSlider::groove:horizontal{\n"
 "    border: 1px solid white;\n"
 "   height: 10px; /* the groove expands to the size of the slider by default. by giving it a height, it has a fixed size */\n"
 "    background: #2a2a2a;\n"
 "    margin: 0px 0;\n"
 "}\n"
 "\n"
-"Phonon::SeekSlider::handle:horizontal {\n"
+"QSlider::handle:horizontal {\n"
 "    background: white;\n"
 "    border: 3px solid #a0344d;\n"
 "      width: 5px;\n"
@@ -182,17 +168,18 @@ class Ui_AudioPlayerDialog(object):
 "    margin: -2px -2px; /* handle is placed by default on the contents rect of the groove. Expand outside the groove */\n"
 "    border-radius: 10px;\n"
 "}\n"
-"Phonon::SeekSlider::sub-page:horizontal {\n"
+"QSlider::sub-page:horizontal {\n"
 "    background: #a0344d; \n"
 "    /*height: 8px;*/\n"
 "    border: 1px solid white;\n"
 "} \n"
 "\n"
-""))
-        self.seekSlider.setObjectName(_fromUtf8("seekSlider"))
-        self.horizontalLayout.addWidget(self.seekSlider)
-        self.playToolButton = QtGui.QPushButton(self.centralwidget)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
+"")
+        self.songSlider.setOrientation(QtCore.Qt.Horizontal)
+        self.songSlider.setObjectName("songSlider")
+        self.horizontalLayout.addWidget(self.songSlider)
+        self.playToolButton = QtWidgets.QPushButton(self.centralwidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.playToolButton.sizePolicy().hasHeightForWidth())
@@ -200,87 +187,123 @@ class Ui_AudioPlayerDialog(object):
         self.playToolButton.setMinimumSize(QtCore.QSize(0, 40))
         self.playToolButton.setMaximumSize(QtCore.QSize(40, 40))
         self.playToolButton.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.playToolButton.setStyleSheet(_fromUtf8("QPushButton#playToolButton {\n"
+        self.playToolButton.setStyleSheet("QPushButton {\n"
 "    background-color: #2a2a2a;\n"
 "    color: white;\n"
 " }\n"
-""))
+"QPushButton:hover{\n"
+"  border-radius: 4px;\n"
+"  border: 1px solid rgba(160,52,77,70);\n"
+"}\n"
+"\n"
+"QPushButton:pressed{\n"
+"background-color:rgba(160,52,77,100);\n"
+"}\n"
+"\n"
+"")
         icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap(_fromUtf8(":/img/play-button.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon1.addPixmap(QtGui.QPixmap(":/icons/img/stop-button.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.playToolButton.setIcon(icon1)
         self.playToolButton.setIconSize(QtCore.QSize(40, 40))
-        self.playToolButton.setObjectName(_fromUtf8("playToolButton"))
+        self.playToolButton.setObjectName("playToolButton")
         self.horizontalLayout.addWidget(self.playToolButton)
-        self.stopToolButton = QtGui.QPushButton(self.centralwidget)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
+        self.stopToolButton = QtWidgets.QPushButton(self.centralwidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.stopToolButton.sizePolicy().hasHeightForWidth())
         self.stopToolButton.setSizePolicy(sizePolicy)
         self.stopToolButton.setMaximumSize(QtCore.QSize(40, 40))
         self.stopToolButton.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.stopToolButton.setStyleSheet(_fromUtf8("QPushButton#stopToolButton {\n"
+        self.stopToolButton.setStyleSheet("QPushButton {\n"
 "    background-color: #2a2a2a;\n"
 "    color: white;\n"
 " }\n"
-" "))
-        self.stopToolButton.setText(_fromUtf8(""))
+"QPushButton:hover{\n"
+"  border-radius: 4px;\n"
+"  border: 1px solid rgba(160,52,77,70);\n"
+"}\n"
+"\n"
+"QPushButton:pressed{\n"
+"background-color:rgba(160,52,77,100);\n"
+"}\n"
+"\n"
+"")
+        self.stopToolButton.setText("")
         icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap(_fromUtf8(":/img/stop-button.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon2.addPixmap(QtGui.QPixmap(":/icons/img/play-button.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.stopToolButton.setIcon(icon2)
         self.stopToolButton.setIconSize(QtCore.QSize(40, 40))
-        self.stopToolButton.setObjectName(_fromUtf8("stopToolButton"))
+        self.stopToolButton.setObjectName("stopToolButton")
         self.horizontalLayout.addWidget(self.stopToolButton)
-        spacerItem4 = QtGui.QSpacerItem(30, 21, QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Minimum)
+        spacerItem4 = QtWidgets.QSpacerItem(30, 21, QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem4)
         self.verticalLayout_3.addLayout(self.horizontalLayout)
-        spacerItem5 = QtGui.QSpacerItem(20, 8, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Fixed)
+        spacerItem5 = QtWidgets.QSpacerItem(20, 8, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
         self.verticalLayout_3.addItem(spacerItem5)
-        self.horizontalLayout_4 = QtGui.QHBoxLayout()
-        self.horizontalLayout_4.setObjectName(_fromUtf8("horizontalLayout_4"))
-        self.verticalLayout_7 = QtGui.QVBoxLayout()
-        self.verticalLayout_7.setObjectName(_fromUtf8("verticalLayout_7"))
-        self.horizontalLayout_5 = QtGui.QHBoxLayout()
-        self.horizontalLayout_5.setObjectName(_fromUtf8("horizontalLayout_5"))
-        self.pushButtonRandom = QtGui.QPushButton(self.centralwidget)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
+        self.horizontalLayout_4 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_4.setObjectName("horizontalLayout_4")
+        self.verticalLayout_7 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_7.setObjectName("verticalLayout_7")
+        self.horizontalLayout_5 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_5.setObjectName("horizontalLayout_5")
+        self.pushButtonRandom = QtWidgets.QPushButton(self.centralwidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.pushButtonRandom.sizePolicy().hasHeightForWidth())
         self.pushButtonRandom.setSizePolicy(sizePolicy)
         self.pushButtonRandom.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.pushButtonRandom.setStyleSheet(_fromUtf8("QPushButton {\n"
+        self.pushButtonRandom.setStyleSheet("QPushButton {\n"
 "    background-color: #2a2a2a;\n"
 "    color: white;\n"
 " }\n"
-""))
-        self.pushButtonRandom.setText(_fromUtf8(""))
+"QPushButton:hover{\n"
+"  border-radius: 4px;\n"
+"  border: 1px solid rgba(160,52,77,70);\n"
+"}\n"
+"\n"
+"QPushButton:pressed{\n"
+"background-color:rgba(160,52,77,100);\n"
+"}\n"
+"\n"
+"")
+        self.pushButtonRandom.setText("")
         icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap(_fromUtf8(":/img/random-button.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon3.addPixmap(QtGui.QPixmap(":/icons/img/ic_shuffle_white_24dp_1x.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.pushButtonRandom.setIcon(icon3)
         self.pushButtonRandom.setIconSize(QtCore.QSize(24, 24))
-        self.pushButtonRandom.setObjectName(_fromUtf8("pushButtonRandom"))
+        self.pushButtonRandom.setObjectName("pushButtonRandom")
         self.horizontalLayout_5.addWidget(self.pushButtonRandom)
-        self.pushButtonClearFilter = QtGui.QPushButton(self.centralwidget)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
+        self.pushButtonClearFilter = QtWidgets.QPushButton(self.centralwidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.pushButtonClearFilter.sizePolicy().hasHeightForWidth())
         self.pushButtonClearFilter.setSizePolicy(sizePolicy)
         self.pushButtonClearFilter.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.pushButtonClearFilter.setStyleSheet(_fromUtf8("QPushButton {\n"
+        self.pushButtonClearFilter.setStyleSheet("QPushButton {\n"
 "    background-color: #2a2a2a;\n"
 "    color: white;\n"
 " }\n"
-""))
-        self.pushButtonClearFilter.setText(_fromUtf8(""))
+"QPushButton:hover{\n"
+"  border-radius: 4px;\n"
+"  border: 1px solid rgba(160,52,77,70);\n"
+"}\n"
+"\n"
+"QPushButton:pressed{\n"
+"background-color:rgba(160,52,77,100);\n"
+"}\n"
+"\n"
+"")
+        self.pushButtonClearFilter.setText("")
         icon4 = QtGui.QIcon()
-        icon4.addPixmap(QtGui.QPixmap(_fromUtf8(":/img/clear-button.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon4.addPixmap(QtGui.QPixmap(":/icons/img/clear-button.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.pushButtonClearFilter.setIcon(icon4)
         self.pushButtonClearFilter.setIconSize(QtCore.QSize(24, 24))
-        self.pushButtonClearFilter.setObjectName(_fromUtf8("pushButtonClearFilter"))
+        self.pushButtonClearFilter.setObjectName("pushButtonClearFilter")
         self.horizontalLayout_5.addWidget(self.pushButtonClearFilter)
-        self.comboBoxArtist = QtGui.QComboBox(self.centralwidget)
+        self.comboBoxArtist = QtWidgets.QComboBox(self.centralwidget)
         self.comboBoxArtist.setMaximumSize(QtCore.QSize(250, 16777215))
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
@@ -340,7 +363,7 @@ class Ui_AudioPlayerDialog(object):
         self.comboBoxArtist.setPalette(palette)
         self.comboBoxArtist.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
         self.comboBoxArtist.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.comboBoxArtist.setStyleSheet(_fromUtf8("QComboBox\n"
+        self.comboBoxArtist.setStyleSheet("QComboBox\n"
 "{\n"
 "    color:white;\n"
 "    padding:1px;\n"
@@ -372,13 +395,13 @@ class Ui_AudioPlayerDialog(object):
 "    width: 16px;\n"
 "    height: 16px;\n"
 "    border-style: none;\n"
-"}"))
+"}")
         self.comboBoxArtist.setEditable(True)
-        self.comboBoxArtist.setObjectName(_fromUtf8("comboBoxArtist"))
+        self.comboBoxArtist.setObjectName("comboBoxArtist")
         self.horizontalLayout_5.addWidget(self.comboBoxArtist)
-        self.comboBoxAlbum = QtGui.QComboBox(self.centralwidget)
+        self.comboBoxAlbum = QtWidgets.QComboBox(self.centralwidget)
         self.comboBoxAlbum.setMaximumSize(QtCore.QSize(250, 16777215))
-        self.comboBoxAlbum.setStyleSheet(_fromUtf8("QComboBox\n"
+        self.comboBoxAlbum.setStyleSheet("QComboBox\n"
 "{\n"
 "    color:white;\n"
 "    padding:1px;\n"
@@ -410,13 +433,13 @@ class Ui_AudioPlayerDialog(object):
 "    width: 16px;\n"
 "    height: 16px;\n"
 "    border-style: none;\n"
-"}"))
-        self.comboBoxAlbum.setObjectName(_fromUtf8("comboBoxAlbum"))
+"}")
+        self.comboBoxAlbum.setObjectName("comboBoxAlbum")
         self.horizontalLayout_5.addWidget(self.comboBoxAlbum)
-        self.comboBoxGenre = QtGui.QComboBox(self.centralwidget)
+        self.comboBoxGenre = QtWidgets.QComboBox(self.centralwidget)
         self.comboBoxGenre.setMaximumSize(QtCore.QSize(250, 16777215))
         self.comboBoxGenre.setFocusPolicy(QtCore.Qt.ClickFocus)
-        self.comboBoxGenre.setStyleSheet(_fromUtf8("QComboBox\n"
+        self.comboBoxGenre.setStyleSheet("QComboBox\n"
 "{\n"
 "    color:white;\n"
 "    padding:1px;\n"
@@ -448,12 +471,12 @@ class Ui_AudioPlayerDialog(object):
 "    width: 16px;\n"
 "    height: 16px;\n"
 "    border-style: none;\n"
-"}"))
+"}")
         self.comboBoxGenre.setFrame(True)
-        self.comboBoxGenre.setObjectName(_fromUtf8("comboBoxGenre"))
+        self.comboBoxGenre.setObjectName("comboBoxGenre")
         self.horizontalLayout_5.addWidget(self.comboBoxGenre)
-        self.lineEditFilter = QtGui.QLineEdit(self.centralwidget)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Maximum, QtGui.QSizePolicy.Fixed)
+        self.lineEditFilter = QtWidgets.QLineEdit(self.centralwidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.lineEditFilter.sizePolicy().hasHeightForWidth())
@@ -461,16 +484,24 @@ class Ui_AudioPlayerDialog(object):
         self.lineEditFilter.setMinimumSize(QtCore.QSize(150, 0))
         self.lineEditFilter.setMaximumSize(QtCore.QSize(250, 16777215))
         self.lineEditFilter.setFocusPolicy(QtCore.Qt.StrongFocus)
-        self.lineEditFilter.setStyleSheet(_fromUtf8("QLineEdit{\n"
+        self.lineEditFilter.setStyleSheet("QLineEdit{\n"
 "    color:white;\n"
 "    background:rgb(42,42,42);\n"
 "    border-style: none;\n"
 "\n"
-"}"))
-        self.lineEditFilter.setObjectName(_fromUtf8("lineEditFilter"))
+"}")
+        self.lineEditFilter.setObjectName("lineEditFilter")
         self.horizontalLayout_5.addWidget(self.lineEditFilter)
         self.verticalLayout_7.addLayout(self.horizontalLayout_5)
-        self.milongaSource = QtGui.QTableView(self.centralwidget)
+        self.labelsongNB_source = QtWidgets.QLabel(self.centralwidget)
+        self.labelsongNB_source.setStyleSheet("QLabel{\n"
+"    color: white;\n"
+"    font-size: 14px;\n"
+"    font-weight: bold;\n"
+"}")
+        self.labelsongNB_source.setObjectName("labelsongNB_source")
+        self.verticalLayout_7.addWidget(self.labelsongNB_source)
+        self.milongaSource = QtWidgets.QTableView(self.centralwidget)
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
         brush.setStyle(QtCore.Qt.SolidPattern)
@@ -528,7 +559,7 @@ class Ui_AudioPlayerDialog(object):
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Window, brush)
         self.milongaSource.setPalette(palette)
         self.milongaSource.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
-        self.milongaSource.setStyleSheet(_fromUtf8("QTableView{\n"
+        self.milongaSource.setStyleSheet("QTableView{\n"
 "    color:white;\n"
 "    font-size: 12px;\n"
 "    background: rgb(42, 42, 42);\n"
@@ -544,25 +575,25 @@ class Ui_AudioPlayerDialog(object):
 "    color:white;\n"
 "    background: rgb(42, 42, 42);\n"
 "}\n"
-""))
-        self.milongaSource.setEditTriggers(QtGui.QAbstractItemView.NoEditTriggers)
+"")
+        self.milongaSource.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
         self.milongaSource.setTabKeyNavigation(False)
-        self.milongaSource.setDragDropMode(QtGui.QAbstractItemView.DragOnly)
+        self.milongaSource.setDragDropMode(QtWidgets.QAbstractItemView.DragOnly)
         self.milongaSource.setDefaultDropAction(QtCore.Qt.CopyAction)
-        self.milongaSource.setSelectionBehavior(QtGui.QAbstractItemView.SelectRows)
-        self.milongaSource.setVerticalScrollMode(QtGui.QAbstractItemView.ScrollPerItem)
+        self.milongaSource.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectRows)
+        self.milongaSource.setVerticalScrollMode(QtWidgets.QAbstractItemView.ScrollPerItem)
         self.milongaSource.setShowGrid(False)
         self.milongaSource.setGridStyle(QtCore.Qt.NoPen)
         self.milongaSource.setSortingEnabled(True)
         self.milongaSource.setWordWrap(False)
         self.milongaSource.setCornerButtonEnabled(False)
-        self.milongaSource.setObjectName(_fromUtf8("milongaSource"))
+        self.milongaSource.setObjectName("milongaSource")
         self.milongaSource.horizontalHeader().setStretchLastSection(True)
         self.milongaSource.verticalHeader().setVisible(False)
         self.verticalLayout_7.addWidget(self.milongaSource)
         self.horizontalLayout_4.addLayout(self.verticalLayout_7)
-        self.pushButtonHideDest = QtGui.QPushButton(self.centralwidget)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Expanding)
+        self.pushButtonHideDest = QtWidgets.QPushButton(self.centralwidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.pushButtonHideDest.sizePolicy().hasHeightForWidth())
@@ -570,21 +601,21 @@ class Ui_AudioPlayerDialog(object):
         self.pushButtonHideDest.setMaximumSize(QtCore.QSize(10, 16777215))
         self.pushButtonHideDest.setCursor(QtGui.QCursor(QtCore.Qt.SplitHCursor))
         self.pushButtonHideDest.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.pushButtonHideDest.setStyleSheet(_fromUtf8("QPushButton {\n"
+        self.pushButtonHideDest.setStyleSheet("QPushButton {\n"
 "    background-color: #2a2a2a;\n"
 "    color: white;\n"
 "    border: none;\n"
 " }\n"
-""))
-        self.pushButtonHideDest.setText(_fromUtf8(""))
+"")
+        self.pushButtonHideDest.setText("")
         icon5 = QtGui.QIcon()
-        icon5.addPixmap(QtGui.QPixmap(_fromUtf8(":/img/hide-right.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon5.addPixmap(QtGui.QPixmap(":/img/hide-right.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.pushButtonHideDest.setIcon(icon5)
         self.pushButtonHideDest.setIconSize(QtCore.QSize(10, 80))
-        self.pushButtonHideDest.setObjectName(_fromUtf8("pushButtonHideDest"))
+        self.pushButtonHideDest.setObjectName("pushButtonHideDest")
         self.horizontalLayout_4.addWidget(self.pushButtonHideDest)
-        self.pushButtonHideSource = QtGui.QPushButton(self.centralwidget)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Expanding)
+        self.pushButtonHideSource = QtWidgets.QPushButton(self.centralwidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.pushButtonHideSource.sizePolicy().hasHeightForWidth())
@@ -592,137 +623,210 @@ class Ui_AudioPlayerDialog(object):
         self.pushButtonHideSource.setMaximumSize(QtCore.QSize(10, 16777215))
         self.pushButtonHideSource.setCursor(QtGui.QCursor(QtCore.Qt.SizeHorCursor))
         self.pushButtonHideSource.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.pushButtonHideSource.setStyleSheet(_fromUtf8("QPushButton {\n"
+        self.pushButtonHideSource.setStyleSheet("QPushButton {\n"
 "    background-color: #2a2a2a;\n"
 "    color: white;\n"
 "    border: none;\n"
 " }\n"
-""))
-        self.pushButtonHideSource.setText(_fromUtf8(""))
+"")
+        self.pushButtonHideSource.setText("")
         icon6 = QtGui.QIcon()
-        icon6.addPixmap(QtGui.QPixmap(_fromUtf8(":/img/hide-left.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon6.addPixmap(QtGui.QPixmap(":/img/hide-left.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.pushButtonHideSource.setIcon(icon6)
         self.pushButtonHideSource.setIconSize(QtCore.QSize(10, 80))
-        self.pushButtonHideSource.setObjectName(_fromUtf8("pushButtonHideSource"))
+        self.pushButtonHideSource.setObjectName("pushButtonHideSource")
         self.horizontalLayout_4.addWidget(self.pushButtonHideSource)
-        self.verticalLayout_8 = QtGui.QVBoxLayout()
-        self.verticalLayout_8.setObjectName(_fromUtf8("verticalLayout_8"))
-        self.horizontalLayout_6 = QtGui.QHBoxLayout()
-        self.horizontalLayout_6.setObjectName(_fromUtf8("horizontalLayout_6"))
-        self.pushButtonMilongaClear = QtGui.QPushButton(self.centralwidget)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
+        self.verticalLayout_8 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_8.setObjectName("verticalLayout_8")
+        self.horizontalLayout_6 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_6.setObjectName("horizontalLayout_6")
+        self.pushButtonMilongaClear = QtWidgets.QPushButton(self.centralwidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.pushButtonMilongaClear.sizePolicy().hasHeightForWidth())
         self.pushButtonMilongaClear.setSizePolicy(sizePolicy)
         self.pushButtonMilongaClear.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.pushButtonMilongaClear.setStyleSheet(_fromUtf8("QPushButton {\n"
+        self.pushButtonMilongaClear.setStyleSheet("QPushButton {\n"
 "    background-color: #2a2a2a;\n"
 "    color: white;\n"
 " }\n"
-""))
-        self.pushButtonMilongaClear.setText(_fromUtf8(""))
+"QPushButton:hover{\n"
+"  border-radius: 4px;\n"
+"  border: 1px solid rgba(160,52,77,70);\n"
+"}\n"
+"\n"
+"QPushButton:pressed{\n"
+"background-color:rgba(160,52,77,100);\n"
+"}\n"
+"\n"
+"")
+        self.pushButtonMilongaClear.setText("")
         self.pushButtonMilongaClear.setIcon(icon4)
         self.pushButtonMilongaClear.setIconSize(QtCore.QSize(24, 28))
-        self.pushButtonMilongaClear.setObjectName(_fromUtf8("pushButtonMilongaClear"))
+        self.pushButtonMilongaClear.setObjectName("pushButtonMilongaClear")
         self.horizontalLayout_6.addWidget(self.pushButtonMilongaClear)
-        self.labelMilongaName = QtGui.QLabel(self.centralwidget)
-        self.labelMilongaName.setStyleSheet(_fromUtf8("QLabel{\n"
+        self.labelMilongaName = QtWidgets.QLabel(self.centralwidget)
+        self.labelMilongaName.setStyleSheet("QLabel{\n"
 "    color: white;\n"
 "    font-size: 14px;\n"
 "    font-weight: bold;\n"
-"}"))
-        self.labelMilongaName.setObjectName(_fromUtf8("labelMilongaName"))
+"}")
+        self.labelMilongaName.setObjectName("labelMilongaName")
         self.horizontalLayout_6.addWidget(self.labelMilongaName)
-        self.pushButtonLoadMilonga = QtGui.QPushButton(self.centralwidget)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
+        self.pushButtonLoadMilonga = QtWidgets.QPushButton(self.centralwidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.pushButtonLoadMilonga.sizePolicy().hasHeightForWidth())
         self.pushButtonLoadMilonga.setSizePolicy(sizePolicy)
         self.pushButtonLoadMilonga.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.pushButtonLoadMilonga.setStyleSheet(_fromUtf8("QPushButton {\n"
+        self.pushButtonLoadMilonga.setStyleSheet("QPushButton {\n"
 "    background-color: #2a2a2a;\n"
 "    color: white;\n"
 " }\n"
-""))
-        self.pushButtonLoadMilonga.setText(_fromUtf8(""))
+"QPushButton:hover{\n"
+"  border-radius: 4px;\n"
+"  border: 1px solid rgba(160,52,77,70);\n"
+"}\n"
+"\n"
+"QPushButton:pressed{\n"
+"background-color:rgba(160,52,77,100);\n"
+"}\n"
+"\n"
+"")
+        self.pushButtonLoadMilonga.setText("")
         icon7 = QtGui.QIcon()
-        icon7.addPixmap(QtGui.QPixmap(_fromUtf8(":/img/load-milonga-button.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon7.addPixmap(QtGui.QPixmap(":/icons/img/ic_folder_white_24dp_1x.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.pushButtonLoadMilonga.setIcon(icon7)
         self.pushButtonLoadMilonga.setIconSize(QtCore.QSize(24, 24))
-        self.pushButtonLoadMilonga.setObjectName(_fromUtf8("pushButtonLoadMilonga"))
+        self.pushButtonLoadMilonga.setObjectName("pushButtonLoadMilonga")
         self.horizontalLayout_6.addWidget(self.pushButtonLoadMilonga)
-        self.pushButtonInfoMilonga = QtGui.QPushButton(self.centralwidget)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
+        self.pushButtonInfoMilonga = QtWidgets.QPushButton(self.centralwidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.pushButtonInfoMilonga.sizePolicy().hasHeightForWidth())
         self.pushButtonInfoMilonga.setSizePolicy(sizePolicy)
         self.pushButtonInfoMilonga.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.pushButtonInfoMilonga.setStyleSheet(_fromUtf8("QPushButton {\n"
+        self.pushButtonInfoMilonga.setStyleSheet("QPushButton {\n"
 "    background-color: #2a2a2a;\n"
 "    color: white;\n"
 " }\n"
-""))
-        self.pushButtonInfoMilonga.setText(_fromUtf8(""))
+"QPushButton:hover{\n"
+"  border-radius: 4px;\n"
+"  border: 1px solid rgba(160,52,77,70);\n"
+"}\n"
+"\n"
+"QPushButton:pressed{\n"
+"background-color:rgba(160,52,77,100);\n"
+"}\n"
+"\n"
+"")
+        self.pushButtonInfoMilonga.setText("")
         icon8 = QtGui.QIcon()
-        icon8.addPixmap(QtGui.QPixmap(_fromUtf8(":/img/info-button.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon8.addPixmap(QtGui.QPixmap(":/icons/img/ic_info_white_24dp_1x.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.pushButtonInfoMilonga.setIcon(icon8)
         self.pushButtonInfoMilonga.setIconSize(QtCore.QSize(24, 24))
-        self.pushButtonInfoMilonga.setObjectName(_fromUtf8("pushButtonInfoMilonga"))
+        self.pushButtonInfoMilonga.setObjectName("pushButtonInfoMilonga")
         self.horizontalLayout_6.addWidget(self.pushButtonInfoMilonga)
-        self.pushButtonSaveMilonga = QtGui.QPushButton(self.centralwidget)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
+        self.pushButtonSaveMilongaAs = QtWidgets.QPushButton(self.centralwidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.pushButtonSaveMilongaAs.sizePolicy().hasHeightForWidth())
+        self.pushButtonSaveMilongaAs.setSizePolicy(sizePolicy)
+        self.pushButtonSaveMilongaAs.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.pushButtonSaveMilongaAs.setStyleSheet("QPushButton {\n"
+"    background-color: #2a2a2a;\n"
+"    color: white;\n"
+" }\n"
+"QPushButton:hover{\n"
+"  border-radius: 4px;\n"
+"  border: 1px solid rgba(160,52,77,70);\n"
+"}\n"
+"\n"
+"QPushButton:pressed{\n"
+"background-color:rgba(160,52,77,100);\n"
+"}\n"
+"\n"
+"")
+        self.pushButtonSaveMilongaAs.setText("")
+        icon9 = QtGui.QIcon()
+        icon9.addPixmap(QtGui.QPixmap(":/icons/img/ic_save_white_24dp_1x.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pushButtonSaveMilongaAs.setIcon(icon9)
+        self.pushButtonSaveMilongaAs.setIconSize(QtCore.QSize(24, 24))
+        self.pushButtonSaveMilongaAs.setObjectName("pushButtonSaveMilongaAs")
+        self.horizontalLayout_6.addWidget(self.pushButtonSaveMilongaAs)
+        self.pushButtonSaveMilonga = QtWidgets.QPushButton(self.centralwidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.pushButtonSaveMilonga.sizePolicy().hasHeightForWidth())
         self.pushButtonSaveMilonga.setSizePolicy(sizePolicy)
         self.pushButtonSaveMilonga.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.pushButtonSaveMilonga.setStyleSheet(_fromUtf8("QPushButton {\n"
+        self.pushButtonSaveMilonga.setStyleSheet("QPushButton {\n"
 "    background-color: #2a2a2a;\n"
 "    color: white;\n"
 " }\n"
-""))
-        self.pushButtonSaveMilonga.setText(_fromUtf8(""))
-        icon9 = QtGui.QIcon()
-        icon9.addPixmap(QtGui.QPixmap(_fromUtf8(":/img/save-milonga-button.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.pushButtonSaveMilonga.setIcon(icon9)
+"QPushButton:hover{\n"
+"  border-radius: 4px;\n"
+"  border: 1px solid rgba(160,52,77,70);\n"
+"}\n"
+"\n"
+"QPushButton:pressed{\n"
+"background-color:rgba(160,52,77,100);\n"
+"}\n"
+"\n"
+"")
+        self.pushButtonSaveMilonga.setText("")
+        icon10 = QtGui.QIcon()
+        icon10.addPixmap(QtGui.QPixmap(":/icons/img/save-milonga-button.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pushButtonSaveMilonga.setIcon(icon10)
         self.pushButtonSaveMilonga.setIconSize(QtCore.QSize(24, 24))
-        self.pushButtonSaveMilonga.setObjectName(_fromUtf8("pushButtonSaveMilonga"))
+        self.pushButtonSaveMilonga.setObjectName("pushButtonSaveMilonga")
         self.horizontalLayout_6.addWidget(self.pushButtonSaveMilonga)
-        self.pushButtonDeleteMilonga = QtGui.QPushButton(self.centralwidget)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
+        self.pushButtonDeleteMilonga = QtWidgets.QPushButton(self.centralwidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.pushButtonDeleteMilonga.sizePolicy().hasHeightForWidth())
         self.pushButtonDeleteMilonga.setSizePolicy(sizePolicy)
         self.pushButtonDeleteMilonga.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.pushButtonDeleteMilonga.setStyleSheet(_fromUtf8("QPushButton {\n"
+        self.pushButtonDeleteMilonga.setStyleSheet("QPushButton {\n"
 "    background-color: #2a2a2a;\n"
 "    color: white;\n"
 " }\n"
-""))
-        self.pushButtonDeleteMilonga.setText(_fromUtf8(""))
-        icon10 = QtGui.QIcon()
-        icon10.addPixmap(QtGui.QPixmap(_fromUtf8(":/img/trash-button.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.pushButtonDeleteMilonga.setIcon(icon10)
+"QPushButton:hover{\n"
+"  border-radius: 4px;\n"
+"  border: 1px solid rgba(160,52,77,70);\n"
+"}\n"
+"\n"
+"QPushButton:pressed{\n"
+"background-color:rgba(160,52,77,100);\n"
+"}\n"
+"\n"
+"")
+        self.pushButtonDeleteMilonga.setText("")
+        icon11 = QtGui.QIcon()
+        icon11.addPixmap(QtGui.QPixmap(":/icons/img/ic_delete_white_24dp_1x.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pushButtonDeleteMilonga.setIcon(icon11)
         self.pushButtonDeleteMilonga.setIconSize(QtCore.QSize(24, 24))
-        self.pushButtonDeleteMilonga.setObjectName(_fromUtf8("pushButtonDeleteMilonga"))
+        self.pushButtonDeleteMilonga.setObjectName("pushButtonDeleteMilonga")
         self.horizontalLayout_6.addWidget(self.pushButtonDeleteMilonga)
         self.verticalLayout_8.addLayout(self.horizontalLayout_6)
-        self.labelSizeDuration = QtGui.QLabel(self.centralwidget)
-        self.labelSizeDuration.setStyleSheet(_fromUtf8("QLabel{\n"
+        self.labelSizeDuration = QtWidgets.QLabel(self.centralwidget)
+        self.labelSizeDuration.setStyleSheet("QLabel{\n"
 "    color: white;\n"
 "    font-size: 14px;\n"
 "    font-weight: bold;\n"
-"}"))
-        self.labelSizeDuration.setObjectName(_fromUtf8("labelSizeDuration"))
+"}")
+        self.labelSizeDuration.setObjectName("labelSizeDuration")
         self.verticalLayout_8.addWidget(self.labelSizeDuration)
-        self.milongaDest = QtGui.QTableView(self.centralwidget)
+        self.milongaDest = QtWidgets.QTableView(self.centralwidget)
         self.milongaDest.setFocusPolicy(QtCore.Qt.NoFocus)
         self.milongaDest.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
-        self.milongaDest.setStyleSheet(_fromUtf8("QTableView{\n"
+        self.milongaDest.setStyleSheet("QTableView{\n"
 "    color:white;\n"
 "    font-size: 12px;\n"
 "    background: rgb(42, 42, 42);\n"
@@ -738,52 +842,51 @@ class Ui_AudioPlayerDialog(object):
 "    color:white;\n"
 "    background: rgb(42, 42, 42);\n"
 "}\n"
-""))
-        self.milongaDest.setEditTriggers(QtGui.QAbstractItemView.NoEditTriggers)
+"")
+        self.milongaDest.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
         self.milongaDest.setProperty("showDropIndicator", True)
         self.milongaDest.setDragEnabled(True)
         self.milongaDest.setDragDropOverwriteMode(True)
-        self.milongaDest.setDragDropMode(QtGui.QAbstractItemView.DragDrop)
+        self.milongaDest.setDragDropMode(QtWidgets.QAbstractItemView.DragDrop)
         self.milongaDest.setDefaultDropAction(QtCore.Qt.MoveAction)
-        self.milongaDest.setSelectionBehavior(QtGui.QAbstractItemView.SelectRows)
+        self.milongaDest.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectRows)
         self.milongaDest.setShowGrid(False)
         self.milongaDest.setWordWrap(False)
         self.milongaDest.setCornerButtonEnabled(False)
-        self.milongaDest.setObjectName(_fromUtf8("milongaDest"))
+        self.milongaDest.setObjectName("milongaDest")
         self.verticalLayout_8.addWidget(self.milongaDest)
         self.horizontalLayout_4.addLayout(self.verticalLayout_8)
         self.verticalLayout_3.addLayout(self.horizontalLayout_4)
         AudioPlayerDialog.setCentralWidget(self.centralwidget)
-        self.menubar = QtGui.QMenuBar(AudioPlayerDialog)
+        self.menubar = QtWidgets.QMenuBar(AudioPlayerDialog)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 1029, 25))
-        self.menubar.setObjectName(_fromUtf8("menubar"))
-        self.menuFile = QtGui.QMenu(self.menubar)
-        self.menuFile.setObjectName(_fromUtf8("menuFile"))
-        self.menuEdition = QtGui.QMenu(self.menubar)
-        self.menuEdition.setObjectName(_fromUtf8("menuEdition"))
-        self.menuDisplay = QtGui.QMenu(self.menubar)
-        self.menuDisplay.setObjectName(_fromUtf8("menuDisplay"))
+        self.menubar.setObjectName("menubar")
+        self.menuFile = QtWidgets.QMenu(self.menubar)
+        self.menuFile.setObjectName("menuFile")
+        self.menuEdition = QtWidgets.QMenu(self.menubar)
+        self.menuEdition.setObjectName("menuEdition")
+        self.menuDisplay = QtWidgets.QMenu(self.menubar)
+        self.menuDisplay.setObjectName("menuDisplay")
         AudioPlayerDialog.setMenuBar(self.menubar)
-        self.actionPreferences = QtGui.QAction(AudioPlayerDialog)
-        self.actionPreferences.setObjectName(_fromUtf8("actionPreferences"))
-        self.actionFullscreen = QtGui.QAction(AudioPlayerDialog)
+        self.actionPreferences = QtWidgets.QAction(AudioPlayerDialog)
+        self.actionPreferences.setObjectName("actionPreferences")
+        self.actionFullscreen = QtWidgets.QAction(AudioPlayerDialog)
         self.actionFullscreen.setCheckable(True)
-        self.actionFullscreen.setObjectName(_fromUtf8("actionFullscreen"))
-        self.actionDisplay_side_screen = QtGui.QAction(AudioPlayerDialog)
+        self.actionFullscreen.setObjectName("actionFullscreen")
+        self.actionDisplay_side_screen = QtWidgets.QAction(AudioPlayerDialog)
         self.actionDisplay_side_screen.setCheckable(True)
-        self.actionDisplay_side_screen.setSoftKeyRole(QtGui.QAction.SelectSoftKey)
         self.actionDisplay_side_screen.setIconVisibleInMenu(True)
-        self.actionDisplay_side_screen.setObjectName(_fromUtf8("actionDisplay_side_screen"))
-        self.actionImport_file = QtGui.QAction(AudioPlayerDialog)
-        self.actionImport_file.setObjectName(_fromUtf8("actionImport_file"))
-        self.actionImport_directory = QtGui.QAction(AudioPlayerDialog)
-        self.actionImport_directory.setObjectName(_fromUtf8("actionImport_directory"))
-        self.actionEdit_details_of_current_song = QtGui.QAction(AudioPlayerDialog)
-        self.actionEdit_details_of_current_song.setObjectName(_fromUtf8("actionEdit_details_of_current_song"))
-        self.actionLoad_BPM_from_ID3_Tag = QtGui.QAction(AudioPlayerDialog)
-        self.actionLoad_BPM_from_ID3_Tag.setObjectName(_fromUtf8("actionLoad_BPM_from_ID3_Tag"))
-        self.actionTap_yourself_BPM = QtGui.QAction(AudioPlayerDialog)
-        self.actionTap_yourself_BPM.setObjectName(_fromUtf8("actionTap_yourself_BPM"))
+        self.actionDisplay_side_screen.setObjectName("actionDisplay_side_screen")
+        self.actionImport_file = QtWidgets.QAction(AudioPlayerDialog)
+        self.actionImport_file.setObjectName("actionImport_file")
+        self.actionImport_directory = QtWidgets.QAction(AudioPlayerDialog)
+        self.actionImport_directory.setObjectName("actionImport_directory")
+        self.actionEdit_details_of_current_song = QtWidgets.QAction(AudioPlayerDialog)
+        self.actionEdit_details_of_current_song.setObjectName("actionEdit_details_of_current_song")
+        self.actionLoad_BPM_from_ID3_Tag = QtWidgets.QAction(AudioPlayerDialog)
+        self.actionLoad_BPM_from_ID3_Tag.setObjectName("actionLoad_BPM_from_ID3_Tag")
+        self.actionTap_yourself_BPM = QtWidgets.QAction(AudioPlayerDialog)
+        self.actionTap_yourself_BPM.setObjectName("actionTap_yourself_BPM")
         self.menuFile.addAction(self.actionImport_file)
         self.menuFile.addAction(self.actionImport_directory)
         self.menuEdition.addAction(self.actionPreferences)
@@ -801,40 +904,42 @@ class Ui_AudioPlayerDialog(object):
         QtCore.QMetaObject.connectSlotsByName(AudioPlayerDialog)
 
     def retranslateUi(self, AudioPlayerDialog):
-        AudioPlayerDialog.setWindowTitle(_translate("AudioPlayerDialog", "DjTango", None))
-        self.labelTypeSong.setText(_translate("AudioPlayerDialog", "-", None))
-        self.labelTitle.setText(_translate("AudioPlayerDialog", "TextLabel", None))
-        self.labelArtist.setText(_translate("AudioPlayerDialog", "NA", None))
-        self.labelSep.setText(_translate("AudioPlayerDialog", "-", None))
-        self.labelAlbum.setText(_translate("AudioPlayerDialog", "NA", None))
-        self.timeLabel.setText(_translate("AudioPlayerDialog", "-", None))
-        self.playToolButton.setToolTip(_translate("AudioPlayerDialog", "play / pause", None))
-        self.playToolButton.setShortcut(_translate("AudioPlayerDialog", "Space", None))
-        self.stopToolButton.setToolTip(_translate("AudioPlayerDialog", "stop", None))
-        self.pushButtonClearFilter.setToolTip(_translate("AudioPlayerDialog", "clear the filters", None))
-        self.lineEditFilter.setToolTip(_translate("AudioPlayerDialog", "Enter some text and type enter to filter", None))
-        self.pushButtonMilongaClear.setToolTip(_translate("AudioPlayerDialog", "clear the milonga table (will not be saved)", None))
-        self.labelMilongaName.setText(_translate("AudioPlayerDialog", "- No Milonga -", None))
-        self.pushButtonLoadMilonga.setToolTip(_translate("AudioPlayerDialog", "Load Milonga", None))
-        self.pushButtonLoadMilonga.setShortcut(_translate("AudioPlayerDialog", "Ctrl+O", None))
-        self.pushButtonInfoMilonga.setToolTip(_translate("AudioPlayerDialog", "Give infos about milonga", None))
-        self.pushButtonSaveMilonga.setToolTip(_translate("AudioPlayerDialog", "Save Milonga", None))
-        self.pushButtonSaveMilonga.setShortcut(_translate("AudioPlayerDialog", "Ctrl+S", None))
-        self.pushButtonDeleteMilonga.setToolTip(_translate("AudioPlayerDialog", "Delete this Milonga", None))
-        self.labelSizeDuration.setText(_translate("AudioPlayerDialog", "0 song    |    duration : 00:00    |    Milonga will end at 12:35", None))
-        self.menuFile.setTitle(_translate("AudioPlayerDialog", "File", None))
-        self.menuEdition.setTitle(_translate("AudioPlayerDialog", "Edition", None))
-        self.menuDisplay.setTitle(_translate("AudioPlayerDialog", "Display", None))
-        self.actionPreferences.setText(_translate("AudioPlayerDialog", "Preferences", None))
-        self.actionFullscreen.setText(_translate("AudioPlayerDialog", "Fullscreen", None))
-        self.actionFullscreen.setShortcut(_translate("AudioPlayerDialog", "F11", None))
-        self.actionDisplay_side_screen.setText(_translate("AudioPlayerDialog", "Display side screen", None))
-        self.actionDisplay_side_screen.setShortcut(_translate("AudioPlayerDialog", "Ctrl+F11", None))
-        self.actionImport_file.setText(_translate("AudioPlayerDialog", "Import file(s)", None))
-        self.actionImport_directory.setText(_translate("AudioPlayerDialog", "Import directory", None))
-        self.actionEdit_details_of_current_song.setText(_translate("AudioPlayerDialog", "Edit details of selected song(s)", None))
-        self.actionLoad_BPM_from_ID3_Tag.setText(_translate("AudioPlayerDialog", "Load BPM from ID3 Tag", None))
-        self.actionTap_yourself_BPM.setText(_translate("AudioPlayerDialog", "Tap yourself BPM", None))
+        _translate = QtCore.QCoreApplication.translate
+        AudioPlayerDialog.setWindowTitle(_translate("AudioPlayerDialog", "DjTango"))
+        self.labelTypeSong.setText(_translate("AudioPlayerDialog", "-"))
+        self.labelTitle.setText(_translate("AudioPlayerDialog", "TextLabel"))
+        self.labelArtist.setText(_translate("AudioPlayerDialog", "NA"))
+        self.labelSep.setText(_translate("AudioPlayerDialog", "-"))
+        self.labelAlbum.setText(_translate("AudioPlayerDialog", "NA"))
+        self.timeLabel.setText(_translate("AudioPlayerDialog", "-"))
+        self.playToolButton.setToolTip(_translate("AudioPlayerDialog", "play / pause"))
+        self.playToolButton.setShortcut(_translate("AudioPlayerDialog", "Space"))
+        self.stopToolButton.setToolTip(_translate("AudioPlayerDialog", "stop"))
+        self.pushButtonClearFilter.setToolTip(_translate("AudioPlayerDialog", "clear the filters"))
+        self.lineEditFilter.setToolTip(_translate("AudioPlayerDialog", "Enter some text and type enter to filter"))
+        self.labelsongNB_source.setText(_translate("AudioPlayerDialog", "0 song"))
+        self.pushButtonMilongaClear.setToolTip(_translate("AudioPlayerDialog", "clear the milonga table (will not be saved)"))
+        self.labelMilongaName.setText(_translate("AudioPlayerDialog", "- No Milonga -"))
+        self.pushButtonLoadMilonga.setToolTip(_translate("AudioPlayerDialog", "Load Milonga"))
+        self.pushButtonLoadMilonga.setShortcut(_translate("AudioPlayerDialog", "Ctrl+O"))
+        self.pushButtonInfoMilonga.setToolTip(_translate("AudioPlayerDialog", "Give infos about milonga"))
+        self.pushButtonSaveMilongaAs.setToolTip(_translate("AudioPlayerDialog", "save Milanga as"))
+        self.pushButtonSaveMilonga.setToolTip(_translate("AudioPlayerDialog", "Save Milonga"))
+        self.pushButtonSaveMilonga.setShortcut(_translate("AudioPlayerDialog", "Ctrl+S"))
+        self.pushButtonDeleteMilonga.setToolTip(_translate("AudioPlayerDialog", "Delete this Milonga"))
+        self.labelSizeDuration.setText(_translate("AudioPlayerDialog", "0 song    |    duration : 00:00    |    Milonga will end at 12:35"))
+        self.menuFile.setTitle(_translate("AudioPlayerDialog", "File"))
+        self.menuEdition.setTitle(_translate("AudioPlayerDialog", "Edition"))
+        self.menuDisplay.setTitle(_translate("AudioPlayerDialog", "Display"))
+        self.actionPreferences.setText(_translate("AudioPlayerDialog", "Preferences"))
+        self.actionFullscreen.setText(_translate("AudioPlayerDialog", "Fullscreen"))
+        self.actionFullscreen.setShortcut(_translate("AudioPlayerDialog", "F11"))
+        self.actionDisplay_side_screen.setText(_translate("AudioPlayerDialog", "Display side screen"))
+        self.actionDisplay_side_screen.setShortcut(_translate("AudioPlayerDialog", "Ctrl+F11"))
+        self.actionImport_file.setText(_translate("AudioPlayerDialog", "Import file(s)"))
+        self.actionImport_directory.setText(_translate("AudioPlayerDialog", "Import directory"))
+        self.actionEdit_details_of_current_song.setText(_translate("AudioPlayerDialog", "Edit details of selected song(s)"))
+        self.actionLoad_BPM_from_ID3_Tag.setText(_translate("AudioPlayerDialog", "Load BPM from ID3 Tag"))
+        self.actionTap_yourself_BPM.setText(_translate("AudioPlayerDialog", "Tap yourself BPM"))
 
-from PyQt4 import phonon
 import djtango_rc

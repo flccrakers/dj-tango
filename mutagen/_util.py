@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-
 # Copyright (C) 2006  Joe Wreschnig
 #
 # This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License version 2 as
-# published by the Free Software Foundation.
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
 
 """Utility classes for Mutagen.
 
@@ -16,7 +16,13 @@ import sys
 import struct
 import codecs
 import errno
-import mmap
+
+try:
+    import mmap
+except ImportError:
+    # Google App Engine has no mmap:
+    #   https://github.com/quodlibet/mutagen/issues/286
+    mmap = None
 
 from collections import namedtuple
 from contextlib import contextmanager
@@ -527,6 +533,19 @@ def _fill_cdata(cls):
                 if s.size == 1:
                     esuffix = ""
                 bits = str(s.size * 8)
+
+                if unsigned:
+                    max_ = 2 ** (s.size * 8) - 1
+                    min_ = 0
+                else:
+                    max_ = 2 ** (s.size * 8 - 1) - 1
+                    min_ = - 2 ** (s.size * 8 - 1)
+
+                funcs["%s%s_min" % (prefix, name)] = min_
+                funcs["%s%s_max" % (prefix, name)] = max_
+                funcs["%sint%s_min" % (prefix, bits)] = min_
+                funcs["%sint%s_max" % (prefix, bits)] = max_
+
                 funcs["%s%s%s" % (prefix, name, esuffix)] = unpack
                 funcs["%sint%s%s" % (prefix, bits, esuffix)] = unpack
                 funcs["%s%s%s_from" % (prefix, name, esuffix)] = unpack_from
@@ -644,6 +663,8 @@ def mmap_move(fileobj, dest, src, count):
         ValueError: In case invalid parameters were given
     """
 
+    assert mmap is not None, "no mmap support"
+
     if dest < 0 or src < 0 or count < 0:
         raise ValueError("Invalid parameters")
 
@@ -661,7 +682,7 @@ def mmap_move(fileobj, dest, src, count):
         raise ValueError("Not in file size boundary")
 
     offset = ((min(dest, src) // mmap.ALLOCATIONGRANULARITY) *
-        mmap.ALLOCATIONGRANULARITY)
+              mmap.ALLOCATIONGRANULARITY)
     assert dest >= offset
     assert src >= offset
     assert offset % mmap.ALLOCATIONGRANULARITY == 0
@@ -789,9 +810,12 @@ def insert_bytes(fobj, size, offset, BUFFER_SIZE=2 ** 16):
 
     resize_file(fobj, size, BUFFER_SIZE)
 
-    try:
-        mmap_move(fobj, offset + size, offset, movesize)
-    except mmap.error:
+    if mmap is not None:
+        try:
+            mmap_move(fobj, offset + size, offset, movesize)
+        except mmap.error:
+            fallback_move(fobj, offset + size, offset, movesize, BUFFER_SIZE)
+    else:
         fallback_move(fobj, offset + size, offset, movesize, BUFFER_SIZE)
 
 
@@ -820,9 +844,12 @@ def delete_bytes(fobj, size, offset, BUFFER_SIZE=2 ** 16):
     if movesize < 0:
         raise ValueError
 
-    try:
-        mmap_move(fobj, offset, offset + size, movesize)
-    except mmap.error:
+    if mmap is not None:
+        try:
+            mmap_move(fobj, offset, offset + size, movesize)
+        except mmap.error:
+            fallback_move(fobj, offset, offset + size, movesize, BUFFER_SIZE)
+    else:
         fallback_move(fobj, offset, offset + size, movesize, BUFFER_SIZE)
 
     resize_file(fobj, -size, BUFFER_SIZE)
@@ -872,6 +899,38 @@ def dict_match(d, key, default=None):
             if fnmatchcase(key, pattern):
                 return value
     return default
+
+
+def encode_endian(text, encoding, errors="strict", le=True):
+    """Like text.encode(encoding) but always returns little endian/big endian
+    BOMs instead of the system one.
+
+    Args:
+        text (text)
+        encoding (str)
+        errors (str)
+        le (boolean): if little endian
+    Returns:
+        bytes
+    Raises:
+        UnicodeEncodeError
+        LookupError
+    """
+
+    encoding = codecs.lookup(encoding).name
+
+    if encoding == "utf-16":
+        if le:
+            return codecs.BOM_UTF16_LE + text.encode("utf-16-le", errors)
+        else:
+            return codecs.BOM_UTF16_BE + text.encode("utf-16-be", errors)
+    elif encoding == "utf-32":
+        if le:
+            return codecs.BOM_UTF32_LE + text.encode("utf-32-le", errors)
+        else:
+            return codecs.BOM_UTF32_BE + text.encode("utf-32-be", errors)
+    else:
+        return text.encode(encoding, errors)
 
 
 def decode_terminated(data, encoding, strict=True):

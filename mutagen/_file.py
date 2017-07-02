@@ -1,9 +1,10 @@
-# Copyright (C) 2005  Michael Urman
 # -*- coding: utf-8 -*-
+# Copyright (C) 2005  Michael Urman
 #
 # This program is free software; you can redistribute it and/or modify
-# it under the terms of version 2 of the GNU General Public License as
-# published by the Free Software Foundation.
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
 
 import warnings
 
@@ -263,10 +264,11 @@ def File(filething, options=None, easy=False):
         from mutagen.aiff import AIFF
         from mutagen.aac import AAC
         from mutagen.smf import SMF
+        from mutagen.dsf import DSF
         options = [MP3, TrueAudio, OggTheora, OggSpeex, OggVorbis, OggFLAC,
                    FLAC, AIFF, APEv2File, MP4, ID3FileType, WavPack,
                    Musepack, MonkeysAudio, OptimFROG, ASF, OggOpus, AAC,
-                   SMF]
+                   SMF, DSF]
 
     if not options:
         return None

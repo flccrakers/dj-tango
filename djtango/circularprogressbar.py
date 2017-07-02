@@ -1,7 +1,10 @@
-from PyQt4 import QtCore, QtGui, Qt
+from PyQt5 import QtCore, QtGui, Qt, QtWidgets
 from djtango import utils
 
-class QRoundProgressBar(QtGui.QWidget):
+#use this web site to build a new one
+#http://circularprogressbar.blogspot.lu/
+
+class QRoundProgressBar(QtWidgets.QWidget):
 
     StyleDonut = 1
     StylePie = 2
@@ -126,7 +129,7 @@ class QRoundProgressBar(QtGui.QWidget):
         self.rebuildDataBrushIfNeeded()
 
         # background
-        self.drawBackground(p, buffer.rect())
+        #self.drawBackground(p, buffer.rect())
 
         # base circle
         self.drawBase(p, baseRect)

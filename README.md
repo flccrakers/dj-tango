@@ -47,11 +47,3 @@ TODO: Write credits
 ## License
 
 TODO: Write license
-
-
-
-# dj-tango
-
-
-
-To install it, you can 

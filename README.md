@@ -9,14 +9,16 @@ This is a software who allow anyone who want DJING tango musique to do it with a
 ### Linux: 
 Open a terminal an type 
 
-<code>git clone https://github.com/flccrakers/dj-tango.git</code>
+<pre><code>git clone https://github.com/flccrakers/dj-tango.git</code></pre>
+
 
 Enter in the directory and launch the program.
-
+<pre>
 <code>
 cd dj-tango
 ./run.sh
 </code>
+</pre>
 
 ## Usage
 

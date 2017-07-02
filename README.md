@@ -8,21 +8,25 @@ This is a software who allow anyone who want DJING tango musique to do it with a
 
 ### Linux: 
 Open a terminal an type 
-
 <pre><code>git clone https://github.com/flccrakers/dj-tango.git</code></pre>
 
+You will need to install:
 
-Enter in the directory and launch the program.
+- python
+- QT5
+- PYQT
+
+
+## Usage
+
+### Linux:
+Enter in the directory dj-tango and launch the program.
 <pre>
 <code>
 cd dj-tango
 ./run.sh
 </code>
 </pre>
-
-## Usage
-
-TODO: Write usage instructions
 
 ## Contributing
 

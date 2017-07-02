@@ -584,8 +584,11 @@ class AudioPlayerDialog(QMainWindow, QObject):
         #self.connect(self.infothread, SIGNAL("terminated()"), self.closeInfo)
 
 
+<<<<<<< HEAD
         self._dialog.playToolButton.clicked.connect(self._handelPlayPause)
         
+=======
+>>>>>>> 938ab5919e086bb93688ae63d16324a5358b997f
         self._dialog.lineEditFilter.returnPressed.connect(self._handelFilterChange)
         self._dialog.pushButtonRandom.clicked.connect(self.sourceModel.randomize)
 

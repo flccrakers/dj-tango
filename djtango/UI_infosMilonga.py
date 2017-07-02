@@ -13,7 +13,11 @@ class Ui_infosMilonga(object):
         infosMilonga.setObjectName("infosMilonga")
         infosMilonga.setWindowModality(QtCore.Qt.ApplicationModal)
         infosMilonga.resize(284, 250)
+<<<<<<< HEAD
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+=======
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
+>>>>>>> 938ab5919e086bb93688ae63d16324a5358b997f
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(infosMilonga.sizePolicy().hasHeightForWidth())

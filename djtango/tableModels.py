@@ -177,16 +177,10 @@ class milongaSource(QAbstractTableModel):
         self.layoutChanged.emit()
         #pass
     def randomize(self):
-<<<<<<< HEAD
-        self.layoutAboutToBeChanged.emit()
-        random.shuffle(self.mylist)
-        self.layoutChanged.emit()
-=======
+
         self.emit(SIGNAL("layoutAboutToBeChanged()"))
         random.shuffle(self.mylist)
         self.emit(SIGNAL("layoutChanged()"))
-
->>>>>>> 938ab5919e086bb93688ae63d16324a5358b997f
 
     def changeData(self, datain):
         print ("I'm changing the data")

@@ -202,7 +202,7 @@ class Ui_AudioPlayerDialog(object):
 "\n"
 "")
         icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap(":/icons/img/stop-button.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon1.addPixmap(QtGui.QPixmap(":/icons/img/play-button.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.playToolButton.setIcon(icon1)
         self.playToolButton.setIconSize(QtCore.QSize(40, 40))
         self.playToolButton.setObjectName("playToolButton")
@@ -231,7 +231,7 @@ class Ui_AudioPlayerDialog(object):
 "")
         self.stopToolButton.setText("")
         icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap(":/icons/img/play-button.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon2.addPixmap(QtGui.QPixmap(":/icons/img/stop-button.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.stopToolButton.setIcon(icon2)
         self.stopToolButton.setIconSize(QtCore.QSize(40, 40))
         self.stopToolButton.setObjectName("stopToolButton")

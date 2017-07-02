@@ -447,7 +447,7 @@ background-color:rgba(160,52,77,100);
         </property>
         <property name="icon">
          <iconset resource="djtango.qrc">
-          <normaloff>:/icons/img/stop-button.png</normaloff>:/icons/img/stop-button.png</iconset>
+          <normaloff>:/icons/img/play-button.png</normaloff>:/icons/img/play-button.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -501,7 +501,7 @@ background-color:rgba(160,52,77,100);
         </property>
         <property name="icon">
          <iconset resource="djtango.qrc">
-          <normaloff>:/icons/img/play-button.png</normaloff>:/icons/img/play-button.png</iconset>
+          <normaloff>:/icons/img/stop-button.png</normaloff>:/icons/img/stop-button.png</iconset>
         </property>
         <property name="iconSize">
          <size>

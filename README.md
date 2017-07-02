@@ -11,7 +11,12 @@ Open a terminal an type
 
 <code>git clone https://github.com/flccrakers/dj-tango.git</code>
 
-Enter in the repertory.
+Enter in the directory and launch the program.
+
+<code>
+cd dj-tango
+./run.sh
+</code>
 
 ## Usage
 

@@ -163,13 +163,7 @@ class milongaSource(QAbstractTableModel):
         return None
 
     def sort(self, col, order):
-        #print ("sorting")
-        """sort table by given column number col"""
         self.layoutAboutToBeChanged.emit()
-        #self.emit(SIGNAL("layoutAboutToBeChanged()"))
-        #print (Qt.InitialSortOrderRole)
-        #print(Qt.AscendingOrder)
-        #print (col)
         self.mylist = sorted(self.mylist, key=operator.itemgetter(col))
         #self.
         if order == Qt.AscendingOrder:
@@ -178,9 +172,9 @@ class milongaSource(QAbstractTableModel):
         #pass
     def randomize(self):
 
-        self.emit(SIGNAL("layoutAboutToBeChanged()"))
+        self.layoutAboutToBeChanged.emit()
         random.shuffle(self.mylist)
-        self.emit(SIGNAL("layoutChanged()"))
+        self.layoutChanged.emit()
 
     def changeData(self, datain):
         print ("I'm changing the data")
@@ -210,18 +204,11 @@ class milongaSource(QAbstractTableModel):
         #print ("I will try to change the data with value: "+str(value))
 
         if index.isValid() and role == Qt.EditRole:
-            #if index.column() == 8: #if it's the time
-            #    value = utils.msecToms(value)
-            #if index.column() == 7: #if it's the bpm column
-            #    value = round(value,2)
             self.mylist[index.row()][index.column()] = value
-            #self.emit(SIGNAL("DataChanged(QModelIndex,QModelIndex)"), index, index)
             self.dataChanged.emit(index, index)
             return True
         return False
-        #def setData()
     def flags(self, index):
-        #return Qt.ItemIsEditable | Qt.ItemIsDragEnabled | Qt.ItemIsSelectable | Qt.ItemIsEnabled | Qt.ItemIsDropEnabled 
         return Qt.ItemIsDragEnabled | Qt.ItemIsEnabled | Qt.ItemIsSelectable
 
    

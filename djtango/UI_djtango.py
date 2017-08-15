@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file './gui/UI_djtango.ui'
 #
-# Created by: PyQt5 UI code generator 5.5.1
+# Created by: PyQt5 UI code generator 5.7
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -39,9 +39,10 @@ class Ui_AudioPlayerDialog(object):
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Window, brush)
         AudioPlayerDialog.setPalette(palette)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/img/logo-djtango.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(":/icons/img/logo-djtango.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         AudioPlayerDialog.setWindowIcon(icon)
         AudioPlayerDialog.setAutoFillBackground(True)
+        AudioPlayerDialog.setToolButtonStyle(QtCore.Qt.ToolButtonFollowStyle)
         self.centralwidget = QtWidgets.QWidget(AudioPlayerDialog)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
@@ -318,8 +319,8 @@ class Ui_AudioPlayerDialog(object):
         brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.ButtonText, brush)
-        brush = QtGui.QBrush(QtGui.QColor(0, 0, 0))
-        brush.setStyle(QtCore.Qt.NoBrush)
+        brush = QtGui.QBrush(QtGui.QColor(160, 52, 77, 80))
+        brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.Base, brush)
         brush = QtGui.QBrush(QtGui.QColor(160, 52, 77, 80))
         brush.setStyle(QtCore.Qt.SolidPattern)
@@ -336,8 +337,8 @@ class Ui_AudioPlayerDialog(object):
         brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.ButtonText, brush)
-        brush = QtGui.QBrush(QtGui.QColor(0, 0, 0))
-        brush.setStyle(QtCore.Qt.NoBrush)
+        brush = QtGui.QBrush(QtGui.QColor(160, 52, 77, 80))
+        brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.Base, brush)
         brush = QtGui.QBrush(QtGui.QColor(160, 52, 77, 80))
         brush.setStyle(QtCore.Qt.SolidPattern)
@@ -355,14 +356,14 @@ class Ui_AudioPlayerDialog(object):
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.ButtonText, brush)
         brush = QtGui.QBrush(QtGui.QColor(0, 0, 0))
-        brush.setStyle(QtCore.Qt.NoBrush)
+        brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Base, brush)
         brush = QtGui.QBrush(QtGui.QColor(160, 52, 77, 80))
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Window, brush)
         self.comboBoxArtist.setPalette(palette)
         self.comboBoxArtist.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
-        self.comboBoxArtist.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.comboBoxArtist.setFocusPolicy(QtCore.Qt.ClickFocus)
         self.comboBoxArtist.setStyleSheet("QComboBox\n"
 "{\n"
 "    color:white;\n"
@@ -396,11 +397,12 @@ class Ui_AudioPlayerDialog(object):
 "    height: 16px;\n"
 "    border-style: none;\n"
 "}")
-        self.comboBoxArtist.setEditable(True)
+        self.comboBoxArtist.setEditable(False)
         self.comboBoxArtist.setObjectName("comboBoxArtist")
         self.horizontalLayout_5.addWidget(self.comboBoxArtist)
         self.comboBoxAlbum = QtWidgets.QComboBox(self.centralwidget)
         self.comboBoxAlbum.setMaximumSize(QtCore.QSize(250, 16777215))
+        self.comboBoxAlbum.setFocusPolicy(QtCore.Qt.ClickFocus)
         self.comboBoxAlbum.setStyleSheet("QComboBox\n"
 "{\n"
 "    color:white;\n"
@@ -609,7 +611,7 @@ class Ui_AudioPlayerDialog(object):
 "")
         self.pushButtonHideDest.setText("")
         icon5 = QtGui.QIcon()
-        icon5.addPixmap(QtGui.QPixmap(":/img/hide-right.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon5.addPixmap(QtGui.QPixmap(":/icons/img/hide-right.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.pushButtonHideDest.setIcon(icon5)
         self.pushButtonHideDest.setIconSize(QtCore.QSize(10, 80))
         self.pushButtonHideDest.setObjectName("pushButtonHideDest")
@@ -631,7 +633,7 @@ class Ui_AudioPlayerDialog(object):
 "")
         self.pushButtonHideSource.setText("")
         icon6 = QtGui.QIcon()
-        icon6.addPixmap(QtGui.QPixmap(":/img/hide-left.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon6.addPixmap(QtGui.QPixmap(":/icons/img/hide-left.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.pushButtonHideSource.setIcon(icon6)
         self.pushButtonHideSource.setIconSize(QtCore.QSize(10, 80))
         self.pushButtonHideSource.setObjectName("pushButtonHideSource")
@@ -859,7 +861,7 @@ class Ui_AudioPlayerDialog(object):
         self.verticalLayout_3.addLayout(self.horizontalLayout_4)
         AudioPlayerDialog.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(AudioPlayerDialog)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1029, 25))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1029, 22))
         self.menubar.setObjectName("menubar")
         self.menuFile = QtWidgets.QMenu(self.menubar)
         self.menuFile.setObjectName("menuFile")

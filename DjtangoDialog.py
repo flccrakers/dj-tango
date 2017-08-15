@@ -645,7 +645,7 @@ class AudioPlayerDialog(QMainWindow, QObject):
 
     def _handelStateChanged(self):
 
-        print("state: "+str(self.player.state()))
+        #print("state: "+str(self.player.state()))
         if self.player.state() == QMediaPlayer.PlayingState:
             self._isClicked = False
         elif self.player.state() == QMediaPlayer.StoppedState:
@@ -660,7 +660,6 @@ class AudioPlayerDialog(QMainWindow, QObject):
     
 
     def durationChanged(self, duration):
-        print("dans durationChanged")
         self.bar.setRange(0, duration)
         duration/=1000
         print(str(duration*1000)+" "+str(self.curTango.duration))
@@ -696,17 +695,14 @@ class AudioPlayerDialog(QMainWindow, QObject):
 
     def positionChanged(self, progress):
         progress /= 1000
-        print("in positionChanged")
         if not self._dialog.songSlider.isSliderDown():
             self._dialog.songSlider.setValue(progress)
             self._dialog.timeLabel.setText(str(utils.msecToms(progress*1000))+" / "+str(utils.msecToms(self.duration*1000)))
 
         if not self.curTango.type == 4 or not self.volumeSetToInitial:
-            #self.player.setVolume(100)
-            #if (not self.volumeSetToInitial):
-            #    self.player.setVolume(1.0)
-            #    print("try to set the volume at 1")
-            #    self.volumeSetToInitial = True 
+            self.player.setVolume(100)
+            #self.audioSink.setVolume(1.0)
+            self.volumeSetToInitial = True 
             self.bar.setValue(self.duration*1000-progress*1000)
         elif self.curTango.type == 4:
             #print("progress: "+str(progress)+" FadOutTime: "+str(self.FadOutTime))
@@ -721,8 +717,6 @@ class AudioPlayerDialog(QMainWindow, QObject):
                     #print("I'm stopping the Cortina")
                     self.volumeSetToInitial = False
                     self.player.stop()
-                    self.player.setVolume(1.0)
-
                     #print("Je viens de stoper la musique")
 
     def seek(self, seconds):
@@ -1257,7 +1251,6 @@ class AudioPlayerDialog(QMainWindow, QObject):
             self._dialog.comboBoxGenre.setVisible(False)
             self._dialog.lineEditFilter.setVisible(False)
             self._dialog.pushButtonRandom.setVisible(False)
-            self._dialog.labelsongNB_source.setVisible(False)
            
         else:
             self._dialog.pushButtonHideDest.setVisible(True)
@@ -1269,7 +1262,6 @@ class AudioPlayerDialog(QMainWindow, QObject):
             self._dialog.comboBoxGenre.setVisible(True)
             self._dialog.lineEditFilter.setVisible(True)
             self._dialog.pushButtonRandom.setVisible(True)
-            self._dialog.labelsongNB_source.setVisible(True)
     
     def _handelHideDest(self):
 
@@ -1285,7 +1277,6 @@ class AudioPlayerDialog(QMainWindow, QObject):
             self._dialog.pushButtonSaveMilonga.setVisible(False)
             self._dialog.labelSizeDuration.setVisible(False)
             self._dialog.pushButtonInfoMilonga.setVisible(False)
-            self._dialog.pushButtonSaveMilongaAs.setVisible(False)
 
 
 
@@ -1303,7 +1294,6 @@ class AudioPlayerDialog(QMainWindow, QObject):
             self._dialog.pushButtonSaveMilonga.setVisible(True)
             self._dialog.labelSizeDuration.setVisible(True)
             self._dialog.pushButtonInfoMilonga.setVisible(True)
-            self._dialog.pushButtonSaveMilongaAs.setVisible(True)
             #self.resizeHeaderSource()
             #self._dialog.milongaSource.horizontalHeader() emit()
 
@@ -1457,41 +1447,40 @@ class AudioPlayerDialog(QMainWindow, QObject):
 
         
 
-#    def _handleTick(self):
-#        print("dans handleTic")
-#        currentTime = str(utils.msecToms(self.mediaObj.currentTime()))
-#        duration = str(utils.msecToms(self.mediaObj.totalTime()))
-#        if (not self.curTango.duration == self.mediaObj.totalTime()) and (self.mediaObj.totalTime() > 0):
-#            #print ("duration: "+str(self.curTango.duration)+" time in mediaObj: "+str(self.mediaObj.totalTime()))
-#            self.curTango.duration = self.mediaObj.totalTime()
-#            self.djData.updateTango(self.curTango)
+    def _handleTick(self):
+        currentTime = str(utils.msecToms(self.mediaObj.currentTime()))
+        duration = str(utils.msecToms(self.mediaObj.totalTime()))
+        if (not self.curTango.duration == self.mediaObj.totalTime()) and (self.mediaObj.totalTime() > 0):
+            #print ("duration: "+str(self.curTango.duration)+" time in mediaObj: "+str(self.mediaObj.totalTime()))
+            self.curTango.duration = self.mediaObj.totalTime()
+            self.djData.updateTango(self.curTango)
 
 
-#        if self.mediaObj.totalTime() >0:
-#            self._dialog.timeLabel.setText(currentTime+" / "+duration)
-#            if self.curTango.type == 4:
-#                self.bar.setRange(0, self.FadOutTime)
-#            else:
-#                self.bar.setRange(0, self.mediaObj.totalTime())
+        if self.mediaObj.totalTime() >0:
+            self._dialog.timeLabel.setText(currentTime+" / "+duration)
+            if self.curTango.type == 4:
+                self.bar.setRange(0, self.FadOutTime)
+            else:
+                self.bar.setRange(0, self.mediaObj.totalTime())
             #self.bar.setFormat()
 
-#            if self.curTango.type == 4:
-#                self.bar.setValue(self.FadOutTime-self.mediaObj.currentTime())    
-#            else:
-#                self.bar.setValue(self.mediaObj.totalTime()-self.mediaObj.currentTime())
+            if self.curTango.type == 4:
+                self.bar.setValue(self.FadOutTime-self.mediaObj.currentTime())    
+            else:
+                self.bar.setValue(self.mediaObj.totalTime()-self.mediaObj.currentTime())
                 
-#        if not self.curTango.type == 4 or not self.volumeSetToInitial:
-#            self.audioSink.setVolume(1.0)
-#            self.volumeSetToInitial = True
-#        elif self.curTango.type == 4:
-#            if self.mediaObj.currentTime() >= (self.FadOutTime - self.durationFadOut):
-#                if self.audioSink.volume() > 0.1:
-#                    self.audioSink.setVolume(self.audioSink.volume()-100/self.stepFadOut)
+        if not self.curTango.type == 4 or not self.volumeSetToInitial:
+            self.audioSink.setVolume(1.0)
+            self.volumeSetToInitial = True
+        elif self.curTango.type == 4:
+            if self.mediaObj.currentTime() >= (self.FadOutTime - self.durationFadOut):
+                if self.audioSink.volume() > 0.1:
+                    self.audioSink.setVolume(self.audioSink.volume()-100/self.stepFadOut)
                 #print ("lowering the volume "+str(self.audioSink.volume())+" currentTime: "+str(self.mediaObj.currentTime()) + " FadOutTime: "+str(self.FadOutTime))
-#                if self.audioSink.volume() <= 0.1 and self.mediaObj.currentTime()>=self.FadOutTime:
-#                    #print("I'm stopping the Cortina")
-#                    self.volumeSetToInitial = False
-#                    self.mediaObj.stop()
+                if self.audioSink.volume() <= 0.1 and self.mediaObj.currentTime()>=self.FadOutTime:
+                    #print("I'm stopping the Cortina")
+                    self.volumeSetToInitial = False
+                    self.mediaObj.stop()
 			
      
 
@@ -1688,8 +1677,7 @@ class AudioPlayerDialog(QMainWindow, QObject):
         self.player.play()
         print("c'est parti")
         
-
-        #time.sleep(0.1)
+        time.sleep(0.1)
         
 
     

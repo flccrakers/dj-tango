@@ -100,15 +100,15 @@ class dirSong:
 
 	def checkNewFiles(self):
 		ret = []
-		print ("# of tangos in the database :\t"+str(len(self.tangos)))
-		print("# of tangos in the table: \t"+str(len(self.listFiles)))
+		#print ("# of tangos in the database :\t"+str(len(self.tangos)))
+		#print("# of tangos in the table: \t"+str(len(self.listFiles)))
 		newfiles = self.getListFromDir()
-		print ("# of tangos on the Hard Drive :\t"+str(len(newfiles)))
+		#print ("# of tangos on the Hard Drive :\t"+str(len(newfiles)))
 		if not len(self.tangos) == len(newfiles):
 			#print("les deux ne sont pas de la même taille")
 			for key in newfiles.keys():
 				if not key in self.listFiles:
-					print ("file to add : "+key)
+					#print ("file to add : "+key)
 					ret.append(key)
 		return ret
 
@@ -116,19 +116,19 @@ class dirSong:
 		ret=[]
 		if realfiles:
 			files = self.getListFromDir()
-			print ("files on hard drive: "+str(len(files)))
+			#print ("files on hard drive: "+str(len(files)))
 			for file in files:
 				if file in self.listFiles:
 					pass
 				else:
 					ret.append(file)
 		else:
-			print ("files in database: "+str(len(self.tangos)))
+			#print ("files in database: "+str(len(self.tangos)))
 			for i in self.tangos:
 				tango = self.tangos[i]
 				if not os.path.isfile(tango.path):
 					ret.append(tango.path)
-					print (str(i))
+					#print (str(i))
 				
 
 		
@@ -174,7 +174,7 @@ class dirSong:
 			else: 
 				print("Warning: path did not exist in listFiles, I will not update it. Path: "+tango.path)
 			
-			print("Coying this file in the new directory")
+			#print("Coying this file in the new directory")
 			move(tango.path, os.path.join(rep, name))
 		
 

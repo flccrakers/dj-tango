@@ -92,7 +92,7 @@ class djDataConnection:
 
 
 	def updatePath(self, ID, newpath):
-		print(str(ID)+" "+newpath)
+		#print(str(ID)+" "+newpath)
 		conn = sqlite3.connect(self.path)
 		cursor = conn.cursor()
 		
@@ -357,7 +357,7 @@ class djDataConnection:
 
 
 	def updateProperties(self, durationFadOut, fadoutTime, writeTagBox, normalize, TYPE):
-		print("I will update the database for preferences")
+		#print("I will update the database for preferences")
 		conn = sqlite3.connect(self.path)
 		cursor = conn.cursor()
 
@@ -377,7 +377,7 @@ class djDataConnection:
 		self.updateType(TYPE)
 
 	def updateSongPath(self, songPath):
-		print("I will the song path")
+		#print("I will the song path")
 		conn = sqlite3.connect(self.path)
 		cursor = conn.cursor()
 
@@ -393,7 +393,7 @@ class djDataConnection:
 
 		conn = sqlite3.connect(self.path)
 		cursor = conn.cursor()
-		print (TYPE)
+		#print (TYPE)
 		#print(TYPE.length)
 
 
@@ -403,7 +403,7 @@ class djDataConnection:
 		#"INSERT INTO tangos (path, title, artist, album, genre, year) VALUES(?,?,?,?,?,?)"
 		sql = "INSERT INTO tangoType (ID, type, R, G, B, T) VALUES(?,?,?,?,?,?)"
 		for nb in TYPE:
-			print (TYPE[nb][0])
+			#print (TYPE[nb][0])
 			cursor.execute(sql, TYPE[nb])
 			conn.commit()
 	
@@ -432,7 +432,7 @@ class djDataConnection:
 		cursor.execute(sql)
 		rows = cursor.fetchall()
 		conn.close()
-		print(rows)
+		#print(rows)
 		for row in rows:
 			ret['path'] = row[0]
 			ret['cortinaDuration'] = row[1]

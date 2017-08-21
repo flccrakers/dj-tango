@@ -272,14 +272,7 @@ class QRoundProgressBar(QtWidgets.QWidget):
             self.updateFlags |= self.UF_TIME
 
         self.update()
-    '''def setBackgroundColor(self, backgroundColor):
-        #self.palette().setColor(QtGui.QPalette.Background, backgroundColor)
-        p = self.palette()
-        p.setBrush(QtGui.QPalette.Background, backgroundColor)
-        self.setPalette(p)
-        #self.palette().background = backgroundColor
-        print("try to set color")
-    '''
+   
 
     def rebuildDataBrushIfNeeded(self):
         if self.rebuildBrush:

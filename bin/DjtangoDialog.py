@@ -112,7 +112,7 @@ class AudioPlayerDialog(QMainWindow, QObject):
         self.mediaSource = None
 
         self.djhome = os.path.join(os.path.expanduser("~"), ".djtango")
-        print (self.djhome)
+        print ('DJ_HOME_PATH: ' +self.djhome)
         
         self.addedEffects = {}
         self.effectsDict = {}
@@ -209,7 +209,7 @@ class AudioPlayerDialog(QMainWindow, QObject):
         self.stepFadOut = self.durationFadOut / self.player.notifyInterval()
         self.duration = 0
 
-        print("AUDIO PATH IN INITIALIZING DATA : "+self.audioPath)
+        #print("AUDIO PATH IN INITIALIZING DATA : "+self.audioPath)
 
 
 
@@ -284,7 +284,7 @@ class AudioPlayerDialog(QMainWindow, QObject):
         self.dirthread2 = QThread()
         self.scanner.moveToThread(self.dirthread2)
         
-
+        #j'ai modifié   
         # Create self._dialog instance and call
         # necessary methods to create a user interface
         self._createUI()
@@ -297,7 +297,7 @@ class AudioPlayerDialog(QMainWindow, QObject):
 
 
         #launch the worer threads
-        print("will start dirthread2")
+        print("starting directory scanning")
         self.dirthread2.start()
         
         
@@ -645,12 +645,12 @@ class AudioPlayerDialog(QMainWindow, QObject):
 
     def _handelStateChanged(self):
 
-        print("state: "+str(self.player.state()))
+        #print("state: "+str(self.player.state()))
         if self.player.state() == QMediaPlayer.PlayingState:
             self._isClicked = False
         elif self.player.state() == QMediaPlayer.StoppedState:
             if not self._isClicked and self._isPlaying :
-                print("will play the next song")
+                #print("will play the next song")
                 #self.clearPlayingCursor()
 
                 if self._isMilongaPlaying:
@@ -660,10 +660,10 @@ class AudioPlayerDialog(QMainWindow, QObject):
     
 
     def durationChanged(self, duration):
-        print("dans durationChanged")
+        #print("dans durationChanged")
         self.bar.setRange(0, duration)
         duration/=1000
-        print(str(duration*1000)+" "+str(self.curTango.duration))
+        #print(str(duration*1000)+" "+str(self.curTango.duration))
 
         self.duration = duration
 
@@ -696,17 +696,17 @@ class AudioPlayerDialog(QMainWindow, QObject):
 
     def positionChanged(self, progress):
         progress /= 1000
-        print("in positionChanged")
+        #print("in positionChanged")
         if not self._dialog.songSlider.isSliderDown():
             self._dialog.songSlider.setValue(progress)
             self._dialog.timeLabel.setText(str(utils.msecToms(progress*1000))+" / "+str(utils.msecToms(self.duration*1000)))
 
         if not self.curTango.type == 4 or not self.volumeSetToInitial:
-            #self.player.setVolume(100)
+            self.player.setVolume(100)
             #if (not self.volumeSetToInitial):
             #    self.player.setVolume(1.0)
             #    print("try to set the volume at 1")
-            #    self.volumeSetToInitial = True 
+            self.volumeSetToInitial = True 
             self.bar.setValue(self.duration*1000-progress*1000)
         elif self.curTango.type == 4:
             #print("progress: "+str(progress)+" FadOutTime: "+str(self.FadOutTime))
@@ -954,7 +954,7 @@ class AudioPlayerDialog(QMainWindow, QObject):
                 for i in range(len(self.bpmtrack)-1, len(self.bpmtrack)-6, -1):
                     #print (self.delta[i])
                     temp.append(self.bpmtrack[i])
-                print("delta: "+str(max(temp)-min(temp)))
+                #print("delta: "+str(max(temp)-min(temp)))
                 if max(temp)-min(temp) < 0.3 and self.bmpState != 2:
                     self.tapContent.labelDone.setText("DONE")
                     self.tapContent.labelDone.setStyleSheet("color: rgba(70,169,73)")
@@ -1146,7 +1146,7 @@ class AudioPlayerDialog(QMainWindow, QObject):
             self.TangoBeforeChange.year == self.detailsContent.spinBoxYear.value() and
             self.TangoBeforeChange.type == self.detailsContent.comboBoxTangoType.currentIndex()+1 and
             self.TangoBeforeChange.album == self.detailsContent.lineEditAlbum.text()):
-            print("rien n'a changé")
+            #print("rien n'a changé")
             ret = False
         #else:
         #    print("quelque chose a changé")
@@ -1242,7 +1242,7 @@ class AudioPlayerDialog(QMainWindow, QObject):
         #print ("number of rows: "+str(len(indexes)))
         for index in indexes:
             if index.isValid():
-                print (index.row())
+                #print (index.row())
                 self.destModel.removeRows(index.row(),1,QModelIndex())
 
     def _handelHideSource(self):
@@ -1342,7 +1342,7 @@ class AudioPlayerDialog(QMainWindow, QObject):
     def openFileDialog(self):
 
         dirName = QFileDialog.getExistingDirectory(self, "Open Directory", os.path.expanduser('~'), QFileDialog.ShowDirsOnly | QFileDialog.DontResolveSymlinks);
-        print (dirName)
+        #print (dirName)
         self.prefContent.lineEditSongDir.setText(dirName)
         self.scanningDir = True
         newfiles = self._tangoList.checkNewFiles()
@@ -1457,48 +1457,14 @@ class AudioPlayerDialog(QMainWindow, QObject):
 
         
 
-#    def _handleTick(self):
-#        print("dans handleTic")
-#        currentTime = str(utils.msecToms(self.mediaObj.currentTime()))
-#        duration = str(utils.msecToms(self.mediaObj.totalTime()))
-#        if (not self.curTango.duration == self.mediaObj.totalTime()) and (self.mediaObj.totalTime() > 0):
-#            #print ("duration: "+str(self.curTango.duration)+" time in mediaObj: "+str(self.mediaObj.totalTime()))
-#            self.curTango.duration = self.mediaObj.totalTime()
-#            self.djData.updateTango(self.curTango)
 
-
-#        if self.mediaObj.totalTime() >0:
-#            self._dialog.timeLabel.setText(currentTime+" / "+duration)
-#            if self.curTango.type == 4:
-#                self.bar.setRange(0, self.FadOutTime)
-#            else:
-#                self.bar.setRange(0, self.mediaObj.totalTime())
-            #self.bar.setFormat()
-
-#            if self.curTango.type == 4:
-#                self.bar.setValue(self.FadOutTime-self.mediaObj.currentTime())    
-#            else:
-#                self.bar.setValue(self.mediaObj.totalTime()-self.mediaObj.currentTime())
-                
-#        if not self.curTango.type == 4 or not self.volumeSetToInitial:
-#            self.audioSink.setVolume(1.0)
-#            self.volumeSetToInitial = True
-#        elif self.curTango.type == 4:
-#            if self.mediaObj.currentTime() >= (self.FadOutTime - self.durationFadOut):
-#                if self.audioSink.volume() > 0.1:
-#                    self.audioSink.setVolume(self.audioSink.volume()-100/self.stepFadOut)
-                #print ("lowering the volume "+str(self.audioSink.volume())+" currentTime: "+str(self.mediaObj.currentTime()) + " FadOutTime: "+str(self.FadOutTime))
-#                if self.audioSink.volume() <= 0.1 and self.mediaObj.currentTime()>=self.FadOutTime:
-#                    #print("I'm stopping the Cortina")
-#                    self.volumeSetToInitial = False
-#                    self.mediaObj.stop()
 			
      
 
   
     def playNextMilongaSong(self):
 
-        print("I will play the next one");
+        #print("I will play the next one");
 
         rowIndex = self.curLibraryRow+1
         #print("avant: "+str(rowIndex)+" -> "+str(self.destModel.rowCount(QModelIndex())))
@@ -1587,7 +1553,7 @@ class AudioPlayerDialog(QMainWindow, QObject):
                 self.destModel.setData(index, 0, Qt.EditRole)
 
     def playSelectedSource(self):
-        print("will play on enter press?")
+        #print("will play on enter press?")
         self._libraryClicked()
 
     def _libraryClicked(self):
@@ -1681,12 +1647,12 @@ class AudioPlayerDialog(QMainWindow, QObject):
         self._isPlaying = True
         
         #self.mediaObj.play()
-        print("je vais jouer le tango")
+        #print("je vais jouer le tango")
         
-        print(self.mediaSource)
+        #print(self.mediaSource)
         #pdb.set_trace()
         self.player.play()
-        print("c'est parti")
+        #print("c'est parti")
         
 
         #time.sleep(0.1)

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file './gui/UI_djtango.ui'
 #
-# Created by: PyQt5 UI code generator 5.7
+# Created by: PyQt5 UI code generator 5.5.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -11,7 +11,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_AudioPlayerDialog(object):
     def setupUi(self, AudioPlayerDialog):
         AudioPlayerDialog.setObjectName("AudioPlayerDialog")
-        AudioPlayerDialog.resize(1029, 599)
+        AudioPlayerDialog.resize(959, 599)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -146,6 +146,26 @@ class Ui_AudioPlayerDialog(object):
         self.horizontalLayout.addLayout(self.verticalLayout)
         spacerItem3 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem3)
+        self.checkBoxLetCortinaUntilEnd = QtWidgets.QCheckBox(self.centralwidget)
+        self.checkBoxLetCortinaUntilEnd.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.checkBoxLetCortinaUntilEnd.setStyleSheet("QCheckBox{\n"
+"    border: none;\n"
+"   color: white;\n"
+"    font-size: 14px;\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:unchecked {\n"
+"    background-color: rgb(42,42,42);       \n"
+"    border: 1px solid white;\n"
+"    image: url(../gui/img/checkbox_checked.png);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked {\n"
+"    background-color: rgb(160,52,77);      \n"
+"      border: 1px solid white;  \n"
+"}")
+        self.checkBoxLetCortinaUntilEnd.setObjectName("checkBoxLetCortinaUntilEnd")
+        self.horizontalLayout.addWidget(self.checkBoxLetCortinaUntilEnd)
         self.timeLabel = QtWidgets.QLabel(self.centralwidget)
         self.timeLabel.setStyleSheet("QLabel{\n"
 "    color: white;\n"
@@ -355,7 +375,7 @@ class Ui_AudioPlayerDialog(object):
         brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.ButtonText, brush)
-        brush = QtGui.QBrush(QtGui.QColor(0, 0, 0))
+        brush = QtGui.QBrush(QtGui.QColor(160, 52, 77, 80))
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Base, brush)
         brush = QtGui.QBrush(QtGui.QColor(160, 52, 77, 80))
@@ -861,7 +881,7 @@ class Ui_AudioPlayerDialog(object):
         self.verticalLayout_3.addLayout(self.horizontalLayout_4)
         AudioPlayerDialog.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(AudioPlayerDialog)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1029, 22))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 959, 22))
         self.menubar.setObjectName("menubar")
         self.menuFile = QtWidgets.QMenu(self.menubar)
         self.menuFile.setObjectName("menuFile")
@@ -913,6 +933,7 @@ class Ui_AudioPlayerDialog(object):
         self.labelArtist.setText(_translate("AudioPlayerDialog", "NA"))
         self.labelSep.setText(_translate("AudioPlayerDialog", "-"))
         self.labelAlbum.setText(_translate("AudioPlayerDialog", "NA"))
+        self.checkBoxLetCortinaUntilEnd.setText(_translate("AudioPlayerDialog", "End Cort."))
         self.timeLabel.setText(_translate("AudioPlayerDialog", "-"))
         self.playToolButton.setToolTip(_translate("AudioPlayerDialog", "play / pause"))
         self.playToolButton.setShortcut(_translate("AudioPlayerDialog", "Space"))

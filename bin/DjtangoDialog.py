@@ -696,34 +696,29 @@ class AudioPlayerDialog(QMainWindow, QObject):
 
     def positionChanged(self, progress):
         progress /= 1000
-        #print("in positionChanged")
         if not self._dialog.songSlider.isSliderDown():
             self._dialog.songSlider.setValue(progress)
             self._dialog.timeLabel.setText(str(utils.msecToms(progress*1000))+" / "+str(utils.msecToms(self.duration*1000)))
 
         if not self.curTango.type == 4 or not self.volumeSetToInitial:
             self.player.setVolume(100)
-            #if (not self.volumeSetToInitial):
-            #    self.player.setVolume(1.0)
-            #    print("try to set the volume at 1")
+            #print("case 1")
             self.volumeSetToInitial = True 
             self.bar.setValue(self.duration*1000-progress*1000)
-        elif self.curTango.type == 4:
-            #print("progress: "+str(progress)+" FadOutTime: "+str(self.FadOutTime))
-            #print("volume: "+str(self.player.volume())) 
-            self.bar.setRange(0, self.FadOutTime) #set the maximum value of the circular progress bar
-            self.bar.setValue(self.FadOutTime-progress*1000)
-            if (progress*1000) >= (self.FadOutTime - self.durationFadOut):
-                if self.player.volume() > 1:
-                    self.player.setVolume(self.player.volume()-100/self.stepFadOut)
-                #print ("lowering the volume "+str(self.player.volume())+" currentTime: "+str(progress*1000) + " FadOutTime: "+str(self.FadOutTime))
-                if self.player.volume() <= 1 and progress*1000>=self.FadOutTime:
-                    #print("I'm stopping the Cortina")
-                    self.volumeSetToInitial = False
-                    self.player.stop()
-                    self.player.setVolume(1.0)
-
-                    #print("Je viens de stoper la musique")
+        elif self.curTango.type == 4 and not self._dialog.checkBoxLetCortinaUntilEnd.isChecked():
+          #print("case 2")
+          self.bar.setRange(0, self.FadOutTime) #set the maximum value of the circular progress bar
+          self.bar.setValue(self.FadOutTime-progress*1000)
+          if (progress*1000) >= (self.FadOutTime - self.durationFadOut):
+            if self.player.volume() > 1:
+              self.player.setVolume(self.player.volume()-100/self.stepFadOut)
+              if self.player.volume() <= 1 and progress*1000>=self.FadOutTime:
+                self.volumeSetToInitial = False
+                self.player.stop()
+                self.player.setVolume(100)
+        elif self._dialog.checkBoxLetCortinaUntilEnd.isChecked():
+          #print("case 3")
+          self.player.setVolume(100)
 
     def seek(self, seconds):
             self.player.setPosition(seconds * 1000)

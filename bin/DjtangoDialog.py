@@ -649,11 +649,16 @@ class AudioPlayerDialog(QMainWindow, QObject):
         if self.player.state() == QMediaPlayer.PlayingState:
             self._isClicked = False
         elif self.player.state() == QMediaPlayer.StoppedState:
+
+
             if not self._isClicked and self._isPlaying :
                 #print("will play the next song")
                 #self.clearPlayingCursor()
 
                 if self._isMilongaPlaying:
+                    if self._dialog.checkBoxLetCortinaUntilEnd.isChecked():
+                      #remove the checked state
+                      self._dialog.checkBoxLetCortinaUntilEnd.setCheckState(False)
                     self.playNextMilongaSong()
                 else:
                     self.playNextLibrarySong()
@@ -700,7 +705,7 @@ class AudioPlayerDialog(QMainWindow, QObject):
             self._dialog.songSlider.setValue(progress)
             self._dialog.timeLabel.setText(str(utils.msecToms(progress*1000))+" / "+str(utils.msecToms(self.duration*1000)))
 
-        if not self.curTango.type == 4 or not self.volumeSetToInitial:
+        if not self.curTango.type == 4 or not self.volumeSetToInitial or self._dialog.checkBoxLetCortinaUntilEnd.isChecked():
             self.player.setVolume(100)
             #print("case 1")
             self.volumeSetToInitial = True 
@@ -712,13 +717,13 @@ class AudioPlayerDialog(QMainWindow, QObject):
           if (progress*1000) >= (self.FadOutTime - self.durationFadOut):
             if self.player.volume() > 1:
               self.player.setVolume(self.player.volume()-100/self.stepFadOut)
-              if self.player.volume() <= 1 and progress*1000>=self.FadOutTime:
-                self.volumeSetToInitial = False
-                self.player.stop()
-                self.player.setVolume(100)
-        elif self._dialog.checkBoxLetCortinaUntilEnd.isChecked():
+            if self.player.volume() <= 1 and progress*1000>=self.FadOutTime:
+              self.volumeSetToInitial = False
+              self.player.stop()
+              self.player.setVolume(100)
+        #elif self._dialog.checkBoxLetCortinaUntilEnd.isChecked():
           #print("case 3")
-          self.player.setVolume(100)
+        #  self.player.setVolume(100)
 
     def seek(self, seconds):
             self.player.setPosition(seconds * 1000)

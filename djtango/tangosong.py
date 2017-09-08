@@ -25,6 +25,8 @@ class TangoSong:
 		self.duration = 0
 		self.bpmHuman = 0
 		self.bpmFromFile = 0
+		self.tstart = 0
+		self.tend = 0
 		#print (EasyID3.valid_keys.keys())
 		#self.list = []
 		
@@ -110,7 +112,7 @@ class TangoSong:
 		return [self.ID, self.title, self.artist, self.album, self.type]
 
 	def listUpdateDB(self):
-		return [self.title, self.artist, self.album, self.type, int(self.year), self.bpmHuman, self.bpmFromFile, self.duration, self.path, self.ID]
+		return [self.title, self.artist, self.album, self.type, int(self.year), self.bpmHuman, self.bpmFromFile, self.duration, self.path, self.tstart, self.tend, self.ID ]
 
 
 	def writeTags(self, TYPE):

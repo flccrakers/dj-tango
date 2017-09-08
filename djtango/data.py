@@ -223,6 +223,8 @@ class djDataConnection:
 			ctango.bpmHuman = row[7]
 			ctango.bpmFromFile = row[8]
 			ctango.duration = row[9]
+			ctango.tstart = row[13]
+			ctango.tend = row[14]
 
 			tangoList.append(ctango)
 			#print (ctango.type)
@@ -319,7 +321,9 @@ class djDataConnection:
 		bpmHuman = ?,
 		bpmFromFile = ?,
 		duration = ?,
-		tangopath = ?
+		tangopath = ?,
+		tstart = ?,
+		tend = ?
 		WHERE ID = ? """
 		#print (tango.listUpdateDB())
 		cursor.execute(sql, tango.listUpdateDB())

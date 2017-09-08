@@ -13,6 +13,8 @@ CREATE TABLE "tangos" (
 	`singer`	INTEGER,
 	`composer`	INTEGER,
 	`author`	INTEGER,
+	`tstart`	INTEGER DEFAULT 0,
+	`tend`	INTEGER DEFAULT 0,
 	PRIMARY KEY(ID)
 );
 CREATE TABLE tangoType

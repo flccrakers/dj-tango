@@ -346,6 +346,7 @@ class djDataConnection:
 		conn.close()
 
 	def updateBPM(self, tango):
+		print("will update in database "+str(tango.bpmHuman))
 		conn = sqlite3.connect(self.path)
 		cursor = conn.cursor()	
 		

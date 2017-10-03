@@ -42,6 +42,7 @@ from PyQt5.Qt import QAbstractItemView
 from PyQt5.Qt import QHeaderView
 from PyQt5.Qt import QColorDialog
 from PyQt5.Qt import QSortFilterProxyModel
+#from PyQt5 import QtGui
 from mutagen.mp3 import MP3
 
 from PyQt5.QtMultimedia import (QMediaPlayer, QMediaContent)
@@ -99,10 +100,13 @@ class MyTimer:
         self._timer.cancel() 
 
 class AudioPlayerDialog(QMainWindow, QObject):
+
     tangoListUpdated = pyqtSignal(dirSong)
     workingOnNewfileStatus = pyqtSignal(bool)
     def __init__(self):
         QMainWindow.__init__(self)
+
+        self.setWindowIcon(QIcon('../djtango/img/logo-djtango.png')) 
 
         self.bpm = 0
 
@@ -1964,8 +1968,13 @@ class AudioPlayerDialog(QMainWindow, QObject):
                 classique+=tango.duration
             if not tango.type == 4:
                 #print(tango.ID)
-                #print(tango.duration)
-                totalDuration+=float(tango.duration)
+                print(str(tango.tstart)+" | "+str(tango.tend))
+                if (tango.tend == 0 and tango.tstart == 0):
+                    totalDuration+=float(tango.duration)
+                elif tango.tend>0:
+                    #print("duration: "+str(tango.duration)+" real duration "+str(tango.tend - tango.tstart))
+                    print("dif: "+str(tango.duration - tango.tend))
+                    totalDuration+=float(tango.tend - tango.tstart)
                 totalDurWithCort+=float(tango.duration)
                 songnum+=1
             else: 

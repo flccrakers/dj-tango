@@ -256,6 +256,8 @@ class djDataConnection:
 			ctango.bpmFromFile = row[8]
 			#print("duration in database: "+str(row[9]))
 			ctango.duration = row[9]
+			ctango.tstart = row[13]
+			ctango.tend = row[14]
 			tangoList.append(ctango)
 			#print (ctango.type)
 		return tangoList
@@ -287,6 +289,9 @@ class djDataConnection:
 			ctango.bpmFromFile = row[8]
 			#print("duration in database: "+str(row[9]))
 			ctango.duration = row[9]
+			ctango.tstart = row[13]
+			ctango.tend = row[14]
+
 			tangoList.append(ctango)
 			#print (ctango.type)
 		return tangoList
@@ -346,6 +351,7 @@ class djDataConnection:
 		conn.close()
 
 	def updateBPM(self, tango):
+		print("will update in database "+str(tango.bpmHuman))
 		conn = sqlite3.connect(self.path)
 		cursor = conn.cursor()	
 		

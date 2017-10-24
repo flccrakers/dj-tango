@@ -705,7 +705,7 @@ class AudioPlayerDialog(QMainWindow, QObject):
 
 
     def positionChanged(self, progress):
-        if progress >= self.curTango.tend:
+        if progress >= self.curTango.tend and self.curTango.tend != 0:
             self.player.stop()
         progress /= 1000
         if not self._dialog.songSlider.isSliderDown():

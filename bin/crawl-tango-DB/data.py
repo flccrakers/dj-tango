@@ -41,7 +41,7 @@ class DBtangoConnexion:
 	def existTango(self, tango):
 		conn = sqlite3.connect(self.path)
 		cursor = conn.cursor()
-
+		#print (tango)
 		sql = "SELECT * FROM tangos WHERE year =? and artist =? and title =? and singer =? and genre =? and composer =? and author =?"
 		#print (sql)
 		#print (tango.path)

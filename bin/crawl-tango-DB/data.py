@@ -42,7 +42,7 @@ class DBtangoConnexion:
 		if self.existTango(song):
 			return
 
-		sql = "INSERT INTO tangos (year,artist, title,singer, genre, composer, author) VALUES(?,?,?,?,?,?,?)"
+		sql = "INSERT INTO tangos (year, month, day,artist, norm_artist, title, norm_title, singer, genre, composer, author) VALUES(?,?,?,?,?,?,?,?,?,?,?)"
 		cursor.execute(sql, song)
 
 		
@@ -53,7 +53,7 @@ class DBtangoConnexion:
 		conn = sqlite3.connect(self.path)
 		cursor = conn.cursor()
 		#print (tango)
-		sql = "SELECT * FROM tangos WHERE year =? and artist =? and title =? and singer =? and genre =? and composer =? and author =?"
+		sql = "SELECT * FROM tangos WHERE year =? and month=? and day=? and artist =? and norm_artist=? and title =? and norm_title=? and singer =? and genre =? and composer =? and author =?"
 		#print (sql)
 		#print (tango.path)
 

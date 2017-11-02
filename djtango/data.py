@@ -46,6 +46,7 @@ class djDataConnection:
 		
 	def existTangoInTangoDatabase(self, tango):
 		conn = sqlite3.connect(self.pathTangoDatabase)
+		print (self.pathTangoDatabase)
 		cursor = conn.cursor()
 		sql = "SELECT * FROM tangos WHERE norm_artist = ? and norm_title = ?"
 		print (self.path)

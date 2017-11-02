@@ -6,6 +6,7 @@ import re
 from bs4 import BeautifulSoup
 from pprint import pprint
 from data import DBtangoConnexion
+import utils
 
 
 def getSongsFromPage(page, url):
@@ -32,9 +33,20 @@ def getSongsFromPage(page, url):
 				song = []
 				tds = tr.findAll("td")
 				#print(str(tds[4].a.next)+' | '+str(tds[5].next))
-				song = [tds[1].a.next,tds[2].a.next,tds[3].a.next,tds[4].a.next,tds[5].next+tds[5].span.next,tds[6].a.next]
+				song = [
+				tds[1].a.next,
+				int(tds[1].a.span.next.split('-')[1]),#month
+				int(tds[1].a.span.next.split('-')[2]),#day
+				tds[2].a.next,
+				utils.remove_accents(tds[2].a.next).lower(),
+				tds[3].a.next,
+				utils.remove_accents(tds[3].a.next).lower(),
+				tds[4].a.next,
+				tds[5].next+tds[5].span.next,
+				tds[6].a.next]
+
 				if isinstance(tds[4].a.next, bs4.element.Tag):
-					song[3] =''
+					song[7] =''
 				if not isinstance(tds[7].a.next, bs4.element.Tag):
 					song.append(tds[7].a.next)
 				else:
@@ -97,7 +109,7 @@ rootPage = "https://www.el-recodo.com/music?page=O&tri=O&P=0&lang=fr#";
 fp = urllib.request.urlopen(rootPage)
 #<a href="music?O=Adolfo CARABELLI&amp;tri=&amp;P=0&amp;lang=fr">Adolfo CARABELLI <span class="label label-default">58</span></a>
 dbData = DBtangoConnexion()
-#dbData.createDatabase()
+dbData.createDatabase()
 songs=[]
 orchestraList = getListOfOrchestra(fp.read())
 banned = ['http://www.el-recodo.com/#',

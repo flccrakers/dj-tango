@@ -3,10 +3,11 @@
 
 from djtango.data import djDataConnection
 from djtango.tangosong import TangoSong
+import os
 
 #listOfTango = []
-
-djData = djDataConnection()
+djhome = os.path.join(os.path.expanduser("~"), ".djtango")
+djData = djDataConnection(djhome)
 TYPE = djData.getTangoTypeList()
 
 def getTypeFromName(name):

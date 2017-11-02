@@ -115,6 +115,7 @@ class AudioPlayerDialog(QMainWindow, QObject):
         
         self.mediaSource = None
 
+        #todo: user case in windows ?
         self.djhome = os.path.join(os.path.expanduser("~"), ".djtango")
         print ('DJ_HOME_PATH: ' +self.djhome)
         

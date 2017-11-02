@@ -49,7 +49,7 @@ class djDataConnection:
 		cursor = conn.cursor()
 		sql = "SELECT * FROM tangos WHERE norm_artist = ? and norm_title = ?"
 		print (self.path)
-		#print("SELECT * FROM tangos WHERE norm_artist = \""+utils.remove_accents(tango.artist).lower()+"\" AND norm_title = \""+utils.remove_accents(tango.title).lower()+"\"")
+		print("SELECT * FROM tangos WHERE norm_artist = \""+utils.remove_accents(tango.artist).lower()+"\" AND norm_title = \""+utils.remove_accents(tango.title).lower()+"\"")
 
 		cursor.execute(sql, (utils.remove_accents(tango.artist).lower(), utils.remove_accents(tango.title).lower(), ))
 		rows = cursor.fetchall()

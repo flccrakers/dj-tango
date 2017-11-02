@@ -13,8 +13,19 @@ class DBtangoConnexion:
 		cursor = conn.cursor()
 		# create a table
 		cursor.execute("""CREATE TABLE tangos
-			(ID INTEGER PRIMARY KEY ASC, title text, artist text, album text, 
-			genre text, year integer, singer text, composer text, author text) 
+			(ID INTEGER PRIMARY KEY ASC, 
+			title text,
+			norm_title text,
+			artist text,
+			norm_artist text,
+			album text, 
+			genre text,
+			year integer,
+			month integer,
+			day integer,
+			singer text,
+			composer text,
+			author text) 
 			""")
 		conn.commit()
 		conn.close()

@@ -3,7 +3,7 @@
 
 
 # use pydub to detect the silences at the begining and the end of a song
-# and save the real beginin and end of each song.
+# and save the real begining and end of each song in the database
 
 from djtango.data import djDataConnection
 from pydub import AudioSegment

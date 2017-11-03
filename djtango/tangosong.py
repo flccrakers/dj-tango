@@ -27,6 +27,8 @@ class TangoSong:
 		self.bpmFromFile = 0
 		self.tstart = 0
 		self.tend = 0
+		self.composer = 'Unknown'
+		self.author = 'Unknown'
 		#print (EasyID3.valid_keys.keys())
 		#self.list = []
 		
@@ -40,7 +42,7 @@ class TangoSong:
 		self.artist = self.artist.title()
 		self.title = self.title.title()
 		self.album = self.album.title()
-		self.author = self.author.title()
+		self.author = self.author.title()	
 
 	def extractAnyTag(self):
 		
@@ -112,7 +114,7 @@ class TangoSong:
 		return [self.ID, self.title, self.artist, self.album, self.type]
 
 	def listUpdateDB(self):
-		return [self.title, self.artist, self.album, self.type, int(self.year), self.bpmHuman, self.bpmFromFile, self.duration, self.path, self.tstart, self.tend, self.ID ]
+		return [self.title, self.artist, self.album, self.type, int(self.year), self.bpmHuman, self.bpmFromFile, self.duration, self.path, self.tstart, self.tend,self.author, self.singer, self.composer, self.ID ]
 
 
 	def writeTags(self, TYPE):

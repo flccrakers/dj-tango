@@ -1206,6 +1206,7 @@ class AudioPlayerDialog(QMainWindow, QObject):
                     #
                 
                 if self.normalize==2:
+                    print(tangoID)
                     self._tangoList.normalizeTango(tangoID, self.TYPE)
 
                 if self.writeTag == 2:

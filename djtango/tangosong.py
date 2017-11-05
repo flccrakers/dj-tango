@@ -29,6 +29,7 @@ class TangoSong:
 		self.tend = 0
 		self.composer = 'Unknown'
 		self.author = 'Unknown'
+		self.singer = 'Unknown'
 		#print (EasyID3.valid_keys.keys())
 		#self.list = []
 		
@@ -42,7 +43,12 @@ class TangoSong:
 		self.artist = self.artist.title()
 		self.title = self.title.title()
 		self.album = self.album.title()
-		self.author = self.author.title()	
+		print("author: "+str(self.author))
+		if (self.author):
+			self.author = self.author.title()
+		else:
+			self.author = 'Unknown'.title()
+		#self.author = self.author.title()	
 
 	def extractAnyTag(self):
 		

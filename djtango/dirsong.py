@@ -177,7 +177,7 @@ class dirSong:
 			#print("Coying this file in the new directory")
 			move(tango.path, os.path.join(rep, name))
 		
-
+			print(Tid)
 			self.tangos[Tid].path = os.path.join(rep, name)
 			self.tangos[Tid].titleFields()
 			self.listFiles[tango.path] = tango.ID

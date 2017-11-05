@@ -3,7 +3,7 @@ import itertools
 from .utils import db_to_float
 
 def detect_silence_start_end(audio_segment, min_silence_len=1000, silence_thresh=-16, seek_step=1):
-    print("try to optimize")
+    #print("try to optimize")
 
     seg_len = len(audio_segment)
      # you can't have a silent portion of a sound that is longer than the sound

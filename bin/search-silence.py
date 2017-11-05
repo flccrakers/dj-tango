@@ -8,56 +8,97 @@
 from djtango.data import djDataConnection
 from pydub import AudioSegment
 from pydub import silence
+import pydub
 
-import unicodedata, re, os
+import unicodedata, re, os, sys
 #p = re.compile('(\s\(2\)| \(3\)| \(4\)| \(5\))')
+def backspace(n):
+    # print((b'\x08').decode(), end='')     # use \x08 char to go back
+    #clear()
+
+    toPrint = ''
+    for i in range(0,n):
+    	toPrint+=' '
+    print(toPrint, end='\r') 
+
+def clear():
+
+    os.system( 'clear' )
+    print()
+
+
 djhome = os.path.join(os.path.expanduser("~"), ".djtango")
 
 data = djDataConnection(djhome)
 tangos = data.getAllTangos()
+sizeBackSpace = 1000;
 
-startworkat = 0
+startworkat = 4814
+tangoCount = 0
+cont = 1
+size = 3
 #count = 0
 for tango in tangos:
+	tangoCount+=1
 	#count+=1
-	print(str(tango.ID) +" - "+tango.path)
+	#sys.stdout.flush()
+
+	#printing infos
+	backspace(sizeBackSpace)
+	percent = tangoCount*100/len(tangos)
+	start = '   ['+"%.0f" % percent+'% '
+	for i in range(0,cont):
+		start+='.'
+	for i in range(0,size-cont):
+		start+=' '
+	start+='] - '
+	cont+=1
+	if cont >size: cont = 1;
+	toPrint = start+str(tango.ID) + " - "+tango.path 
+	print(toPrint, end='\r', flush=True) 
+	sizeBackSpace = len (toPrint)
+
+
 	file_extension = os.path.splitext(tango.path)[1][1:]
-	#print (file_extension)
-	#acceptedext = []
-
 	if tango.ID >= startworkat:
-		#song = AudioSegment.from_mp3(tango.path)
-		song = AudioSegment.from_file(tango.path, file_extension.lower())
-		#print (len(song))
-		silences = silence.detect_silence_start_end(song, 500, -56)
-		print ("#of silences: "+str(len(silences)))
-		if (len(silences) > 1):
-			starttime = silences[0][1]
-			stoptime = silences[len(silences)-1][0]
-			print (str(starttime)+" "+str(stoptime))
-			tango.tstart = starttime
-			tango.tend = stoptime
-		elif len(silences) == 1:
-			print(silences)
-			if (silences[0][0] == 0):
-				tango.tstart = silences[0][1]
-				tango.tend = len(song)
-			elif silences[0][0] > len(song)*3/4:
+		try:
+			song = AudioSegment.from_file(tango.path, file_extension.lower())
+			silences = silence.detect_silence_start_end(song, 500, -56)
+			if (len(silences) > 1):
+				starttime = silences[0][1]
+				stoptime = silences[len(silences)-1][0]
+				tango.tstart = starttime
+				tango.tend = stoptime
+			elif len(silences) == 1:
+				if (silences[0][0] == 0):
+					tango.tstart = silences[0][1]
+					tango.tend = len(song)
+				elif silences[0][0] > len(song)*3/4:
+					tango.tstart = 0
+					tango.tend = silences[0][0]
+			elif len(silences) == 0:
 				tango.tstart = 0
-				tango.tend = silences[0][0]
-		elif len(silences) == 0:
-			print ("start to end")
-			tango.tstart = 0
-			tango.tend = len(song)
-		else:
-			print("something not clear, put to 0")
-			tango.tstart = 0
-			tango.tend = 0
+				tango.tend = len(song)
+			else:
+				tango.tstart = 0
+				tango.tend = 0
 		
-		print (str(tango.tstart)+" "+str(tango.tend))
-		tango.duration = len(song)
+			tango.duration = len(song)
 
-		#exit(0)
-		data.updateTango(tango)
-
-	#data.updateTitleArtistInTangoDatabase(tango[0], tango[1], tango[2])
+			data.updateTango(tango)
+		except FileNotFoundError:
+			print (start+"We can not find the file of "+str(tango.ID));
+			backspace(sizeBackSpace)
+			print(toPrint)
+		except KeyboardInterrupt:
+			backspace(sizeBackSpace)
+			print(toPrint)
+			print(start+"KeyboardInterrupt")
+			exit(0)
+		except pydub.exceptions.CouldntDecodeError as e:
+			clear()
+			backspace(sizeBackSpace)
+			print(toPrint)
+			print(start+"Can't Decode "+str(tango.ID)+" "+tango.path)
+			
+			pass

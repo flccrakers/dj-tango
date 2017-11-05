@@ -46,11 +46,11 @@ class djDataConnection:
 		
 	def existTangoInTangoDatabase(self, tango):
 		conn = sqlite3.connect(self.pathTangoDatabase)
-		print (self.pathTangoDatabase)
+		#print (self.pathTangoDatabase)
 		cursor = conn.cursor()
 		sql = "SELECT * FROM tangos WHERE norm_artist = ? and norm_title = ?"
-		print (self.path)
-		print("SELECT * FROM tangos WHERE norm_artist = \""+utils.remove_accents(tango.artist).lower()+"\" AND norm_title = \""+utils.remove_accents(tango.title).lower()+"\"")
+		#print (self.path)
+		#print("SELECT * FROM tangos WHERE norm_artist = \""+utils.remove_accents(tango.artist).lower()+"\" AND norm_title = \""+utils.remove_accents(tango.title).lower()+"\"")
 
 		cursor.execute(sql, (utils.remove_accents(tango.artist).lower(), utils.remove_accents(tango.title).lower(), ))
 		rows = cursor.fetchall()
@@ -142,6 +142,11 @@ class djDataConnection:
 			ctango.bpmHuman = row[7]
 			ctango.bpmFromFile = row[8]
 			ctango.duration = row[9]
+			ctango.singer = row[10]
+			ctango.composer = row[11]
+			ctango.author = row[12]
+			ctango.tstart = row[13]
+			ctango.tend = row[14]
 
 			tangoList.append(ctango)
 			#print (ctango.type)
@@ -224,6 +229,9 @@ class djDataConnection:
 			ctango.bpmHuman = row[7]
 			ctango.bpmFromFile = row[8]
 			ctango.duration = row[9]
+			ctango.singer = row[10]
+			ctango.composer = row[11]
+			ctango.author = row[12]
 			ctango.tstart = row[13]
 			ctango.tend = row[14]
 
@@ -257,6 +265,9 @@ class djDataConnection:
 			ctango.bpmFromFile = row[8]
 			#print("duration in database: "+str(row[9]))
 			ctango.duration = row[9]
+			ctango.singer = row[10]
+			ctango.composer = row[11]
+			ctango.author = row[12]
 			ctango.tstart = row[13]
 			ctango.tend = row[14]
 			tangoList.append(ctango)
@@ -290,6 +301,9 @@ class djDataConnection:
 			ctango.bpmFromFile = row[8]
 			#print("duration in database: "+str(row[9]))
 			ctango.duration = row[9]
+			ctango.singer = row[10]
+			ctango.composer = row[11]
+			ctango.author = row[12]
 			ctango.tstart = row[13]
 			ctango.tend = row[14]
 
@@ -329,7 +343,10 @@ class djDataConnection:
 		duration = ?,
 		tangopath = ?,
 		tstart = ?,
-		tend = ?
+		tend = ?,
+		author=?,
+		singer=?, 
+		composer = ?
 		WHERE ID = ? """
 		#print (tango.listUpdateDB())
 		cursor.execute(sql, tango.listUpdateDB())

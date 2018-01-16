@@ -1,3 +1,6 @@
 __init__.py
 __pycahce__
 *.pyc
+.idea/
+venv/
+venv1/

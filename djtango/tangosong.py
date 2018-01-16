@@ -122,6 +122,9 @@ class TangoSong:
 	def listUpdateDB(self):
 		return [self.title, self.artist, self.album, self.type, int(self.year), self.bpmHuman, self.bpmFromFile, self.duration, self.path, self.tstart, self.tend,self.author, self.singer, self.composer, self.ID ]
 
+	def	listUpdateDBTxt(self):
+		return [self.title, self.artist, self.album, str(self.type), str(self.year), str(self.bpmHuman), str(self.bpmFromFile), str(self.duration), self.path, str(self.tstart), str(self.tend), self.author, self.singer, self.composer, str(self.ID) ]
+
 
 	def writeTags(self, TYPE):
 		
@@ -155,11 +158,15 @@ class TangoSong:
 		#print ("GENRE !!!! :"+str(genre))
 		try:
 			audio['title'] = u""+self.title
-			audio['artist'] = u""+self.artist
-			audio['album'] = self.album
+			audio['artist'] = [u""+self.artist,u""+self.singer]
+			audio['album'] = u""+self.album
 			audio['genre'] = u""+str(TYPE[self.type][1].title())
 			audio['date'] = u""+str(self.year)
 			audio['author'] = u""+self.author
+			audio['composer'] = u""+self.composer
+			audio['length'] = u""+str(self.duration)
+			#audio['INVOLVEDPEOPLE'] = u"Singer:"+self.singer
+
 			if self.bpmHuman > 0:
 				audio['bpm'] = str(self.bpmHuman)
 			else:

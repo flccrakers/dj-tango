@@ -1,60 +1,54 @@
 #!/usr/bin/python3
 # -*- coding:Utf-8 -*-
-import pdb
-from djtango.UI_djtango import Ui_AudioPlayerDialog
-from djtango.UI_details import Ui_details
-from djtango.UI_infos import Ui_infos
-from djtango.UI_preferences import Ui_preferences
-from djtango.UI_selectmilonga import Ui_selectmilonga
-from djtango.UI_milongaName import Ui_DialogMilongaName
-from djtango.UI_askDelete import Ui_DialogAskDelete
-from djtango.UI_sideDisplay import Ui_sideDisplay
-from djtango.UI_tapbpm import Ui_tapDialog
-from djtango.UI_infosMilonga import Ui_infosMilonga
-from djtango.form import Ui_Form
-from djtango.tangosong import TangoSong
-from djtango.dirsong import dirSong
-from djtango.data import djDataConnection
-from djtango.circularprogressbar import QRoundProgressBar
-from djtango import tableModels
-from djtango import utils
-from djtango.dirscanningthread import dirScan
+import audioread
+import os
+import platform
+import re
+import sys
+import threading
+import time
 
-
+from PyQt5 import QtCore, QtGui
+from PyQt5.Qt import QAbstractItemView
+from PyQt5.Qt import QApplication
+from PyQt5.Qt import QColorDialog
+# from PyQt5.Qt import QList
+from PyQt5.Qt import QDesktopWidget
+# from PyQt5.Qt import SIGNAL
+from PyQt5.Qt import QFileDialog
+from PyQt5.Qt import QHeaderView
+from PyQt5.Qt import QIcon
+from PyQt5.Qt import QThread
+from PyQt5.Qt import pyqtSignal
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+from PyQt5.QtMultimedia import (QMediaPlayer, QMediaContent)
+from PyQt5.QtWidgets import QDialog
 from PyQt5.QtWidgets import QMainWindow
+from PyQt5.QtWidgets import QMenu
+from PyQt5.QtWidgets import QMessageBox
 from PyQt5.QtWidgets import QProgressDialog
 from PyQt5.QtWidgets import QShortcut
 from PyQt5.QtWidgets import QWidget
-from PyQt5.QtWidgets import QDialog
-from PyQt5.QtWidgets import QMenu
-from PyQt5.QtWidgets import QMessageBox
-from PyQt5.Qt import QApplication
-#from PyQt5.Qt import QList
-from PyQt5.Qt import QDesktopWidget
-from PyQt5.Qt import QThread
-from PyQt5.Qt import pyqtSignal
-#from PyQt5.Qt import SIGNAL
-from PyQt5.Qt import QFileDialog
-from PyQt5.Qt import QIcon
-from PyQt5.Qt import QAction
-from PyQt5.Qt import QAbstractTableModel
-from PyQt5.Qt import QAbstractItemView
-from PyQt5.Qt import QHeaderView
-from PyQt5.Qt import QColorDialog
-from PyQt5.Qt import QSortFilterProxyModel
-#from PyQt5 import QtGui
-from mutagen.mp3 import MP3
+from djtango import tableModels
+from djtango import utils
+from djtango.UI_askDelete import Ui_DialogAskDelete
+from djtango.UI_details import Ui_details
+from djtango.UI_djtango import Ui_AudioPlayerDialog
+from djtango.UI_infos import Ui_infos
+from djtango.UI_infosMilonga import Ui_infosMilonga
+from djtango.UI_milongaName import Ui_DialogMilongaName
+from djtango.UI_preferences import Ui_preferences
+from djtango.UI_selectmilonga import Ui_selectmilonga
+from djtango.UI_sideDisplay import Ui_sideDisplay
+from djtango.UI_tapbpm import Ui_tapDialog
+from djtango.circularprogressbar import QRoundProgressBar
+from djtango.data import djDataConnection
+from djtango.dirscanningthread import dirScan
+from djtango.dirsong import dirSong
+from djtango.tangosong import TangoSong
 
-from PyQt5.QtMultimedia import (QMediaPlayer, QMediaContent)
-
-
-from PyQt5.QtCore import * 
-from PyQt5.QtGui import *
-
-from PyQt5 import QtCore, QtGui
-
-
-import os, sys, time, threading, operator, re, audioread, platform 
+# from PyQt5 import QtGui
 
 try:
     _fromUtf8 =QtCore.QString.fromUtf8

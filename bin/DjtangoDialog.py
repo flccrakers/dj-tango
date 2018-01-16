@@ -2138,49 +2138,42 @@ class AudioPlayerDialog(QMainWindow, QObject):
             self.showNormal()
 
     def _updateSideScreen(self, lastsong = False):
+    #update size depending on the lentgh of the text.
+    	if self.curTango is  not None:
+    		nextTanda = self.getNextTanda();
+    		self.sideContent.labelArtist.setText(self.curTango.artist)
+    		if self.curTango.type == 4:
+    			self.sideContent.labelType.setText(self.TYPE[self.curTango.type][1].upper() )
+    		else:
+    			if not self._isMilongaPlaying:
+    				self.sideContent.labelType.setText(self.TYPE[self.curTango.type][1].upper())
+    			else:
+    				self.sideContent.labelType.setText(self.TYPE[self.curTango.type][1].upper()+" - "+str(nextTanda['nbintanda']-nextTanda['num']+1)+"/"+str(nextTanda['nbintanda']) )
 
-        #update size depending on the lentgh of the text.
-        #
-        #print("in side sceen updating")
+    		title = str(self.curTango.title)
+    		if self.curTango.year >11:
+    			title+=" ( "+str(self.curTango.year)+" )"
+    		self.sideContent.labelTitle.setText(title)
 
-        if self.curTango is  not None: 
-            nextTanda = self.getNextTanda();
-            #print("type : "+str(self.curTango.type))
-            self.sideContent.labelArtist.setText(self.curTango.artist)
-            if self.curTango.type == 4:
-                self.sideContent.labelType.setText(self.TYPE[self.curTango.type][1].upper() )
-            else:
-                if not self._isMilongaPlaying:
-                    self.sideContent.labelType.setText(self.TYPE[self.curTango.type][1].upper())
-                else:
-                    self.sideContent.labelType.setText(self.TYPE[self.curTango.type][1].upper()+" - "+str(nextTanda['nbintanda']-nextTanda['num']+1)+"/"+str(nextTanda['nbintanda']) )
+    		if not self._isMilongaPlaying:
+    			self.sideContent.labelNextTanda.setText("LIST PLAYING :-)")
+    		elif nextTanda['type'] == 'last':
+    			self.sideContent.labelNextTanda.setText("LAST TANDA :-(")
+    		else:
+    			#self.sideContent.labelNextTanda.setText("NEXT TANDA ( "+str(nextTanda['num'])+")""  |  "+str(nextTanda['type']))
+    			self.sideContent.labelNextTanda.setText("NEXT TANDA  |  "+str(nextTanda['type']))
 
-        
-            if self.curTango.year == 0:
-                self.sideContent.labelTitle.setText(self.curTango.title)
-            else:
-                self.sideContent.labelTitle.setText(self.curTango.title+" ( "+str(self.curTango.year)+" )")
+    		if self.curTango.singer != 'Unknown' and self.curTango.singer is not None:
+    			self.sideContent.labelSinger.setText('Cantator: '+str(self.curTango.singer))
+    		else:
+    			self.sideContent.labelSinger.setText('')
 
-            
-            if not self._isMilongaPlaying:
-                self.sideContent.labelNextTanda.setText("LIST PLAYING :-)")
-            elif nextTanda['type'] == 'last':
-                self.sideContent.labelNextTanda.setText("LAST TANDA :-(")
-            else:
-                #self.sideContent.labelNextTanda.setText("NEXT TANDA ( "+str(nextTanda['num'])+")""  |  "+str(nextTanda['type']))
-                self.sideContent.labelNextTanda.setText("NEXT TANDA  |  "+str(nextTanda['type']))
-
-
-
-            R = self.TYPE[self.curTango.type][2]
-            G = self.TYPE[self.curTango.type][3]
-            B = self.TYPE[self.curTango.type][4]
-            T = self.TYPE[self.curTango.type][5]
-        #self.prefContent.selectColorButton.setStyleSheet("background-color: rgba("+str(R)+","+str(G)+","+str(B)+","+str(T)+")")
-            self.sideContent.frameType.setStyleSheet(_fromUtf8("QFrame{\n  background-color: rgba("+str(R)+","+str(G)+","+str(B)+","+str(T)+");\n border: 0px;\n  margin-right: 0px;\n    margin-bottom: 0px;\n margin-left: 0px;\n spacing: 0px;\n padding: 0px;\n} \nQFrame::layout { margin: 0px }"))
-
-            #self.sideContent.frameType.setStyleSheet(_fromUtf8("QFrame{\n  background-color: rgba("+str(R)+","+str(G)+","+str(B)+","+str(T)+");\n border: 0px;\n  margin-right: 0px;\n    margin-bottom: 0px;\n margin-left: 0px;\n spacing: 0px;\n padding: 0px;\n} \nQFrame::layout { margin: 0px }")
-            self._updateLabelSize()
+    		R = self.TYPE[self.curTango.type][2]
+    		G = self.TYPE[self.curTango.type][3]
+    		B = self.TYPE[self.curTango.type][4]
+    		T = self.TYPE[self.curTango.type][5]
+    		self.sideContent.frameType.setStyleSheet(_fromUtf8("QFrame{\n  background-color: rgba("+str(R)+","+str(G)+","+str(B)+","+str(T)+");\n border: 0px;\n  margin-right: 0px;\n    margin-bottom: 0px;\n margin-left: 0px;\n spacing: 0px;\n padding: 0px;\n} \nQFrame::layout { margin: 0px }"))
+    		self._updateLabelSize()
 
     def _updateLabelSize(self):
         size1 = 100
@@ -2233,6 +2226,8 @@ class AudioPlayerDialog(QMainWindow, QObject):
         self.sideContent.labelType.setStyleSheet(_fromUtf8("QLabel{\n  background-color: \"transparent\";\n font-weight: bold;\n    color: white;\n font-size: "+str(size1-3)+"px;\n margin-left: 20px;\n    font-family: \"sans\"\n}"))
         
         self.sideContent.labelTitle.setStyleSheet(_fromUtf8("QLabel{\n  margin-left: 20px;\n    color: white;\n font-size: "+str(size2)+"px;\n  font-family: \"sans\"\n}"))
+        self.sideContent.labelSinger.setStyleSheet(_fromUtf8("QLabel{\n  margin-left: 20px;\n    color: white;\n font-size: "+str(size2)+"px;\n  font-family: \"sans\"\n}"))
+
         self.sideContent.labelNextTanda.setStyleSheet(_fromUtf8("QLabel{\n font-family: \"sans\";\n  font-weight: bold;\n color: white;\n font-size: "+str(nextTandaSize)+"px;\n}"))
 
     def getNbSongInCurTanda(self):

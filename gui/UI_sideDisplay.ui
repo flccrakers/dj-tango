@@ -309,7 +309,7 @@ QFrame::layout { margin: 0px }</string>
 }</string>
        </property>
        <property name="text">
-        <string>Artiste</string>
+        <string>Orchesta</string>
        </property>
        <property name="scaledContents">
         <bool>true</bool>
@@ -371,6 +371,46 @@ QFrame::layout { margin: 0px }</string>
        </property>
        <property name="indent">
         <number>-1</number>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="verticalSpacer">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelSinger">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QLabel{
+	margin-left: 20px;
+	color: white;
+	font-size: 70px;
+	font-family: &quot;sans&quot;
+}</string>
+       </property>
+       <property name="text">
+        <string>Singer:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
        </property>
       </widget>
      </item>

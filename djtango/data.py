@@ -46,15 +46,10 @@ class djDataConnection:
 		
 	def existTangoInTangoDatabase(self, tango):
 		conn = sqlite3.connect(self.pathTangoDatabase)
-		#print (self.pathTangoDatabase)
-		cursor = conn.cursor()
 		sql = "SELECT * FROM tangos WHERE norm_artist = ? and norm_title = ?"
-		#print (self.path)
-		#print("SELECT * FROM tangos WHERE norm_artist = \""+utils.remove_accents(tango.artist).lower()+"\" AND norm_title = \""+utils.remove_accents(tango.title).lower()+"\"")
-
+		cursor = conn.cursor()
 		cursor.execute(sql, (utils.remove_accents(tango.artist).lower(), utils.remove_accents(tango.title).lower(), ))
 		rows = cursor.fetchall()
-		
 		conn.commit()
 		conn.close()
 
@@ -147,6 +142,7 @@ class djDataConnection:
 			ctango.author = row[12]
 			ctango.tstart = row[13]
 			ctango.tend = row[14]
+			ctango.treated = row[15]
 
 			tangoList.append(ctango)
 			#print (ctango.type)
@@ -234,6 +230,7 @@ class djDataConnection:
 			ctango.author = row[12]
 			ctango.tstart = row[13]
 			ctango.tend = row[14]
+			ctango.treated = row[15]
 
 			tangoList.append(ctango)
 			#print (ctango.type)
@@ -270,6 +267,7 @@ class djDataConnection:
 			ctango.author = row[12]
 			ctango.tstart = row[13]
 			ctango.tend = row[14]
+			ctango.treated = row[15]
 			tangoList.append(ctango)
 			#print (ctango.type)
 		return tangoList
@@ -306,6 +304,7 @@ class djDataConnection:
 			ctango.author = row[12]
 			ctango.tstart = row[13]
 			ctango.tend = row[14]
+			ctango.treated = row[15]
 
 			tangoList.append(ctango)
 			#print (ctango.type)
@@ -346,7 +345,8 @@ class djDataConnection:
 		tend = ?,
 		author=?,
 		singer=?, 
-		composer = ?
+		composer = ?,
+		treated = ?
 		WHERE ID = ? """
 		#print (tango.listUpdateDB())
 		cursor.execute(sql, tango.listUpdateDB())

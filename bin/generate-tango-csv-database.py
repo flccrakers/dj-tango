@@ -19,12 +19,13 @@ for tango in tangos:
 		size = os.path.getsize(tango.path)
 	else:
 		size = 0
+	print(str(tango.bpmHuman)+' '+str(tango.bpmFromFile));
 	tango = tango.listUpdateDBTxt()
 	tango[3] = TYPE[int(tango[3])][1];
 	#print (tango[8].replace('/home/hoonakker/media/tango-propres-HQ/', ''))
 	#tango[8] = tango[8].replace('/home/hoonakker/media/tango-propres-HQ/', '')
 	tango.append(str(size))
-	print(str(size))
+	#print(tango)
 	s = ','
 	outF.write(s.join(tango)+"\n")
 	#print(tango.listUpdateDB())

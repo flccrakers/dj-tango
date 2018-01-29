@@ -124,7 +124,7 @@ class TangoSong:
 		return [self.title, self.artist, self.album, self.type, int(self.year), self.bpmHuman, self.bpmFromFile, self.duration, self.path, self.tstart, self.tend,self.author, self.singer, self.composer, self.treated, self.ID ]
 
 	def	listUpdateDBTxt(self):
-		return [self.title, self.artist, self.album, str(self.type), str(self.year), str(self.bpmHuman), str(self.bpmFromFile), str(self.duration), self.path, str(self.tstart), str(self.tend), self.author, self.singer, self.composer, str(self.ID) ]
+		return [self.title, self.artist, self.album, str(self.type), str(self.year), str(self.bpmHuman), str(self.bpmFromFile), str(self.duration), self.path, str(self.tstart), str(self.tend), self.author, self.singer, self.composer, str(self.treated), str(self.ID) ]
 
 
 	def writeTags(self, TYPE):

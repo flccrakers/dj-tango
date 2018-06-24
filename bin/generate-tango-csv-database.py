@@ -13,7 +13,7 @@ tangos = data.getAllTangos()
 TYPE = data.getTangoTypeList()
 #print(TYPE)
 outF = open('tango-database.csv', "w")
-outF.write('title, artist, album, type, year, bpmHuman, bpmFromFile, duration, path, tstart, tend,author, singer, composer, ID'+"\n")
+outF.write('title, artist, album, type, year, bpmHuman, bpmFromFile, duration, path, tstart, tend,author, singer, composer, ID, size'+"\n")
 for tango in tangos:
 	if os.path.isfile(tango.path):
 		size = os.path.getsize(tango.path)
@@ -21,10 +21,17 @@ for tango in tangos:
 		size = 0
 	tango = tango.listUpdateDBTxt()
 	tango[3] = TYPE[int(tango[3])][1];
+
+
+	for i in range(0,len(tango)):
+		if tango[i] == None:
+			tango[i] = 'Unknown'
 	#print (tango[8].replace('/home/hoonakker/media/tango-propres-HQ/', ''))
 	#tango[8] = tango[8].replace('/home/hoonakker/media/tango-propres-HQ/', '')
+	
 	tango.append(str(size))
-	print(str(size))
+	#print(str(size))
+	print (tango);
 	s = ','
 	outF.write(s.join(tango)+"\n")
 	#print(tango.listUpdateDB())

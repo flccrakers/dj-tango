@@ -4,11 +4,11 @@
 
 # use pydub to detect the silences at the begining and the end of a song
 # and save the real begining and end of each song in the database
+
 from djtango.data import djDataConnection
 from pydub import AudioSegment
 from pydub import silence
 import pydub
-
 
 import unicodedata, re, os, sys
 #p = re.compile('(\s\(2\)| \(3\)| \(4\)| \(5\))')
@@ -33,7 +33,7 @@ data = djDataConnection(djhome)
 tangos = data.getAllTangos()
 sizeBackSpace = 1000;
 
-startworkat = 5562
+startworkat = 4814
 tangoCount = 0
 cont = 1
 size = 3

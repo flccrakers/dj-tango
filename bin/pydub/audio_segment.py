@@ -7,7 +7,7 @@ from tempfile import TemporaryFile, NamedTemporaryFile
 import wave
 import sys
 import struct
-from .logging_utils import log_conversion, log_subprocess_output
+from .logging_utils import log_conversion
 import base64
 
 try:
@@ -230,12 +230,6 @@ class AudioSegment(object):
 
     def __getitem__(self, millisecond):
         if isinstance(millisecond, slice):
-            if millisecond.step:
-                return (
-                    self[i:i+millisecond.step]
-                    for i in xrange(*millisecond.indices(len(self)))
-                )
-
             start = millisecond.start if millisecond.start is not None else 0
             end = millisecond.stop if millisecond.stop is not None \
                 else len(self)
@@ -508,22 +502,19 @@ class AudioSegment(object):
 
         log_conversion(conversion_command)
 
-        with open(os.devnull, 'rb') as devnull:
-            p = subprocess.Popen(conversion_command, stdin=devnull, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        p = subprocess.Popen(conversion_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         p_out, p_err = p.communicate()
 
-        log_subprocess_output(p_out)
-        log_subprocess_output(p_err)
+        if p.returncode != 0:
+            raise CouldntDecodeError("Decoding failed. ffmpeg returned error code: {0}\n\nOutput from ffmpeg/avlib:\n\n{1}".format(p.returncode, p_err))
 
         try:
-            if p.returncode != 0:
-                raise CouldntDecodeError("Decoding failed. ffmpeg returned error code: {0}\n\nOutput from ffmpeg/avlib:\n\n{1}".format(p.returncode, p_err))
-            obj = cls._from_safe_wav(output)
+          obj = cls._from_safe_wav(output)
         finally:
-            input_file.close()
-            output.close()
-            os.unlink(input_file.name)
-            os.unlink(output.name)
+          input_file.close()
+          output.close()
+          os.unlink(input_file.name)
+          os.unlink(output.name)
 
         return obj
 
@@ -674,12 +665,8 @@ class AudioSegment(object):
         log_conversion(conversion_command)
 
         # read stdin / write stdout
-        with open(os.devnull, 'rb') as devnull:
-            p = subprocess.Popen(conversion_command, stdin=devnull, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        p = subprocess.Popen(conversion_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         p_out, p_err = p.communicate()
-
-        log_subprocess_output(p_out)
-        log_subprocess_output(p_err)
 
         if p.returncode != 0:
             raise CouldntEncodeError("Encoding failed. ffmpeg/avlib returned error code: {0}\n\nCommand:{1}\n\nOutput from ffmpeg/avlib:\n\n{2}".format(p.returncode, conversion_command, p_err))
@@ -751,13 +738,11 @@ class AudioSegment(object):
         if channels == 2 and self.channels == 1:
             fn = audioop.tostereo
             frame_width = self.frame_width * 2
-            fac = 1
         elif channels == 1 and self.channels == 2:
             fn = audioop.tomono
             frame_width = self.frame_width // 2
-            fac = 0.5
 
-        converted = fn(self._data, self.sample_width, fac, fac)
+        converted = fn(self._data, self.sample_width, 1, 1)
 
         return self._spawn(data=converted,
                            overrides={

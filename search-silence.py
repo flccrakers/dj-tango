@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 # -*- coding:Utf-8 -*
 
-
 # use pydub to detect the silences at the begining and the end of a song
 # and save the real begining and end of each song in the database
 
@@ -33,7 +32,7 @@ data = djDataConnection(djhome)
 tangos = data.getAllTangos()
 sizeBackSpace = 1000;
 
-startworkat = 4814
+startworkat = 5600
 tangoCount = 0
 cont = 1
 size = 3

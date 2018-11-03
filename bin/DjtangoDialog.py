@@ -1435,8 +1435,6 @@ class AudioPlayerDialog(QMainWindow, QObject):
             self.curTango = self._tangoList.tangos[self._currentIndex]
             if self.curTango.type == 4:
                 time.sleep(0.5)
-            else:
-                time.sleep(0.8)
             if self.sideWindow.isFullScreen() and rowIndex == self.destModel.rowCount(QModelIndex()):
                 self._updateSideScreen(True)
             elif self.sideWindow.isFullScreen():

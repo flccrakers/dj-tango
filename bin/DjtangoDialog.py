@@ -569,7 +569,7 @@ class AudioPlayerDialog(QMainWindow, QObject):
         # self.mediaObj.tick.connect(self._handleTick)
         self.player.durationChanged.connect(self.durationChanged)
         self.player.positionChanged.connect(self.position_changed)
-        self.player.stateChanged.connect(self._handelStateChanged)
+        self.player.stateChanged.connect(self._handel_state_changed)
 
         self._dialog.songSlider.sliderMoved.connect(self.seek)
         # self._dialog.songSlider.actionTriggered.connect(self.sliderAction)
@@ -607,17 +607,12 @@ class AudioPlayerDialog(QMainWindow, QObject):
 
         self.selectMilongaListContent.listWidgetMilongas.doubleClicked.connect(self._doubleClickedMilongaSelect)
 
-    def _handelStateChanged(self):
-
+    def _handel_state_changed(self):
         # print("state: "+str(self.player.state()))
         if self.player.state() == QMediaPlayer.PlayingState:
             self._isClicked = False
         elif self.player.state() == QMediaPlayer.StoppedState:
-
             if not self._isClicked and self._isPlaying:
-                # print("will play the next song")
-                # self.clearPlayingCursor()
-
                 if self._isMilongaPlaying:
                     if self._dialog.checkBoxLetCortinaUntilEnd.isChecked():
                         # remove the checked state
@@ -660,17 +655,18 @@ class AudioPlayerDialog(QMainWindow, QObject):
         slider_progress = progress / 1000
         if not self._dialog.songSlider.isSliderDown():
             self._dialog.songSlider.setValue(slider_progress)
-            self._dialog.timeLabel.setText(str(utils.msecToms(progress)) + " / " + str(utils.msecToms(self.duration)))
+            self._dialog.timeLabel.setText(
+                str(utils.msecToms(progress)) + " / " + str(utils.msecToms(self.duration * 1000)))
+
 
         if not self.curTango.type == 4 or not self.volumeSetToInitial or self._dialog.checkBoxLetCortinaUntilEnd.isChecked():
             self.player.setVolume(100)
             # print("case 1")
             self.volumeSetToInitial = True
             self.bar.setValue(self.duration * 1000 - progress * 1000)
-            print(progress, self.curTango.tend)
+            # print(progress, self.curTango.tend)
             if progress >= self.curTango.tend:
-                self.play_next_tango()
-                print("It's time to stop / I should put a timer here to wait ")
+                self.player.stop()
         elif self.curTango.type == 4 and not self._dialog.checkBoxLetCortinaUntilEnd.isChecked():
             # print("case 2")
             self.bar.setRange(0, self.FadOutTime)  # set the maximum value of the circular progress bar
@@ -1408,12 +1404,6 @@ class AudioPlayerDialog(QMainWindow, QObject):
         self._load_new_media()
         self._play_media()
 
-    def play_next_tango(self):
-        if self._isMilongaPlaying:
-            self.play_next_milonga_song()
-        else:
-            self.playNextLibrarySong()
-
     def play_next_milonga_song(self):
 
         print("I will play the next one")
@@ -1433,7 +1423,7 @@ class AudioPlayerDialog(QMainWindow, QObject):
             if self.curTango.type == 4:
                 time.sleep(0.5)
             else:
-                time.sleep(1.5)
+                time.sleep(1.2)
             if self.sideWindow.isFullScreen() and rowIndex == self.destModel.rowCount(QModelIndex()):
                 self._updateSideScreen(True)
             elif self.sideWindow.isFullScreen():
@@ -1570,7 +1560,6 @@ class AudioPlayerDialog(QMainWindow, QObject):
             self.mediaSource = QMediaContent(QUrl.fromLocalFile(QFileInfo(self.curTango.path).absoluteFilePath()))
             self.player.setMedia(self.mediaSource)
             return True
-
 
     def _play_media(self):
         """

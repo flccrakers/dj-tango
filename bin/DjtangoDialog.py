@@ -597,9 +597,9 @@ class AudioPlayerDialog(QMainWindow, QObject):
         self._dialog.pushButtonClearFilter.clicked.connect(self._clear_filter)
 
         self._dialog.pushButtonSaveMilonga.clicked.connect(self._save_milonga)
-        self._dialog.pushButtonSaveMilongaAs.clicked.connect(self._saveMilongaAs)
-        self._dialog.pushButtonDeleteMilonga.clicked.connect(self._deleteMilonga)
-        self._dialog.pushButtonLoadMilonga.clicked.connect(self._loadMilonga)
+        self._dialog.pushButtonSaveMilongaAs.clicked.connect(self._save_milonga_as)
+        self._dialog.pushButtonDeleteMilonga.clicked.connect(self._delete_milonga)
+        self._dialog.pushButtonLoadMilonga.clicked.connect(self._load_milonga)
         self._dialog.pushButtonMilongaClear.clicked.connect(self._clearMilonga)
 
         self._dialog.pushButtonInfoMilonga.clicked.connect(self._showInfoMilonga)
@@ -1790,7 +1790,7 @@ class AudioPlayerDialog(QMainWindow, QObject):
         self.djData.saveMilonga(self.currentMilongaName, self.getIDListFromMilonga())
         self._showInfo("The milonga \"" + str(self.currentMilongaName) + "\" has been saved")
 
-    def _saveMilongaAs(self):
+    def _save_milonga_as(self):
 
         if self.destModel.rowCount(QModelIndex()) == 0:
             self._showInfo("The Milonga list is empty, can't save anything")
@@ -1809,7 +1809,7 @@ class AudioPlayerDialog(QMainWindow, QObject):
         self.djData.saveMilonga(self.currentMilongaName, self.getIDListFromMilonga())
         self._showInfo("The milonga \"" + str(self.currentMilongaName) + "\" has been saved")
 
-    def _deleteMilonga(self):
+    def _delete_milonga(self):
         if self._isMilongaPlaying:
             self._showInfo("You can not do this while a milonga is playing")
             return
@@ -1830,7 +1830,7 @@ class AudioPlayerDialog(QMainWindow, QObject):
         else:
             self._showInfo("You abort the deletion")
 
-    def _loadMilonga(self):
+    def _load_milonga(self):
 
         if self._isMilongaPlaying:
             self._showInfo("You can not do this while a milonga is playing")
@@ -1843,10 +1843,10 @@ class AudioPlayerDialog(QMainWindow, QObject):
         if self.selectMilongaListWindow.result() == 0:
             return
         self.currentMilongaName = self.selectMilongaListContent.listWidgetMilongas.currentItem().data(Qt.DisplayRole)
-        tangoList = self.djData.getTangoFromMilonga(self.currentMilongaName)
+        tango_list = self.djData.getTangoFromMilonga(self.currentMilongaName)
 
         data = []
-        for tango in tangoList:
+        for tango in tango_list:
             # tango.duration = utils.msecToms(tango.duration)
             data.append(tango.list())
 
@@ -1854,7 +1854,7 @@ class AudioPlayerDialog(QMainWindow, QObject):
         self._dialog.labelMilongaName.setText(self.currentMilongaName)
         # self.updateMilongaInfos(tangoList)
         self.destModel.changeData(data)
-        self.updateMilongaInfos(tangoList)
+        self.updateMilongaInfos(tango_list)
 
     def updateMilongaInfos(self, tangoList=None):
         # print("will udpte the milonga Infos");

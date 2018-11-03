@@ -1416,33 +1416,32 @@ class AudioPlayerDialog(QMainWindow, QObject):
 
     def play_next_milonga_song(self):
 
-        # print("I will play the next one");
+        print("I will play the next one")
 
-        row_index = self.curLibraryRow + 1
-        print("avant: "+str(row_index)+" -> "+str(self.destModel.rowCount(QModelIndex())))
-        if row_index <= self.destModel.rowCount(
+        rowIndex = self.curLibraryRow + 1
+        if rowIndex <= self.destModel.rowCount(
                 QModelIndex()):  # we allow put the cursor after the en of the list, but will not play it
             self.curLibraryRow += 1
-            row_index = self.curLibraryRow + 1
+            rowIndex = self.curLibraryRow + 1
         index = self.destModel.index(self.curLibraryRow, 0)
         self._currentIndex = self.destModel.data(index, Qt.DisplayRole)
         self._dialog.milongaDest.selectRow(self.curLibraryRow)
-        # index = self.destModel.index(self.curLibraryRow, 1)
-        # self.destModel.setData(index, 1, Qt.EditRole)
         self.updatePlayingCursor()
 
-        time.sleep(0.1)
-        print("deux: "+str(row_index)+" -> "+str(self.destModel.rowCount(QModelIndex())))
-        if row_index <= self.destModel.rowCount(QModelIndex()):
+        if rowIndex <= self.destModel.rowCount(QModelIndex()):
             self.curTango = self._tangoList.tangos[self._currentIndex]
-
-            if self.sideWindow.isFullScreen() and row_index == self.destModel.rowCount(QModelIndex()):
+            if self.curTango.type == 4:
+                time.sleep(0.5)
+            else:
+                time.sleep(1.5)
+            if self.sideWindow.isFullScreen() and rowIndex == self.destModel.rowCount(QModelIndex()):
                 self._updateSideScreen(True)
             elif self.sideWindow.isFullScreen():
                 self._updateSideScreen()
-
-            self._loadNewMedia()
-            self._playMedia()
+            if self._load_new_media():
+                self._play_media()
+            else:
+                self.play_next_milonga_song()
         else:
             self._showInfo("The milonga is finished")
 

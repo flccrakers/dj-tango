@@ -10,9 +10,9 @@ CREATE TABLE "tangos" (
 	`bpmHuman`	REAL DEFAULT 0,
 	`bpmFromFile`	REAL DEFAULT 0,
 	`duration`	INTEGER DEFAULT 0,
-	`singer`	INTEGER,
-	`composer`	INTEGER,
-	`author`	INTEGER,
+	`singer`	TEXT DEFAULT 'Unknown',
+	`composer`	TEXT DEFAULT 'Unknown',
+	`author`	TEXT DEFAULT 'Unknown',
 	`tstart`	INTEGER DEFAULT 0,
 	`tend`	INTEGER DEFAULT 0,
 	PRIMARY KEY(ID)

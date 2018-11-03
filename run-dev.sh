@@ -17,4 +17,4 @@ pyuic5 ./gui/UI_infosMilonga.ui -o ./djtango/UI_infosMilonga.py &&\
 
 pyuic5 ./gui/form.ui -o ./djtango/form.py &&\
 
-./bin/DjtangoDialog.py
+DjtangoDialog.py

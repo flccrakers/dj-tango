@@ -13,7 +13,7 @@ class Ui_sideDisplay(object):
         sideDisplay.setObjectName("sideDisplay")
         sideDisplay.setWindowModality(QtCore.Qt.NonModal)
         sideDisplay.setEnabled(True)
-        sideDisplay.resize(1337, 1074)
+        sideDisplay.resize(1337, 1092)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -111,7 +111,7 @@ class Ui_sideDisplay(object):
         self.horizontalLayout_2.addItem(spacerItem1)
         self.verticalLayout_5.addWidget(self.frameType)
         self.verticalLayout_2.addLayout(self.verticalLayout_5)
-        spacerItem2 = QtWidgets.QSpacerItem(20, 120, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        spacerItem2 = QtWidgets.QSpacerItem(20, 80, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Maximum)
         self.verticalLayout_2.addItem(spacerItem2)
         self.labelArtist = QtWidgets.QLabel(sideDisplay)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Preferred)
@@ -152,8 +152,25 @@ class Ui_sideDisplay(object):
         self.labelTitle.setIndent(-1)
         self.labelTitle.setObjectName("labelTitle")
         self.verticalLayout_2.addWidget(self.labelTitle)
-        spacerItem4 = QtWidgets.QSpacerItem(20, 300, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        spacerItem4 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
         self.verticalLayout_2.addItem(spacerItem4)
+        self.labelSinger = QtWidgets.QLabel(sideDisplay)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.labelSinger.sizePolicy().hasHeightForWidth())
+        self.labelSinger.setSizePolicy(sizePolicy)
+        self.labelSinger.setStyleSheet("QLabel{\n"
+"    margin-left: 20px;\n"
+"    color: white;\n"
+"    font-size: 70px;\n"
+"    font-family: \"sans\"\n"
+"}")
+        self.labelSinger.setAlignment(QtCore.Qt.AlignCenter)
+        self.labelSinger.setObjectName("labelSinger")
+        self.verticalLayout_2.addWidget(self.labelSinger)
+        spacerItem5 = QtWidgets.QSpacerItem(20, 300, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Maximum)
+        self.verticalLayout_2.addItem(spacerItem5)
         self.verticalLayout.addLayout(self.verticalLayout_2)
         self.verticalLayout_3 = QtWidgets.QVBoxLayout()
         self.verticalLayout_3.setSizeConstraint(QtWidgets.QLayout.SetMinAndMaxSize)
@@ -242,7 +259,8 @@ class Ui_sideDisplay(object):
         _translate = QtCore.QCoreApplication.translate
         sideDisplay.setWindowTitle(_translate("sideDisplay", "sideDisplay"))
         self.labelType.setText(_translate("sideDisplay", "Tango Type"))
-        self.labelArtist.setText(_translate("sideDisplay", "Artiste"))
+        self.labelArtist.setText(_translate("sideDisplay", "Orchesta"))
         self.labelTitle.setText(_translate("sideDisplay", "Title (year - Author)"))
+        self.labelSinger.setText(_translate("sideDisplay", "Singer:"))
         self.labelNextTanda.setText(_translate("sideDisplay", "NEXT TANDA (in X song)   |   VALS"))
 

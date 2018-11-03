@@ -211,6 +211,40 @@ class milongaSource(QAbstractTableModel):
     def flags(self, index):
         return Qt.ItemIsDragEnabled | Qt.ItemIsEnabled | Qt.ItemIsSelectable
 
+    def removeRows(self, row, count, parent):
+        
+        self.beginRemoveRows(parent, row, row+count-1);
+        print ("will remove row(s) starting from"+str(row)+"and removing "+str(count)+" row(s)")
+
+        #before = self.mylist[:row]
+        #after = self.mylist[row+count:]
+        #print (before)
+        #print (after)
+        #print ("before : "+str(len(before)))
+        #print ("after : "+str(len(after)))
+        
+        #if len(before) == 0:
+        #    self.mylist = after[:]
+        #elif len(after) == 0:
+        #    self.mylist = before[:]
+        #else: 
+        #    self.mylist = before[:]
+        #    self.mylist.extend(after)
+
+        # attention, il ne fait pas supprimer la ligne, mais il faut chercher l'index et supprimer uniquement
+        # la bonne ligne dans mylist
+        print(len(self.mylist))
+        #del self.mylist[row]
+        print(len(self.mylist))
+        #self.mylist = self.mylist.remove()
+
+        #print (self.mylist)
+        #
+        #
+        self.endRemoveRows()
+        #self.dataChanged.emit(self.createIndex(0, 0), self.createIndex(self.rowCount(0), self.columnCount(0)))
+        return True
+
    
 
     #def 
@@ -501,6 +535,8 @@ class sourceFilterProxyModel(QSortFilterProxyModel):
         indexArtist = self.sourceModel().index(sourceRow, 3, parent)
         indexAlbum = self.sourceModel().index(sourceRow, 4, parent)
         indexGenre = self.sourceModel().index(sourceRow, 5, parent)
+
+        #print(self.sourceModel().data(indexArtist))
 
         resArtist = self.artistRegExp.match(self.sourceModel().data(indexArtist))
         resAlbum = self.albumRegExp.match(self.sourceModel().data(indexAlbum))

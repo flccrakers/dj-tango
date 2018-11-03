@@ -877,7 +877,7 @@ class AudioPlayerDialog(QMainWindow, QObject):
         self._isClicked = True
         self.curTango = self._tangoList.tangos[self.curTangoEditing]
         self._load_new_media()
-        self._playMedia()
+        self._play_media()
         self.tapTable = []
         self.tapContent.lcdNumber.display(0.0)
         self.bpm = 0
@@ -964,7 +964,7 @@ class AudioPlayerDialog(QMainWindow, QObject):
             self._isClicked = True
             self.curTango = self._tangoList.tangos[self.curTangoEditing]
             self._load_new_media()
-            self._playMedia()
+            self._play_media()
             self.initialiszeBmpInfo()
 
     def _handelTapingPrevious(self):
@@ -982,7 +982,7 @@ class AudioPlayerDialog(QMainWindow, QObject):
             self._isClicked = True
             self.curTango = self._tangoList.tangos[self.curTangoEditing]
             self._load_new_media()
-            self._playMedia()
+            self._play_media()
             self.initialiszeBmpInfo()
 
     def updateTangoBPM(self):
@@ -1020,7 +1020,7 @@ class AudioPlayerDialog(QMainWindow, QObject):
                 self._isClicked = True
                 self.curTango = self._tangoList.tangos[self.curTangoEditing]
                 self._load_new_media()
-                self._playMedia()
+                self._play_media()
 
             # check for the common fields
         sameFieldValue = self.getSameFieldInfos(indexes)
@@ -1381,7 +1381,7 @@ class AudioPlayerDialog(QMainWindow, QObject):
             else:
                 #    self._isMilongaPlaying = False
                 if self._okToPlayPauseStop:
-                    self._playMedia()
+                    self._play_media()
             # elif self._dialog.tabMilonga
             self._isPaused = False
 
@@ -1406,7 +1406,7 @@ class AudioPlayerDialog(QMainWindow, QObject):
         self.updateMilongaInfos();
 
         self._load_new_media()
-        self._playMedia()
+        self._play_media()
 
     def play_next_tango(self):
         if self._isMilongaPlaying:
@@ -1470,7 +1470,7 @@ class AudioPlayerDialog(QMainWindow, QObject):
             self.curTango = self._tangoList.tangos[self._currentIndex]
 
             self._load_new_media()
-            self._playMedia()
+            self._play_media()
             self._updateSideScreen()
             # print("je met à jour le side Screen")
             # pdb.set_trace()
@@ -1524,7 +1524,7 @@ class AudioPlayerDialog(QMainWindow, QObject):
             # self.sourceProxyModel.setData(index, 1, Qt.EditRole)
             self.updatePlayingCursor()
             self._load_new_media()
-            self._playMedia()
+            self._play_media()
             self._updateSideScreen()
 
     def _destLibraryClicked(self):
@@ -1545,7 +1545,7 @@ class AudioPlayerDialog(QMainWindow, QObject):
             self.curTango = self._tangoList.tangos[self._currentIndex]
 
             self._load_new_media()
-            self._playMedia()
+            self._play_media()
 
     def updateDuration(self):
 
@@ -1571,42 +1571,32 @@ class AudioPlayerDialog(QMainWindow, QObject):
             self.player.setMedia(self.mediaSource)
             return True
 
-    def _playMedia(self):
+
+    def _play_media(self):
         """
         Play the curent tango
         """
-
         if not self._okToPlayPauseStop():
             return
-
-        # if self.mediaObj is None:
-
-        #    self._showInfo ("Error playing Audio")
-        #    return
 
         if self.curTango is None:
             self._showInfo("No tango selected")
             return
 
-        # self.audioSink.setVolume(1.0)
         self._dialog.playToolButton.setIcon(self.pauseIcon)
         self.updateTangoInfos(self.curTango)
         self._isPlaying = True
 
-        # self.mediaObj.play()
-        # print("je vais jouer le tango")
-
-        # print(self.mediaSource)
-        # pdb.set_trace()
         if not self.curTango.tstart == 0:
             self.seek(self.curTango.tstart / 1000)
 
         if self._isMilongaPlaying:
             time.sleep(1.5)
-        self.player.play()
+        try:
+            self.player.play()
+        except Exception as err:
+            print(err)
         # print("c'est parti")
-
-        # time.sleep(0.1)
 
     def updateTangoInfos(self, tango):
 

@@ -552,6 +552,7 @@ class AudioPlayerDialog(QMainWindow, QObject):
         # self.connect(self.infothread, SIGNAL("terminated()"), self.closeInfo)
 
         self._dialog.playToolButton.clicked.connect(self._handelPlayPause)
+        self._dialog.checkBoxLetCortinaUntilEnd.clicked.connect(self.handle_cortina_checkbox)
 
         self._dialog.lineEditFilter.returnPressed.connect(self._handelFilterChange)
         self._dialog.pushButtonRandom.clicked.connect(self.sourceModel.randomize)
@@ -658,12 +659,11 @@ class AudioPlayerDialog(QMainWindow, QObject):
             self._dialog.timeLabel.setText(
                 str(utils.msecToms(progress)) + " / " + str(utils.msecToms(self.duration * 1000)))
 
-
         if not self.curTango.type == 4 or not self.volumeSetToInitial or self._dialog.checkBoxLetCortinaUntilEnd.isChecked():
             self.player.setVolume(100)
             # print("case 1")
             self.volumeSetToInitial = True
-            self.bar.setValue(self.duration * 1000 - progress * 1000)
+            self.bar.setValue(self.duration * 1000 - progress)
             # print(progress, self.curTango.tend)
             if progress >= self.curTango.tend:
                 self.player.stop()
@@ -678,6 +678,10 @@ class AudioPlayerDialog(QMainWindow, QObject):
                     self.volumeSetToInitial = False
                     self.player.stop()
                     self.player.setVolume(100)
+        # elif self.curTango.type == 4 and self._dialog.checkBoxLetCortinaUntilEnd.isChecked():
+        #    self.bar.setRange(0, self.duration * 1000)  # set the maximum value of the circular progress bar
+        #    self.bar.setValue(self.duration * 1000 - progress)
+
         # elif self._dialog.checkBoxLetCortinaUntilEnd.isChecked():
         # print("case 3")
         #  self.player.setVolume(100)
@@ -1364,6 +1368,15 @@ class AudioPlayerDialog(QMainWindow, QObject):
 
     ### END ###########################
 
+    def handle_cortina_checkbox(self):
+        #print("should do something")
+        if self._dialog.checkBoxLetCortinaUntilEnd.isChecked:
+            #print("ok it's cheched")
+            self.bar.setRange(0, self.duration * 1000)
+        else:
+            #print("ok not checked")
+            self.bar.setRange(0, self.FadOutTime)
+
     def _handelPlayPause(self):
 
         # print ("number of row in Milonga: "+str(self.destModel.rowCount(QModelIndex())))
@@ -1423,7 +1436,7 @@ class AudioPlayerDialog(QMainWindow, QObject):
             if self.curTango.type == 4:
                 time.sleep(0.5)
             else:
-                time.sleep(1.2)
+                time.sleep(0.8)
             if self.sideWindow.isFullScreen() and rowIndex == self.destModel.rowCount(QModelIndex()):
                 self._updateSideScreen(True)
             elif self.sideWindow.isFullScreen():

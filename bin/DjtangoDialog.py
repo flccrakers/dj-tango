@@ -876,7 +876,7 @@ class AudioPlayerDialog(QMainWindow, QObject):
         self.curLibraryRow = indexes[0].row()
         self._isClicked = True
         self.curTango = self._tangoList.tangos[self.curTangoEditing]
-        self._loadNewMedia()
+        self._load_new_media()
         self._playMedia()
         self.tapTable = []
         self.tapContent.lcdNumber.display(0.0)
@@ -963,7 +963,7 @@ class AudioPlayerDialog(QMainWindow, QObject):
             self._dialog.milongaSource.selectRow(self.curLibraryRow)
             self._isClicked = True
             self.curTango = self._tangoList.tangos[self.curTangoEditing]
-            self._loadNewMedia()
+            self._load_new_media()
             self._playMedia()
             self.initialiszeBmpInfo()
 
@@ -981,7 +981,7 @@ class AudioPlayerDialog(QMainWindow, QObject):
             self._dialog.milongaSource.selectRow(self.curLibraryRow)
             self._isClicked = True
             self.curTango = self._tangoList.tangos[self.curTangoEditing]
-            self._loadNewMedia()
+            self._load_new_media()
             self._playMedia()
             self.initialiszeBmpInfo()
 
@@ -1019,7 +1019,7 @@ class AudioPlayerDialog(QMainWindow, QObject):
             if self.detailsContent.checkBoxPlayMusic.isChecked():
                 self._isClicked = True
                 self.curTango = self._tangoList.tangos[self.curTangoEditing]
-                self._loadNewMedia()
+                self._load_new_media()
                 self._playMedia()
 
             # check for the common fields
@@ -1405,7 +1405,7 @@ class AudioPlayerDialog(QMainWindow, QObject):
         # print ("launching the Milonga")
         self.updateMilongaInfos();
 
-        self._loadNewMedia()
+        self._load_new_media()
         self._playMedia()
 
     def play_next_tango(self):
@@ -1469,7 +1469,7 @@ class AudioPlayerDialog(QMainWindow, QObject):
 
             self.curTango = self._tangoList.tangos[self._currentIndex]
 
-            self._loadNewMedia()
+            self._load_new_media()
             self._playMedia()
             self._updateSideScreen()
             # print("je met à jour le side Screen")
@@ -1523,7 +1523,7 @@ class AudioPlayerDialog(QMainWindow, QObject):
             # index = self.sourceProxyModel.index(indexes[0].row(), 1)
             # self.sourceProxyModel.setData(index, 1, Qt.EditRole)
             self.updatePlayingCursor()
-            self._loadNewMedia()
+            self._load_new_media()
             self._playMedia()
             self._updateSideScreen()
 
@@ -1544,7 +1544,7 @@ class AudioPlayerDialog(QMainWindow, QObject):
             self.curLibraryRow = indexes[0].row()
             self.curTango = self._tangoList.tangos[self._currentIndex]
 
-            self._loadNewMedia()
+            self._load_new_media()
             self._playMedia()
 
     def updateDuration(self):
@@ -1561,10 +1561,15 @@ class AudioPlayerDialog(QMainWindow, QObject):
         elif (sysName == 'Windows'):
             self._showInfo('You can not run this command on Windows :-(')
 
-    def _loadNewMedia(self):
-        # print(self.curTango.path)
-        self.mediaSource = QMediaContent(QUrl.fromLocalFile(QFileInfo(self.curTango.path).absoluteFilePath()))
-        self.player.setMedia(self.mediaSource)
+    def _load_new_media(self):
+        print(self.curTango.path)
+        if not os.path.isfile(self.curTango.path):
+            self._showInfo('This file is not existing on disk, remove it')
+            return False
+        else:
+            self.mediaSource = QMediaContent(QUrl.fromLocalFile(QFileInfo(self.curTango.path).absoluteFilePath()))
+            self.player.setMedia(self.mediaSource)
+            return True
 
     def _playMedia(self):
         """

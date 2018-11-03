@@ -4,4 +4,4 @@
 result=$(dirname "$0")
 echo $result
 cd $result
-$result/DjtangoDialog.py
+$result/bin/DjtangoDialog.py
